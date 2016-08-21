@@ -1,0 +1,45 @@
+<div ui-view='header'></div>
+<div layout="row">
+<div flex="10" class="sidenav">
+	<div ui-view='left'></div>	
+</div>
+<div flex="10"></div>
+<div flex="80">
+		<div ng-controller="tareasCtrl as tarea">
+			<div layout="row">
+				<div style="margin:0 auto; text-align:center;"><h1>{{tarea.tareasModel.tarea.tareasEntity.nombreTarea}}</h1></div>
+			</div>
+			<div layout="row">
+				<div style="margin:0 auto; padding:0 10%;">
+					<p>
+						{{tarea.tareasModel.tarea.tareasEntity.descripcionTarea}}
+					</p>
+					<button type="button">ArchivoAdjunto.zip</button>
+					<br />
+					<md-input-container class="md-block">
+						<label>Comentario</label>
+						<textarea ng-model="tarea.observacionesDocente" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+					</md-input-container>
+					<div style="margin-bottom:5%; text-align:center;">
+					<md-button class="md-raised">
+						<label for="file-input">Seleccione Archivo</label>  
+						</md-button>
+						<input id="file-input" type="file" ng-show="false">
+					</div>
+					<md-button type="button" class="md-raised md-primary"  ng-click="tarea.enviarTarea();">Guardar</md-button>
+				</div>
+			</div>
+			<div layout="row">
+				
+			</div>
+			<a ui-sref="tarea"></a>
+		</div>
+	</div>
+
+</div>
+
+<style>
+	.sidenav{
+		border-right:2px solid #889ea6;
+	}
+</style>

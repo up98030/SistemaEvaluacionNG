@@ -1,0 +1,47 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="/node_modules/angular-ui-grid/ui-grid.css" />
+</head>
+<div ui-view='header'></div>
+<div layout="row">
+<div flex="10" class="sidenav">
+	<div ui-view='left'></div>	
+</div>
+<div flex="10"></div>
+	<div flex="80">
+
+<div ng-controller="usuariosCtrl as usuarios">
+	<h1>Usuarios</h1>
+	<div layout="row">
+		<div flex="90">
+			<div class="headerListaRoles">
+				<div layout="row">
+					<div flex="20" class="contenedorHeaderRoles">
+						<a ui-sref="nuevoUsuario">Añadir</a>
+					</div>
+					<div flex="20">
+						<!-- <a ui-sref="">Editar</a> -->
+					</div>
+					<div flex="20">
+						<a ui-sref="">Eliminar</a>
+					</div>
+				</div>		
+			</div>
+			<div ui-grid="usuarios.gridOptions" ui-grid-selection class="grid" selectable></div>
+		</div>
+	</div>	
+	</div>
+</div>
+</div>
+
+<style>
+	.headerListaRoles{
+		border:1px solid #e5e5e5;
+		padding:1.5%;
+	}
+	.contenedorHeaderRoles{
+
+	}
+		.sidenav{
+		border-right:2px solid #889ea6;
+	}
+</style>

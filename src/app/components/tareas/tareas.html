@@ -1,0 +1,30 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="/node_modules/angular-ui-grid/ui-grid.css" />
+</head>
+<div ui-view='header'></div>
+<div layout="row">
+<div flex="10" class="sidenav">
+	<div ui-view='left'></div>	
+</div>
+<div flex="10"></div>
+<div flex="80">
+		<div ng-controller="tareasCtrl as tareas">
+			<div layout="row">
+				<div flex="90">
+					<div style="margin:0 auto; text-align:center;"><h1>Mis Tareas</h1></div>
+					<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<style>
+	.sidenav{
+		border-right:2px solid #889ea6;
+	}
+</style>
+	
+

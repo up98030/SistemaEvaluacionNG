@@ -1,0 +1,99 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="/node_modules/angular-ui-grid/ui-grid.css" />
+</head>
+<div ui-view='header'></div>
+<div layout="row">
+<div flex="10" class="sidenav">
+	<div ui-view='left'></div>	
+</div>
+<div flex="10"></div>
+	<div flex="80">
+
+<div ng-controller="rolesCtrl as roles">
+	<h1>Roles</h1>
+	<div layout="row">
+		<div flex="90">
+
+
+			<md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect style="height:1000px; overflow:visible;" class="pestana">
+				<md-tab ng-repeat="tab in roles.tabs"
+				ng-disabled="tab.disabled"
+				label="{{tab.title}}" class="rolesHeaderTab">
+					<div class="demo-tab tab{{$index%4}}" style="padding: 25px; text-align: center;">
+						<h3>{{tab.title}}</h3>
+						<hr>
+						<div ng-hide="tab.title == ('Añadir') || tab.title == ('Administrar')">
+							<strong>Descripci&oacute;n:</strong><p>&nbsp;{{tab.descripcion}}</p>
+							<br />
+							<strong>Permisos:</strong><p>&nbsp;{{tab.permisos}}</p>
+
+							<br/>
+							<md-button class="md-primary md-raised" ng-click="removeTab( tab )" ng-disabled="tabs.length <= 1">Guardar</md-button>
+						</div>
+						<div ng-show="tab.title == 'Añadir'" style="text-align:left;">
+							<md-input-container>
+								<label>Nombre Rol:</label>
+								<input ng-model="roles.tituloRol">
+							</md-input-container>
+
+							<md-input-container class="md-block">
+								<label>Descripción</label>
+								<textarea ng-model="roles.descripcionRol" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+							</md-input-container>
+
+							<div>
+								<h4>Permisos</h4>
+								<md-checkbox ng-model="roles.cb1" aria-label="Checkbox 1">
+								Lectura
+								</md-checkbox>
+								<md-checkbox ng-model="roles.cb2" aria-label="Checkbox 1">
+								Crear Tareas
+								</md-checkbox>
+								<md-checkbox ng-model="roles.cb3" aria-label="Checkbox 1">
+								Administrar Usuarios
+								</md-checkbox>
+								<md-checkbox ng-model="roles.cb4" aria-label="Checkbox 1">
+								Administrar M&oacute;dulos
+								</md-checkbox>
+							</div>
+							<div style="text-align:center;">
+								<md-button class="md-primary md-raised">Guardar</md-button>
+							</div>
+						</div>
+						<div ng-show="tab.title == 'Administrar'" style="text-align:left;">
+							
+						</div>
+					</div>
+				</md-tab>
+			</md-tabs>
+
+
+		</div>
+	</div>	
+	</div>
+</div>
+</div>
+
+<style>
+.pestana{
+	height:1000px !important;
+	overflow: auto !important;
+}
+.md-tab{
+	color:blue !important;
+}
+.demo-tab{
+	height:300px;
+}
+.rolesHeaderTab{
+	color:blue;
+}
+md-tab-content{
+	/*height:300px !important;*/
+
+}
+
+	.sidenav{
+		border-right:2px solid #889ea6;
+	}
+</style>

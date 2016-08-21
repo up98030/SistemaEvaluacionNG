@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<head>
+    <link rel="stylesheet" type="text/css" href="/node_modules/angular-ui-grid/ui-grid.css" />
+</head>
+<body>
+    <div ui-view='header'></div>
+    <div style="height:20px;"></div>
+    <div ng-controller="reunionesCtrl as reuniones">
+    {{reuniones.Titulo}}
+    </div>
+</body>
+
+<style>
+    .contenedor-dashboard{
+        /*border:1px solid;*/
+        margin:5px;
+    }
+   
+</style>

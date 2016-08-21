@@ -1,0 +1,51 @@
+<div ui-view='header'></div>
+<div layout="row">
+<div flex="10" class="sidenav">
+	<div ui-view='left'></div>	
+</div>
+<div flex="10"></div>
+	<div flex="80">
+
+<div ng-controller="usuariosCtrl as usuarios">
+	<h1>Nuevo Usuario</h1>
+	<div layout="row">
+		<div flex="90">
+
+		<md-input-container>
+	        <label>Id Usuario:</label>
+	        <input ng-model="idUsuario">
+      	</md-input-container>
+
+      	<md-input-container>
+	        <label>Nombre usuario:</label>
+	        <input ng-model="usernom">
+      	</md-input-container>
+
+      	<md-input-container>
+	        <label>Contraseña:</label>
+	        <input ng-model="userpwd">
+      	</md-input-container>
+
+      	<md-input-container>
+	        <label>Nombres:</label>
+	        <input ng-model="nombresUsuario">
+      	</md-input-container>
+
+      	<md-input-container>
+	        <label>Apellidos:</label>
+	        <input ng-model="apellidosUsuario">
+      	</md-input-container>
+
+      	<md-input-container>
+	        <label>Rol Usuario:</label>
+	        <input ng-model="userrol">
+      	</md-input-container>
+
+      	<div layout="row" style="margin-top:1%;">
+        	<md-button ng-click="usuarios.guardarUsuario()" class="md-primary md-raised">Guardar</md-button>	
+        </div>
+			
+	</div>	
+	</div>
+</div>
+</div>

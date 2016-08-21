@@ -1,0 +1,28 @@
+<md-sidenav md-component-id="left" md-is-open="true" class="md-sidenav-left sidenav" md-disable-backdrop
+        md-whiteframe="4"  md-is-locked-open="$mdMedia('gt-md')">
+            
+        <md-list flex>
+	    <!--
+	    <md-subheader class="md-no-sticky">Tareas</md-subheader>
+	    <md-divider ></md-divider>
+	    -->
+	  		<a ui-sref="usuarios">
+				<md-list-item class="md-2-line">
+		          <div class="md-list-item-text">
+		          <h3>Usuarios</h3>
+		          </div>
+		        </md-list-item>
+			</a>
+	    <md-divider ></md-divider> 
+	    <a ui-sref="roles">
+	        <md-list-item class="md-2-line">
+	          <div class="md-list-item-text">
+	            <h3>Roles</h3>
+	          </div>
+	        </md-list-item>
+	    </a>
+
+	    <md-divider ></md-divider>
+
+        </md-list>            
+</md-sidenav>

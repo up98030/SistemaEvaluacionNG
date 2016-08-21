@@ -1,0 +1,6 @@
+body {
+  /* Header de ui-grid */ }
+  body h1 {
+    color: #3372D9; }
+  body .ui-grid-header-cell-wrapper {
+    height: 25px !important; }

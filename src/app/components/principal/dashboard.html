@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<body>
+    <div ui-view='header'></div>
+    <div style="height:20px;"></div>
+    <div ng-controller="principalCtrl as principal">
+
+        <div layout="row">
+
+
+            <div flex="45" class="contenedor-dashboard">
+            <div style="margin:0 auto; text-align:center;"><h1>Mis Tareas</h1></div>
+                    <div ng-controller="tareasCtrl as tareas">
+                                        <div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
+
+
+                    </div>
+
+            </div>
+            <div flex="10"></div>
+
+
+            <div flex="45" class="contenedor-dashboard">
+                        <div style="margin:0 auto; text-align:center;">
+                        <h1>Usuarios</h1></div>
+                        <div ng-controller="usuariosCtrl as usuarios">
+                            <div ui-grid="usuarios.gridOptions" ui-grid-selection class="grid" selectable></div>
+                        </div>
+
+            </div>
+        </div>
+        <div layout="row">
+            <div flex="30"></div>
+            <div flex="30">
+                        <div style="margin:0 auto; text-align:center;">
+<h1>Mis Módulos</h1></div>
+                                    <div ui-grid="principal.gridOptions" selectable></div>
+            </div>
+            <div flex="30"></div>
+                
+
+        </div>
+    </div>
+</body>
+
+<style>
+    .contenedor-dashboard{
+        /*border:1px solid;*/
+        margin:5px;
+    }
+   
+</style>
