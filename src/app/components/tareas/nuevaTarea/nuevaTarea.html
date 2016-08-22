@@ -10,8 +10,8 @@
 
     <h5>Tipo Tarea:</h5>
 
-    <md-select ng-model="ctrl.userState">
-            <md-option ng-repeat="tipo in tiposTareas" ng-value="tipo.idTipoTarea">
+    <md-select ng-model="tipoTarea">
+            <md-option ng-repeat="tipo in tiposTareas" ng-value="tipo.nombreTipoTarea" ng-selected="$first">
               {{tipo.nombreTipoTarea}}
             </md-option>
     </md-select>
@@ -20,7 +20,7 @@
         <label>Nombre:</label>
         <input ng-model="nombreTarea">
       </md-input-container>
-      <md-input-container class="md-block">
+      <md-input-container class="md-block"">
           <label>Descripción</label>
           <textarea ng-model="descripcionTarea" md-maxlength="150" rows="5" md-select-on-focus></textarea>
         </md-input-container>
@@ -31,18 +31,26 @@
       </md-button>
       <input id="file-input" type="file" ng-show="false">
 
-        <h5>Fecha Límite</h5>
+        <h5 ng-show="tipoTarea == 'TAREA'">Fecha Límite</h5>
+        <h5 ng-show="tipoTarea == 'REUNION'">Fecha Reunión</h5>
          <md-datepicker ng-model="fechaFin" md-min-date="minDate" md-max-date="maxDate">
         </md-datepicker>
 
-        <h5>Criterios de evaluación:</h5>
-        <div ng-repeat='criterio in criteriosEvaluacion'>
-        <md-checkbox ng-checked="existsCriterios(criterio, criteriosSelected)" ng-click="toggleCriterios(criterio, criteriosSelected)">
-               {{ criterio.nombreCriterio }} 
-              </md-checkbox>        
-        </div>    
+        <md-input-container ng-show="tipoTarea == 'REUNION'">
+          <label>Hora: </label>
+          <input ng-model="hora">
+        </md-input-container>
 
-        <h5>Asignar tarea a:</h5>
+        <div ng-show="tipoTarea == 'TAREA'">
+          <h5>Criterios de evaluación:</h5>
+          <div ng-repeat='criterio in criteriosEvaluacion'>
+          <md-checkbox ng-checked="existsCriterios(criterio, criteriosSelected)" ng-click="toggleCriterios(criterio, criteriosSelected)">
+                 {{ criterio.nombreCriterio }} 
+                </md-checkbox>        
+          </div>    
+        </div>
+        <h5 ng-show="tipoTarea == 'TAREA'">Asignar tarea a:</h5>
+        <h5 ng-show="tipoTarea == 'REUNION'">Asistentes:</h5>
         <div ng-repeat='usuario in usuariosModulo'>
         <md-checkbox ng-checked="exists(usuario, usuariosSelected)" ng-click="toggle(usuario, usuariosSelected)">
                {{ usuario.nombreCompleto }} 
@@ -51,8 +59,6 @@
 
         <div layout="row" style="margin-top:1%;">
         	<md-button ng-click="nuevaTarea.guardarTarea()" class="md-primary md-raised">{{nombreGuardar}}</md-button>	
-          <md-button ng-click="nuevaTarea.consultarUsuariosModulo()" class="md-primary md-raised">Consultar</md-button>  
-
         </div>
 </div>
 </div>

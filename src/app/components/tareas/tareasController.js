@@ -19,7 +19,8 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
     rowHeight: 35,
     multiSelect:false,
     columnDefs: [ 
-        { name: 'tareasEntity.nombreTarea', width:250, displayName:'Nombre' },
+        { name: 'usuariosEntity.nombreCompleto', width:250, displayName:'Nombre' },
+        { name: 'tareasEntity.nombreTarea', width:250, displayName:'Tarea' },
         { name: 'archivo', visible: false },
         { name: 'archivoAdjunto', visible: false },
         { name: 'calificacion', visible: false },
@@ -70,8 +71,14 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
   };
     
     /************************** Consulta las tareas del usuario **************************/
-		 this.idUsuario = {"idUsuario":usuarioModel.datosUsuario.idUsuario};
-        this.$http.post('http://localhost:8080/sistEval/ws/tareas/', this.idUsuario).then(function (data){
+         this.tareasUsuariosVO = {
+            "idUsuario": usuarioModel.datosUsuario.idUsuario,
+            "estado":'CRE',
+            "tareasEntity":{
+
+            }
+         }
+        this.$http.post('http://localhost:8080/sistEval/ws/tareas/', this.tareasUsuariosVO).then(function (data){
             console.log("########### TAREAS USUARIO ##############");
             console.log(data.data);
             app.gridOptions.data = data.data;

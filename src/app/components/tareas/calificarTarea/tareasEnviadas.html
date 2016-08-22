@@ -5,8 +5,13 @@
 </div>
 <div flex="10"></div>
 <div flex="80">
-<center><h3>Tareas Enviadas</h3></center>
 <div ng-controller="calificarTareaCtrl as calificarTareaCtrl">
+	<div flex="90">
+		<div style="margin:0 auto; text-align:center;"><h1>Tareas Enviadas</h1></div>
+		<div ui-grid="calificarTareaCtrl.gridOptions" ui-grid-selection class="grid"></div>
+	</div>
+
+</div>
 </div>
 </div>
 </div>

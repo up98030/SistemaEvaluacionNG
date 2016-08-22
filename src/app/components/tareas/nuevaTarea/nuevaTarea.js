@@ -63,6 +63,11 @@ console.log("########## USUARIOS SELECCIONADOS1 ##########");
     return listCriterio.indexOf(criterio) > -1;
     };
 
+   /*********************** CHECKBOX TIPO TAREA  ***************************/
+   this.$scope.seleccionarTipoTarea = function(nombreTipoTarea){
+        this.tipoTarea = nombreTipoTarea;
+   }
+
     /*********************** CONSULTA USUARIOS MODULO  ***************************/
         this.datosModulo = {'idModulo': 1};
         this.$http.post('http://localhost:8080/sistEval/ws/buscarUsuariosModulo/', this.datosModulo).then(function (data){
@@ -126,7 +131,7 @@ console.log("########## USUARIOS SELECCIONADOS1 ##########");
             'nombreTarea': this.nombreTarea,
             'descripcionTarea': this.descripcionTarea,
             'idModulo' : usuarioModel.datosUsuario.idModulo,
-            'tipoTarea': 'Tarea',
+            'tipoTarea': this.$scope.tipoTarea,
             'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
             'estado':'ACT',
             'criterios':criteriosSeleccionados,
