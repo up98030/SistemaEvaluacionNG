@@ -1,6 +1,7 @@
 let app;
-function calificarTareaController ($scope,$http,tareasModel,usuarioModel){
+function calificarTareaController ($scope,$http,$state,tareasModel,usuarioModel){
 	app = this;	
+	this.tareasModel = tareasModel;
 
 	this.gridOptions = { 
     enableRowSelection: true,
@@ -26,10 +27,47 @@ function calificarTareaController ($scope,$http,tareasModel,usuarioModel){
         { name: 'idTarea', visible: false },
         { name: 'observaciones',width:300 }
     ],
-    data : tareasData,
-    
+    data : tareasData,    
     };
+
+    /************************** Cuando selecciona una tarea **************************/
+        this.gridOptions.onRegisterApi = function( gridApi ) {
+       /*console.log(gridApi.selection.on.rowSelectionChanged(app.$scope,function(row){
+        		console.log(row.entity);
+        		console.log("####### ROW CALIFICAR #######");
+        	}));*/
+        	console.log(gridApi.selection.on.rowSelectionChanged($scope,function(row){
+        	 	console.log("CALIFICAR TAREA ########");
+        	 	tareasModel.tarea = row.entity;
+        		console.log(tareasModel.tarea);
+        		$state.go('calificarTarea');
+        	}));
+       /* console.log(gridApi.selection.on.rowSelectionChanged(app.$scope,function(row){            
+            tareasModel.tarea = row.entity;
+            console.log("DATOS TAREA");
+            console.log(tareasModel.tarea);
+            var tarea = row.entity;
+            app.archivoAdjunto = tarea.archivoAdjunto;
+            app.descripcionTarea = tarea.descripcionTarea;
+            app.fechaFin = tarea.fechaFin;
+            app.fechaInicio = tarea.fechaInicio;
+            app.nombreTarea = tarea.nombreTarea;
+            $scope.test = tarea.nombreTarea;            
+            console.log("NOMBRE TAREA");
+            console.log(app.nombreTarea);
+            $scope.$apply();
+            app.$scope.$digest();
+            app.$state.go('tarea');
+            app.$scope.$watch();
+            
+        }));
+
+    console.log(gridApi.selection.getSelectedRows());*/
+  };
+
     var tareasData = [];
+
+
 
       this.tareasUsuariosVO = {
             //"idUsuario": usuarioModel.datosUsuario.idUsuario,
@@ -47,6 +85,6 @@ function calificarTareaController ($scope,$http,tareasModel,usuarioModel){
 }
 
 
-calificarTareaController.$inject = ['$scope','$http','tareasModel','usuarioModel'];
+calificarTareaController.$inject = ['$scope','$http','$state','tareasModel','usuarioModel'];
 
 module.exports = calificarTareaController; 

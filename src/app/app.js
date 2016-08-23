@@ -5,6 +5,7 @@ require('angular-animate');
 //require('bootstrap');
 //require('jQuery');
 require('angular-material');
+
 //require('angular-ui-grid');
 require('./components/home/home.js');
 require('./components/about/about.js');

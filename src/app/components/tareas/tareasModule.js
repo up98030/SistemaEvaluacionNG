@@ -54,6 +54,20 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
                 templateUrl:"app/shared/header/header.html"
             }
     	}
+    })
+    .state('calificarTarea',{
+        url:"/calificar",
+        views:{
+            "":{
+                templateUrl:"app/components/tareas/calificarTarea/calificarTarea.html"
+            },
+            "left@calificarTarea":{
+                templateUrl:"app/components/tareas/left.html"
+            },
+            "header@calificarTarea":{
+                templateUrl:"app/shared/header/header.html"
+            }
+        }
     });
 });
 

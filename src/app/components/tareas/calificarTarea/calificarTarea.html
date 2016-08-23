@@ -5,6 +5,38 @@
 </div>
 <div flex="10"></div>
 <div flex="80">
-<div style="margin:0 auto; text-align:center;"><h1>Mis Tareas</h1></div>
-					<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
+<div ng-controller="calificarTareaCtrl as calificarTareaCtrl">
+	<div flex="90">		
+		<div style="margin:0 auto; text-align:center;"><h2>{{calificarTareaCtrl.tareasModel.tarea.tareasEntity.nombreTarea}}</h2></div>
+		<div style="margin:0 auto; text-align:left;">
+			<span><strong>Docente:</strong></span>
+			<span>{{calificarTareaCtrl.tareasModel.tarea.usuariosEntity.nombreCompleto}}</span>		
+			<div></div>
+			<span><strong>Comentario:</strong></span>
+			<!-- <div style="margin:0 auto; text-align:left;border:1px solid;">
+				<p>{{calificarTareaCtrl.tareasModel.tarea.ObservacionesDocente}}</p>
+			</div>	
+						 -->
+			<!-- <md-toolbar class="md-accent">
+			    <div class="md-toolbar-tools">
+			      <h2 class="md-flex">Comentario:</h2>
+			    </div>
+		    </md-toolbar> -->
+		    <md-whiteframe class="md-whiteframe-1dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
+				<p>{{calificarTareaCtrl.tareasModel.tarea.ObservacionesDocente}}</p>
+		    </md-whiteframe>
+			<div style="text-align:left;">				
+				<h3>Evaluar:</h3>
+				<h5>Entregado:</h5>
+				<md-switch ng-model="data.cb1" aria-label="Switch 1" class="md-primary"></md-switch>
+				<h5>Calificación</h5>
+				 <md-slider flex class="md-primary" md-discrete ng-model="rating3" step="1" min="0" max="5" aria-label="rating">
+     			</md-slider>     			
+				<md-input-container>
+			        <label>Fecha Entrega:</label>
+			        <input ng-model="calificarTareaCtrl.tareasModel.tarea.FechaEnvio" disabled>
+			    </md-input-container>
+      			</div>				
+	</div>
+</div>
 </div>

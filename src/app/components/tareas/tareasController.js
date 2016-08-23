@@ -42,11 +42,9 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
     var completo = false;
 
 	/************************** Cuando selecciona una tarea **************************/
-        
-
         this.gridOptions.onRegisterApi = function( gridApi ) {
             // gridApi.grid.modifyRows(app.gridOptions.data);
-        gridApi.selection.selectRow(app.gridOptions.data[0]);
+        //gridApi.selection.selectRow(app.gridOptions.data[0]);
         console.log(gridApi.selection.on.rowSelectionChanged(app.$scope,function(row){            
             tareasModel.tarea = row.entity;
             console.log("DATOS TAREA");
