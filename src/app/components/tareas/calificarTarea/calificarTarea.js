@@ -73,7 +73,7 @@ function calificarTareaController ($scope,$http,$state,tareasModel,usuarioModel)
             //"idUsuario": usuarioModel.datosUsuario.idUsuario,
             "estado":'ENV',
             tareasEntity:{
-            	"idCreadorTarea":0
+            	"idCreadorTarea":2
             }
          }
         $http.post('http://localhost:8080/sistEval/ws/tareas/', this.tareasUsuariosVO).then(function (data){

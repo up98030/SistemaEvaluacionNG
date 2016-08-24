@@ -25,6 +25,10 @@
 		    <md-whiteframe class="md-whiteframe-1dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
 				<p>{{calificarTareaCtrl.tareasModel.tarea.ObservacionesDocente}}</p>
 		    </md-whiteframe>
+		    <div style="height:10px;"></div>
+		    <div>
+      			<md-button class="md-raised">Descargar archivo</md-button>
+		    </div>
 			<div style="text-align:left;">				
 				<h3>Evaluar:</h3>
 				<h5>Entregado:</h5>
@@ -36,7 +40,35 @@
 			        <label>Fecha Entrega:</label>
 			        <input ng-model="calificarTareaCtrl.tareasModel.tarea.FechaEnvio" disabled>
 			    </md-input-container>
-      			</div>				
+
+				<md-list>
+					<md-list-item class="md-2-line veggie-option"  layout-wrap>
+						<div class="md-item-text md-whiteframe-z1" flex>
+						<h3>Total:</h3>
+						<p>45</p>
+						</div>
+					</md-list-item>
+
+				</md-list>
+				<div style="text-align:center;">
+      				<md-button class="md-raised md-primary">Enviar Calificación</md-button>
+			    </div>
+
+      		</div>				
 	</div>
 </div>
 </div>
+
+<style>
+
+ .veggie-option .md-item-text {
+ 	margin: 0 25%;
+ 	text-align:center;
+  padding: 8px;
+  background: #f0f0f0;
+  border-radius: 3px; }
+ .veggie-option .md-item-text h3,
+ .veggie-option .md-item-text p {
+  padding: 0;
+  margin: 0; }
+</style>
