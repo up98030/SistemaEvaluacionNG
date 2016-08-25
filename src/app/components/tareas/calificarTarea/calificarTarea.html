@@ -31,27 +31,33 @@
 		    </div>
 			<div style="text-align:left;">				
 				<h3>Evaluar:</h3>
-				<h5>Entregado:</h5>
-				<md-switch ng-model="data.cb1" aria-label="Switch 1" class="md-primary"></md-switch>
-				<h5>Calificación</h5>
-				 <md-slider flex class="md-primary" md-discrete ng-model="rating3" step="1" min="0" max="5" aria-label="rating">
-     			</md-slider>     			
-				<md-input-container>
-			        <label>Fecha Entrega:</label>
-			        <input ng-model="calificarTareaCtrl.tareasModel.tarea.FechaEnvio" disabled>
-			    </md-input-container>
+				<div ng-show="calificarTareaCtrl.criteriosTarea.indexOf(1) >= 0">
+					<h5>Entregado:</h5>
+					<md-switch ng-model="calificarTareaCtrl.tareaEntregada" ng-change="calificarTareaCtrl.calificacionEntregaTarea();" aria-label="Switch 1" class="md-primary"></md-switch>
+				</div>
+				<div ng-show="calificarTareaCtrl.criteriosTarea.indexOf(2) >= 0">	
+					<h5>Calificación</h5>
+					 <md-slider flex class="md-primary" md-discrete ng-model="calificarTareaCtrl.valorTareaSlider" step="1" min="0" max="5" aria-label="rating" ng-change="calificarTareaCtrl.calcularTotalCalificacion();">
+	     			</md-slider>     								
+				</div>
+				<div ng-show="calificarTareaCtrl.criteriosTarea.indexOf(3) >= 0">	
+					<md-input-container>
+				        <label>Fecha Entrega:</label>
+				        <input ng-model="calificarTareaCtrl.tareasModel.tarea.FechaEnvio" disabled>
+				    </md-input-container>
+				</div>
 
-				<md-list>
-					<md-list-item class="md-2-line veggie-option"  layout-wrap>
-						<div class="md-item-text md-whiteframe-z1" flex>
-						<h3>Total:</h3>
-						<p>45</p>
-						</div>
-					</md-list-item>
+					<md-list>
+						<md-list-item class="md-2-line veggie-option"  layout-wrap>
+							<div class="md-item-text md-whiteframe-z1" flex>
+							<h3>Total:</h3>
+							<p>{{calificarTareaCtrl.totalCalificacionTarea}}</p>
+							</div>
+						</md-list-item>
 
-				</md-list>
+					</md-list>
 				<div style="text-align:center;">
-      				<md-button class="md-raised md-primary">Enviar Calificación</md-button>
+      				<md-button class="md-raised md-primary" ng-click="calificarTareaCtrl.enviarCalificacion();">Enviar Calificación</md-button>
 			    </div>
 
       		</div>				

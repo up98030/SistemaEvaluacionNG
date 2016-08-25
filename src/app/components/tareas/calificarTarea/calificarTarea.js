@@ -2,6 +2,47 @@ let app;
 function calificarTareaController ($scope,$http,$state,tareasModel,usuarioModel){
 	app = this;	
 	this.tareasModel = tareasModel;
+	this.criteriosTarea = [];
+	this.tareaEntregada = false;
+	this.valorTareaSlider = 0;
+	this.totalCalificacionTarea = 0;
+
+	this.calcularTotalCalificacion = function(){
+		console.log(this.tareaEntregada);
+		//this.calificacionEntregaTarea();
+		this.totalCalificacionTarea += this.valorTareaSlider * 12;
+	};
+
+	/********************* CALCULA EL TOTAL CON LA ENTREGA*************************/
+	this.calificacionEntregaTarea = function(){		
+		let valorEntrega = 0;
+		if(this.criteriosTarea.indexOf(2) >= 0){
+			valorEntrega = 40;
+		}
+		if(this.criteriosTarea.indexOf(3) >= 0){
+			valorEntrega = 40;
+		}
+		if((this.criteriosTarea.indexOf(2) >= 0) && (this.criteriosTarea.indexOf(3) >= 0)){
+			valorEntrega = 20;
+		}
+
+		if(this.tareaEntregada){
+			this.totalCalificacionTarea += valorEntrega;
+		}else{
+			if(this.totalCalificacionTarea > 0){
+				this.totalCalificacionTarea -= valorEntrega;
+			}		
+		}
+	};
+	/********************* CALCULA EL VALOR DE LA PONDERACION *************************/
+	this.calificacionSliderTarea = function(){
+
+	};
+
+	/********************* CALCULA EL VALOR DE LA FECHA DE ENTREGA *************************/
+	this.calificacionFechaTarea = function(){
+
+	}
 
 	this.gridOptions = { 
     enableRowSelection: true,
@@ -67,19 +108,37 @@ function calificarTareaController ($scope,$http,$state,tareasModel,usuarioModel)
 
     var tareasData = [];
 
+    this.enviarCalificacion = function(){
+    	console.log(tareasModel.tarea);
+    	tareasModel.tarea.calificacion = this.totalCalificacionTarea;
+    	tareasModel.tarea.FechaEnvio = '2016-01-01';
+		console.log(tareasModel.tarea);
+		$http.post('http://localhost:8080/sistEval/ws/enviarTarea/', tareasModel.tarea).then(function (data){
+			console.log(data);
+		});
 
+    };
+
+    this.formatDate = function(){
+    	let fecha = new Date();
+    	let year = fecha.get
+    }
 
       this.tareasUsuariosVO = {
             //"idUsuario": usuarioModel.datosUsuario.idUsuario,
             "estado":'ENV',
             tareasEntity:{
-            	"idCreadorTarea":2
+            	"idCreadorTarea":usuarioModel.datosUsuario.idUsuario
             }
          }
         $http.post('http://localhost:8080/sistEval/ws/tareas/', this.tareasUsuariosVO).then(function (data){
             console.log("########### TAREAS USUARIO ##############");
             console.log(data.data);
             app.gridOptions.data = data.data;
+            app.criteriosTarea = data.data[0].tareasEntity.criterios;
+            console.log("CRITERIOS");
+            console.log(app.criteriosTarea);
+            console.log(app.criteriosTarea.length);
         });
 
 }
