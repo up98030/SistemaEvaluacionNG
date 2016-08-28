@@ -6,15 +6,19 @@
     <div ui-view='header'></div>
     <div style="height:20px;"></div>
     <div ng-controller="reunionesCtrl as reuniones">
-    {{reuniones.Titulo}}
-    <h1>Reuniones</h1>
+    <div layout="row">
+        <div flex="100" class="contenedor-reuniones">
+            <div style="margin:0 auto; text-align:center;"><h1>Reuniones</h1></div>
+            <div ui-grid="reuniones.gridOptions" ui-grid-selection class="grid"></div>
+        </div>
+    </div>
     </div>
 </body>
 
 <style>
-    .contenedor-dashboard{
+    .contenedor-reuniones{
         /*border:1px solid;*/
-        margin:5px;
+        padding:0 2%;
     }
    
 </style>

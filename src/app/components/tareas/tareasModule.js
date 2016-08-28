@@ -1,12 +1,14 @@
 var nuevaTareaController = require('./nuevaTarea/nuevaTarea.js');
 var tareasController = require('./tareasController.js');
 var calificarTareaController = require('./calificarTarea/calificarTarea.js');
+var reunionesController = require('./reuniones/reuniones.js');
 
 var tareasModule = angular.module('myApp.tareas', []);
 
 tareasModule.controller('nuevaTareaCtrl', nuevaTareaController);
 tareasModule.controller('tareasCtrl', tareasController);
 tareasModule.controller('calificarTareaCtrl', calificarTareaController);
+tareasModule.controller('reunionesCtrl', reunionesController);
 
 tareasModule.config(function($stateProvider, $urlRouterProvider) {
 	
@@ -68,7 +70,22 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
                 templateUrl:"app/shared/header/header.html"
             }
         }
-    });
+    })
+    .state('reuniones',{
+        url:"/reuniones",
+        views:{
+            "":{
+                templateUrl:"app/components/tareas/reuniones/reuniones.html"
+            },
+            "left@reuniones":{
+                templateUrl:"app/components/tareas/left.html"
+            },
+            "header@reuniones":{
+                templateUrl:"app/shared/header/header.html"
+            }
+        }
+    })
+    ;
 });
 
 module.exports = tareasModule;

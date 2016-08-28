@@ -111,7 +111,15 @@ function calificarTareaController ($scope,$http,$state,tareasModel,usuarioModel)
     this.enviarCalificacion = function(){
     	console.log(tareasModel.tarea);
     	tareasModel.tarea.calificacion = this.totalCalificacionTarea;
+    	tareasModel.tarea.estado = 'CLF';
     	tareasModel.tarea.FechaEnvio = '2016-01-01';
+    	tareasModel.tarea.tareasEntity.fechaFin = '2016-01-01';
+        tareasModel.tarea.tareasEntity.fechaInicio = '2016-01-01';
+        tareasModel.tarea.fechaEnvio = '2016-01-01';
+        delete tareasModel.tarea.FechaEnvio;
+		tareasModel.tarea.observacionesDocente = tareasModel.tarea.ObservacionesDocente;
+        delete tareasModel.tarea.ObservacionesDocente;
+    	console.log("################# ENVIAR CALIFICACION ##############");
 		console.log(tareasModel.tarea);
 		$http.post('http://localhost:8080/sistEval/ws/enviarTarea/', tareasModel.tarea).then(function (data){
 			console.log(data);

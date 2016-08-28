@@ -9,27 +9,34 @@
 	<h2>
 	<span><img src="/src/assets/images/logo.png" /></span>
 	</h2> -->
-	<md-button ui-sref="principal">
+	<md-button ui-sref="principal" class="boton-header" style="vertical-align:middle;">
 		Inicio
 	</md-button>
-	<md-button ui-sref="tareas">
+	<md-button ui-sref="tareas" class="boton-header" style="vertical-align:middle;">
 		Tareas
 	</md-button>
-	<md-button ui-sref="modulos">
+	<!-- <md-button ui-sref="modulos">
 		Modulos
-	</md-button>
-	<md-button ui-sref="calendario">
-		Calendario
-	</md-button>
-	<md-button ui-sref="reuniones">
+	</md-button> -->
+
+	<md-button ui-sref="reuniones" class="boton-header" style="vertical-align:middle;">
 		Reuniones
 	</md-button>
-	<md-button ui-sref="usuarios">
+	
+	<md-button ui-sref="calendario" class="boton-header" style="vertical-align:middle;">
+		Calendario
+	</md-button>
+	
+	<!-- <md-button ui-sref="usuarios">
 		Usuarios
 	</md-button>
-
-	<md-button ui-sref="home">
+	-->
+	<md-button ui-sref="home" class="boton-header" style="vertical-align:middle;">
 		Salir
+	</md-button>
+
+	<md-button ui-sref="home" class="boton-no">
+		
 	</md-button>
 
 </div>
@@ -40,8 +47,11 @@
 		background-color:#2b669a;
 		box-shadow: 5px 4px 5px #7a7a7a;
 		width:100vw;
+		text-align: center;
+		margin: auto;
+		display: inline-block;
+		vertical-align: middle;
 		/*width:95%;
 		margin: 0 auto;*/
 	}
-
 </style>

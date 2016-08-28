@@ -73,7 +73,7 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
             "idUsuario": usuarioModel.datosUsuario.idUsuario,
             "estado":'CRE',
             "tareasEntity":{
-
+                "tipoTarea":'TAREA'
             }
          }
         this.$http.post('http://localhost:8080/sistEval/ws/tareas/', this.tareasUsuariosVO).then(function (data){
@@ -86,8 +86,8 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
     this.enviarTarea = function(){
         tareasModel.tarea.estado = 'ENV';
         tareasModel.tarea.observacionesDocente = this.observacionesDocente;
-        tareasModel.tarea.tareasEntity.fechaFin = null;
-        tareasModel.tarea.tareasEntity.fechaInicio = null;
+        tareasModel.tarea.tareasEntity.fechaFin = new Date();
+        tareasModel.tarea.tareasEntity.fechaInicio = new Date();
         delete tareasModel.tarea.ObservacionesDocente;
         console.log("########## TAREA A ENVIAR ##############================");
         console.log(tareasModel.tarea);

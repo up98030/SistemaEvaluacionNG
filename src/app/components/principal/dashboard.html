@@ -3,12 +3,11 @@
     <div ui-view='header'></div>
     <div style="height:20px;"></div>
     <div ng-controller="principalCtrl as principal">
-
-        <div layout="row">
-
+    <div flex="100">
+        <div layout="row" class="contenedor-principal-dashboard">
 
             <div flex="45" class="contenedor-dashboard">
-            <div style="margin:0 auto; text-align:center;"><h1>Mis Tareas</h1></div>
+            <div style="margin:0 auto; text-align:center;"><h1>Tareas</h1></div>
                     <div ng-controller="tareasCtrl as tareas">
                                         <div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
 
@@ -21,14 +20,14 @@
 
             <div flex="45" class="contenedor-dashboard">
                         <div style="margin:0 auto; text-align:center;">
-                        <h1>Usuarios</h1></div>
-                        <div ng-controller="usuariosCtrl as usuarios">
-                            <div ui-grid="usuarios.gridOptions" ui-grid-selection class="grid" selectable></div>
+                        <h1>Reuniones</h1></div>
+                        <div ng-controller="reunionesCtrl as reuniones">
+                            <div ui-grid="reuniones.gridOptions" ui-grid-selection class="grid" selectable></div>
                         </div>
-
             </div>
         </div>
-        <div layout="row">
+    </div>    
+        <!-- <div layout="row">
             <div flex="30"></div>
             <div flex="30">
                         <div style="margin:0 auto; text-align:center;">
@@ -38,14 +37,18 @@
             <div flex="30"></div>
                 
 
-        </div>
+        </div> -->
     </div>
 </body>
 
 <style>
     .contenedor-dashboard{
         /*border:1px solid;*/
-        margin:5px;
+       /* margin:5px;*/
+    }
+    .contenedor-principal-dashboard{
+        text-align:center;
+        padding:2% ;
     }
    
 </style>

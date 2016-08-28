@@ -13,7 +13,7 @@ require('./components/about/about.js');
 require('./components/principal/dashboard.js');
 require('./components/modulos/modulos.js');
 require('./components/calendario/calendario.js');
-require('./components/reuniones/reuniones.js');
+//require('./components/reuniones/reuniones.js');
 
 var tareasModule = require('./components/tareas/tareasModule.js');
 
@@ -31,7 +31,7 @@ var usuarioModel = require('./models/usuarioModel.js');
 
 var app = angular.module('myApp', 
     [
-    'ui.router','ngSanitize','ui.grid','ui.grid.selection','ngMaterial','materialCalendar','myApp.home','myApp.reuniones','myApp.calendario',
+    'ui.router','ngSanitize','ui.grid','ui.grid.selection','ngMaterial','materialCalendar','myApp.home',/*'myApp.reuniones',*/'myApp.calendario',
     'myApp.modulos','myApp.about', 'myApp.principal',/*'myApp.tareas',*/tareasModule.name, 'myApp.tarea','myApp.usuarios','myApp.roles'
 
     ]);
@@ -119,7 +119,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             }
         }
     })
-	.state('reuniones', {
+	/*.state('reuniones', {
 		url: "/reuniones",
 		views : {
 			"" : {
@@ -129,7 +129,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 				templateUrl:"app/shared/header/header.html"
 			}
 		}
-	})
+	})*/
     .state('usuarios',{
         url:"/usuarios",
         views: {
