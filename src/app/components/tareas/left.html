@@ -2,24 +2,23 @@
 <md-sidenav md-component-id="left" md-is-open="true" class="md-sidenav-left sidenav" md-disable-backdrop
         md-whiteframe="4"  md-is-locked-open="$mdMedia('gt-md')">
             
-        <md-list flex>
+        <md-list  class="contenedor-sidenav" flex>
 	    <!--
 	    <md-subheader class="md-no-sticky">Tareas</md-subheader>
 	    <md-divider ></md-divider>
 	    -->
 	  		<a ui-sref="tareas">
-				<md-list-item class="md-2-line">
+				<md-list-item class="md-2-line item-sidebar">
 		          <div class="md-list-item-text">
-		          <h3>Mis Tareas</h3>
+		          <h3 class="titulo-item-sidebar">Mis Tareas</h3>
 		          </div>
 		        </md-list-item>
-			</a>
-	    <md-divider ></md-divider> 
+			</a>	    
 	    <div ng-show="home.usuarioModel.datosUsuario.idPerfil == 2">
 	    <a ui-sref="nuevaTarea">
-	        <md-list-item class="md-2-line">
+	        <md-list-item class="md-2-line item-sidebar-activo">
 	          <div class="md-list-item-text">
-	            <h3>Nueva Tarea</h3>
+	            <h3 class="titulo-item-sidebar">Nueva Tarea</h3>
 	          </div>
 	        </md-list-item>
 	    </a>
@@ -27,16 +26,47 @@
 
 	    <div ng-show="home.usuarioModel.datosUsuario.idPerfil == 2">
 	    <a ui-sref="tareasEnviadas">
-	        <md-list-item class="md-2-line">
+	        <md-list-item class="md-2-line item-sidebar">
 	          <div class="md-list-item-text">
-	            <h3>Calificar Tareas</h3>
+	            <h3 class="titulo-item-sidebar">Calificar Tareas</h3>
 	          </div>
 	        </md-list-item>
 	    </a>
 	    </div>
 
-	    <md-divider ></md-divider>
-
         </md-list>            
 </md-sidenav>
 </div>
+
+<style>
+md-list-item.item-sidebar{
+	height: auto;
+    min-height: 72px;
+    background-color: #106cc8;
+}
+md-list-item.item-sidebar-activo{
+	background-color:#3692ef;
+}
+
+a{
+	text-decoration:none;
+}
+h3.titulo-item-sidebar{
+	color:#ffffff !important;
+}
+div.sidenav{
+	    z-index: 2;
+    background-color: 106cc8;
+    border:none;
+
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    /* box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+    -webkit-box-shadow: 6px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 6px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 6px 10px 5px 0px rgba(0,0,0,0.75);
+}
+md-list.contenedor-sidenav{
+	padding:0;
+}
+</style>

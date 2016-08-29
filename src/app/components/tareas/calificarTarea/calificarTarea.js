@@ -123,6 +123,8 @@ function calificarTareaController ($scope,$http,$state,tareasModel,usuarioModel)
 		console.log(tareasModel.tarea);
 		$http.post('http://localhost:8080/sistEval/ws/enviarTarea/', tareasModel.tarea).then(function (data){
 			console.log(data);
+			$state.go('tareasEnviadas');
+
 		});
 
     };
