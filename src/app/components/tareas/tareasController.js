@@ -69,9 +69,10 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
   };
     
     /************************** Consulta las tareas del usuario **************************/
-         this.tareasUsuariosVO = {
+    this.cargarTareas = function(estadoTarea){
+        this.tareasUsuariosVO = {
             "idUsuario": usuarioModel.datosUsuario.idUsuario,
-            "estado":'CRE',
+            "estado":estadoTarea,
             "tareasEntity":{
                 "tipoTarea":'TAREA'
             }
@@ -81,6 +82,8 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
             console.log(data.data);
             app.gridOptions.data = data.data;
         });
+    }
+         
 
     /************************** Envia Tarea **************************/
     this.enviarTarea = function(){
@@ -98,7 +101,11 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
         });
 
     }
+    this.cambioTab = function(){
+        alert("asdf");
+    }
 
+        this.selectedIndex = 0;
 
 }
 
