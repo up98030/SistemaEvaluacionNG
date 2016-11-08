@@ -11,29 +11,29 @@
 		<div ng-controller="tareasCtrl as tareas">
 			<div layout="row">
 				<div flex="90">
-					<md-content class="md-padding">
+					<md-content class="md-padding contenedorGridTareas"">
 						<md-tabs class="md-subhead" md-selected="tareas.selectedIndex" md-change="tareas.cambioTab();" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
 							<md-tab id="tab1" md-on-select="tareas.cargarTareas('CRE');">
-								<md-tab-label style="color:blue;">Pendientes</md-tab-label>
-								<md-tab-body>
+								<md-tab-label><span class="label-tab">Pendientes</span></md-tab-label>
+								<md-tab-body class="tabContentGrid">
 									<!-- <div style="margin:0 auto; text-align:center;"><h1>Pendientes</h1></div> -->
 									<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
 								</md-tab-body>
 							</md-tab>
 							<md-tab id="tab2" md-on-select="tareas.cargarTareas('ENV');">
-								<md-tab-label>Entregadas</md-tab-label>
+								<md-tab-label><span class="label-tab">Entregadas</span></md-tab-label>
 								<md-tab-body>
 									<!-- <div style="margin:0 auto; text-align:center;"><h1>Entregadas</h1></div> -->
 									<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
 								</md-tab-body>
 							</md-tab>
-							<md-tab id="tab3" md-on-select="tareas.cargarTareas('CLF');">
+							<!--<md-tab id="tab3" md-on-select="tareas.cargarTareas('CLF');">
 								<md-tab-label>Calificadas</md-tab-label>
-								<md-tab-body>
+								<md-tab-body> -->
 									<!-- <div style="margin:0 auto; text-align:center;"><h1>Calificadas</h1></div> -->
-									<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
+									<!--<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
 								</md-tab-body>
-							</md-tab>
+							</md-tab> -->
 						</md-tabs>
 					</md-content>
 				</div>	
@@ -44,6 +44,18 @@
 
 
 <style>
+<!-- GRIDS -->
+.contenedorGridTareas{
+	min-height:300px !important;
+	height:400px !important;
+	border:1px solid red;
+}
+	.md-active span.label-tab{
+	color:#088da5;
+	}
+	span.label-tab{
+	color:#242075;
+	}
 	.sidenav{
 		border-right:2px solid #889ea6;
 	}
@@ -58,11 +70,7 @@
 	padding-right: 15px;
 	vertical-align: middle;
 	line-height: 30px;
-	height: 35px; }
-	md-tab-item.md-active .md-tab{
-		color:blue;
-	}
-
+	height: 35px; }	
 </style>
 	
 

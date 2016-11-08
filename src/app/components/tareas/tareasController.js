@@ -15,11 +15,12 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
     enableRowSelection: true,
     enableFullRowSelection: true,
     rowHeader: false,
+    enableFiltering:true,
     enableSelectAll: false,
     rowHeight: 35,
     multiSelect:false,
     columnDefs: [ 
-        { name: 'usuariosEntity.nombreCompleto', width:250, displayName:'Nombre' },
+        { name: 'usuariosEntity.nombreCompleto', width:250, displayName:'Nombre', enableFiltering: false},
         { name: 'tareasEntity.nombreTarea', width:250, displayName:'Tarea' },
         { name: 'archivo', visible: false },
         { name: 'archivoAdjunto', visible: false },

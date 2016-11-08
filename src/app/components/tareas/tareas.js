@@ -21,17 +21,18 @@ angular.module('myApp.tareas', [])
     app = this;
     var tareasData = [];
     var completo = false;
-    console.log("TEST");
+    console.log("en tareas.js");
     //console.log(this.tareasModel.test);
     this.gridOptions = { 
     enableRowSelection: true,
     enableFullRowSelection: true,
+    enableFiltering: true,
     rowHeader: false,
     enableSelectAll: false,
     rowHeight: 35,
     multiSelect:false,
     columnDefs: [ 
-        { name: 'nombreTarea',width:250 },
+        { name: 'nombreTarea',width:250,cellFilter: 'nombreTarea:row.entity'},
         { name: 'archivo', visible: false },
         { name: 'archivoAdjunto', visible: false },
         { name: 'calificacion', visible: false },

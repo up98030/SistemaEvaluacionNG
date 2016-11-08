@@ -26,6 +26,40 @@ function nuevaTareaController ($scope,$http,tareasModel,usuarioModel){
     this.usuariosSeleccionados = [];
     this.criteriosSeleccionados = [];
 
+    this.archivoAdjunto = null;
+
+    /*********************** SUBIR ARCHIVOS **********************/
+   /////obtiene el valor del input file y transforma a base 64
+    this.$scope.subirArchivo = function(){
+
+        console.log("ARCHIVO:....");
+        var uploaded = document.getElementById("file-input");
+        var reader = new FileReader();
+
+        reader.onload = function (){
+            var arrayBuffer = this.result,
+            array = new Uint8Array(arrayBuffer),
+            binaryString = String.fromCharCode.apply(null, array);
+            this.archivoAdjunto = binaryString;
+            this.guardarTarea();
+            console.log(binaryString);
+          }
+        reader.readAsArrayBuffer(uploaded.files[0]);
+    }
+
+
+    this.$scope.filesChanged = function(files) {
+   console.log(files);
+/*
+    $http.post(uploadUrl, fd, {
+        withCredentials: true,
+        headers: {'Content-Type': undefined },
+        transformRequest: angular.identity
+    }).success( ...all right!... ).error( ..damn!... );
+*/
+};
+
+
     /******************** CHECKBOX USUARIOS *******************************/
     this.$scope.toggle = function (item, list) {
             var idx = list.indexOf(item);
@@ -137,13 +171,37 @@ console.log("########## USUARIOS SELECCIONADOS1 ##########");
             'criterios':criteriosSeleccionados,
             'fechaInicio': new Date(),
             'fechaFin': new Date(),
-            'archivoAdjunto': '', 
+            'archivoAdjunto': this.archivoAdjunto, 
             'tareasUsuarios': tareasModel.usuariosSeleccionados
             };
             console.log("OBJETO TAREA #$$#$#$#$#$#$#$$#$#");
             console.log(this.tareaData);
 
-            this.$http.post('http://localhost:8080/sistEval/ws/crearTarea/',this.tareaData).then(function (data){
+            console.log("ARCHIVO:....");
+        var uploaded = document.getElementById("file-input");
+        var reader = new FileReader();
+
+        reader.onload = function (){
+            var arrayBuffer = this.result,
+            array = new Uint8Array(arrayBuffer),
+            binaryString = btoa(String.fromCharCode.apply(null, array));
+            this.archivoAdjunto = binaryString;
+
+            this.tareaData = {
+            'nombreTarea': this.nombreTarea,
+            'descripcionTarea': this.descripcionTarea,
+            'idModulo' : usuarioModel.datosUsuario.idModulo,
+            'tipoTarea': app.$scope.tipoTarea,
+            'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
+            'estado':'ACT',
+            'criterios':criteriosSeleccionados,
+            'fechaInicio': new Date(),
+            'fechaFin': new Date(),
+            'archivoAdjunto': this.archivoAdjunto, 
+            'tareasUsuarios': tareasModel.usuariosSeleccionados
+            };
+debugger;
+                 app.$http.post('http://localhost:8080/sistEval/ws/crearTarea/',this.tareaData).then(function (data){
         console.log("tarea");
         console.log(data);
         alert("Tarea creada correctamente");
@@ -151,6 +209,9 @@ console.log("########## USUARIOS SELECCIONADOS1 ##########");
         console.log("ERROR");
         alert("Error insertando tarea");
     });  
+            console.log(binaryString);
+          }
+        reader.readAsArrayBuffer(uploaded.files[0]);
 
     };
 
