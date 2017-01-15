@@ -2,32 +2,33 @@
     <link rel="stylesheet" type="text/css" href="/node_modules/angular-ui-grid/ui-grid.css" />
 </head>
 <div ui-view='header'></div>
-<div layout="row">
-<div flex="10" class="sidenav">
-	<div ui-view='left'></div>	
-</div>
-<div flex="10"></div>
-<div flex="80">
-		<div ng-controller="tareasCtrl as tareas">
+<div ng-controller="tareasCtrl as tareas">
+	<div ui-view='left'></div>
+
+	<div layout="row">
+		<div flex="10"></div>
+		<div flex="80">
 			<div layout="row">
 				<div flex="90">
+
+				<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
+
+
+<!--
 					<md-content class="md-padding contenedorGridTareas"">
 						<md-tabs class="md-subhead" md-selected="tareas.selectedIndex" md-change="tareas.cambioTab();" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
 							<md-tab id="tab1" md-on-select="tareas.cargarTareas('CRE');">
 								<md-tab-label><span class="label-tab">Pendientes</span></md-tab-label>
 								<md-tab-body class="tabContentGrid">
-									<!-- <div style="margin:0 auto; text-align:center;"><h1>Pendientes</h1></div> -->
-									<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
 								</md-tab-body>
 							</md-tab>
 							<md-tab id="tab2" md-on-select="tareas.cargarTareas('ENV');">
 								<md-tab-label><span class="label-tab">Entregadas</span></md-tab-label>
 								<md-tab-body>
-									<!-- <div style="margin:0 auto; text-align:center;"><h1>Entregadas</h1></div> -->
 									<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
 								</md-tab-body>
 							</md-tab>
-							<!--<md-tab id="tab3" md-on-select="tareas.cargarTareas('CLF');">
+							<md-tab id="tab3" md-on-select="tareas.cargarTareas('CLF');">
 								<md-tab-label>Calificadas</md-tab-label>
 								<md-tab-body> -->
 									<!-- <div style="margin:0 auto; text-align:center;"><h1>Calificadas</h1></div> -->
@@ -39,9 +40,8 @@
 				</div>	
 			</div>		
 		</div>
-
+	</div>
 </div>
-
 
 <style>
 <!-- GRIDS -->

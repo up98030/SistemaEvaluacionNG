@@ -7,8 +7,9 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
 	this.$state = $state;
 	this.tareasModel = tareasModel;
     this.observacionesDocente;
-	console.log("DATOS USUARIO");
-	console.log(usuarioModel.datosUsuario);
+    this.usuarioModel = usuarioModel;
+	console.log("DATOS USUARIO tareasCtrl");
+	console.log(this.usuarioModel.datosUsuario);
 
 	/************************** Grid de tareas **************************/
 	this.gridOptions = { 
@@ -20,17 +21,17 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
     rowHeight: 35,
     multiSelect:false,
     columnDefs: [ 
-        { name: 'usuariosEntity.nombreCompleto', width:250, displayName:'Nombre', enableFiltering: false},
+        { name: 'usuariosEntity.nombreCompleto', width:250, displayName:'Nombre', enableFiltering: false, visible:false},
         { name: 'tareasEntity.nombreTarea', width:250, displayName:'Tarea' },
         { name: 'archivo', visible: false },
         { name: 'archivoAdjunto', visible: false },
         { name: 'calificacion', visible: false },
-        { name: 'tareasEntity.descripcionTarea',width:300,displayName:'Descripcion Tarea'},
+        { name: 'tareasEntity.descripcionTarea',width:300,displayName:'Descripcion Tarea', visible:false},
         { name: 'estado', visible: false },
         { name: 'observacionesDocente', visible: false },
         { name: 'fechaEnvio', visible: false },
-        { name: 'tareasEntity.fechaFin',width:200, displayName:'Fecha Fin'},
-        { name: 'tareasEntity.fechaInicio',width:200, displayName:'Fecha Inicio' },
+        { name: 'tareasEntity.fechaFin',width:200, displayName:'Fecha Entrega'},
+        { name: 'tareasEntity.fechaInicio',width:200, displayName:'Fecha Inicio', visible:false },
         { name: 'tareasEntity.idModulo', visible: false },
         { name: 'tareasEntity.idCreadorTarea', visible: false },
         { name: 'idTarea', visible: false },
@@ -85,6 +86,7 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
         });
     }
          
+    this.cargarTareas('CRE');
 
     /************************** Envia Tarea **************************/
     this.enviarTarea = function(){
@@ -95,11 +97,29 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
         delete tareasModel.tarea.ObservacionesDocente;
         console.log("########## TAREA A ENVIAR ##############================");
         console.log(tareasModel.tarea);
-            this.$http.post('http://localhost:8080/sistEval/ws/enviarTarea/', tareasModel.tarea).then(function (data){
+
+        var uploaded = document.getElementById("file-inputDetalle");
+        var reader = new FileReader();
+
+        reader.onload = function (){
+
+            var arrayBuffer = this.result,
+            array = new Uint8Array(arrayBuffer),
+            binaryString = btoa(String.fromCharCode.apply(null, array));
+            this.archivoAdjuntoDetalle = binaryString;
+            tareasModel.tarea.archivoAdjunto = this.archivoAdjuntoDetalle;
+
+            app.$http.post('http://localhost:8080/sistEval/ws/enviarTarea/', tareasModel.tarea).then(function (data){
             console.log("########### TAREAS USUARIO ENVIADA ##############");
             console.log(data.data);
             $state.go('tareas');
-        });
+            });
+
+
+        }
+
+        reader.readAsArrayBuffer(uploaded.files[0]);
+            
 
     }
     this.cambioTab = function(){

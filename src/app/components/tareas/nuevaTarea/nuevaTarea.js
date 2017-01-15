@@ -4,6 +4,7 @@ let app;
 function nuevaTareaController ($scope,$http,tareasModel,usuarioModel){
 	this.welcomeText = 'Welcome to myApp Home!';
     this.tareasModel = tareasModel;
+    this.usuarioModel = usuarioModel;
     console.log("$$$$$$$$$$ MODELO");
     console.log(tareasModel.test);
     app = this;
@@ -11,7 +12,6 @@ function nuevaTareaController ($scope,$http,tareasModel,usuarioModel){
     this.inputTitulo = " ";
     this.$http = $http;
     this.$scope = $scope;
-
     this.$scope.nombreGuardar = "Guardar";
     this.nombreTarea = "";
     this.descripcionTarea = "";
@@ -27,6 +27,28 @@ function nuevaTareaController ($scope,$http,tareasModel,usuarioModel){
     this.criteriosSeleccionados = [];
 
     this.archivoAdjunto = null;
+
+    /************** ABRIR DIALOGO *****************/ 
+  /*  this.seleccionarUsuarios = function(ev){
+        console.log("Abriendo dialogo");
+            var confirm = app.$mdDialog.confirm()
+          .title('Would you like to delete your debt?')
+          .textContent('All of the banks have agreed to forgive you your debts.')
+          .ariaLabel('Lucky day')
+          .targetEvent(ev)
+          .ok('Please do it!')
+          .cancel('Sounds like a scam');
+
+    app.$mdDialog.show(confirm).then(function() {
+        alert("OK");
+      //$scope.status = 'You decided to get rid of your debt.';
+    }, function() {
+        alert("Cancelar");
+      //$scope.status = 'You decided to keep your debt.';
+    });
+
+    }
+*/
 
     /*********************** SUBIR ARCHIVOS **********************/
    /////obtiene el valor del input file y transforma a base 64
@@ -128,6 +150,8 @@ console.log("########## USUARIOS SELECCIONADOS1 ##########");
 
         /************************************ GUARDAR TAREA **********************************/
     this.guardarTarea = function(){
+        //debugger;
+        console.log(app.$scope.tipoTarea);
             if(tareasModel.usuariosSeleccionados != undefined){
                 var usuariosSeleccionados = tareasModel.usuariosSeleccionados.slice(0);            
                 usuariosSeleccionados.forEach(function(e){
@@ -146,21 +170,27 @@ console.log("########## USUARIOS SELECCIONADOS1 ##########");
             }
             console.log("########## USUARIOS SELECCIONADOS ##########");
             console.log(usuariosSeleccionados);
-
-            let criteriosSeleccionados = "";
+            
+            if((app.$scope.tipoTarea.localeCompare("REUNION")) < 0){
+                  let criteriosSeleccionados = "";
             tareasModel.criteriosSeleccionados.forEach(function(e){
                 delete e.$$hashKey;
                 criteriosSeleccionados = criteriosSeleccionados + e.idCriterio + ","; 
-
             });
-
-            console.log("########## CRITERIOS SELECCIONADOS ##########");
+            }
+          
+            if((app.$scope.tipoTarea.localeCompare("REUNION")) < 0){                
+                console.log("########## CRITERIOS SELECCIONADOS ##########");
             criteriosSeleccionados = criteriosSeleccionados.slice(0,-1);
             console.log(criteriosSeleccionados);
-        //debugger;
-        this.nombreTarea = this.$scope.nombreTarea;
-        this.descripcionTarea = this.$scope.descripcionTarea;
-        this.fechaFin = this.$scope.fechaFin;
+            }else{
+                var criteriosSeleccionados = "";
+            }
+
+            
+        this.nombreTarea = app.$scope.nombreTarea;
+        this.descripcionTarea = app.$scope.descripcionTarea;
+        this.fechaFin = app.$scope.fechaFin;
         this.tareaData = {
             'nombreTarea': this.nombreTarea,
             'descripcionTarea': this.descripcionTarea,
@@ -170,7 +200,7 @@ console.log("########## USUARIOS SELECCIONADOS1 ##########");
             'estado':'ACT',
             'criterios':criteriosSeleccionados,
             'fechaInicio': new Date(),
-            'fechaFin': new Date(),
+            'fechaFin': this.$scope.fechaFin,
             'archivoAdjunto': this.archivoAdjunto, 
             'tareasUsuarios': tareasModel.usuariosSeleccionados
             };
@@ -188,19 +218,19 @@ console.log("########## USUARIOS SELECCIONADOS1 ##########");
             this.archivoAdjunto = binaryString;
 
             this.tareaData = {
-            'nombreTarea': this.nombreTarea,
-            'descripcionTarea': this.descripcionTarea,
+            'nombreTarea': app.$scope.nombreTarea,
+            'descripcionTarea': app.$scope.descripcionTarea,
             'idModulo' : usuarioModel.datosUsuario.idModulo,
             'tipoTarea': app.$scope.tipoTarea,
             'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
             'estado':'ACT',
             'criterios':criteriosSeleccionados,
             'fechaInicio': new Date(),
-            'fechaFin': new Date(),
+            'fechaFin': app.$scope.fechaFin,
             'archivoAdjunto': this.archivoAdjunto, 
             'tareasUsuarios': tareasModel.usuariosSeleccionados
             };
-debugger;
+//debugger;
                  app.$http.post('http://localhost:8080/sistEval/ws/crearTarea/',this.tareaData).then(function (data){
         console.log("tarea");
         console.log(data);

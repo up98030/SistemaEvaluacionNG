@@ -1,17 +1,18 @@
 <div ui-view='header'></div>
-<div layout="row">
-<div flex="10" class="sidenav">
-	<div ui-view='left'></div>	
-</div>
-<div flex="10"></div>
-<div flex="80">
+
 <div ng-controller="calificarTareaCtrl as calificarTareaCtrl">
+	<div ui-view='left'></div>	
+<div layout="row">
 	<div flex="90">		
-		<div style="margin:0 auto; text-align:center;"><h2>{{calificarTareaCtrl.tareasModel.tarea.tareasEntity.nombreTarea}}</h2></div>
-		<div style="margin:0 auto; text-align:left;">
-			<span><strong>Docente:</strong></span>
-			<span>{{calificarTareaCtrl.tareasModel.tarea.usuariosEntity.nombreCompleto}}</span>		
-			<div></div>
+		<div layout="row" style="text-align:center;">
+			<div class="contenedorTituloTarea" style="">
+				<h1 class="tituloTarea">{{calificarTareaCtrl.tareasModel.tarea.tareasEntity.nombreTarea}}</h1>
+			</div>
+		</div>
+		<div style="margin:0 auto; text-align:center;">
+			<strong>Docente:</strong>
+			<div>{{calificarTareaCtrl.tareasModel.tarea.usuariosEntity.nombreCompleto}}</div>		
+			<div style="height:10px;"></div>
 			<span><strong>Comentario:</strong></span>
 			<!-- <div style="margin:0 auto; text-align:left;border:1px solid;">
 				<p>{{calificarTareaCtrl.tareasModel.tarea.ObservacionesDocente}}</p>
@@ -22,15 +23,13 @@
 			      <h2 class="md-flex">Comentario:</h2>
 			    </div>
 		    </md-toolbar> -->
-		    <md-whiteframe class="md-whiteframe-1dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
 				<p>{{calificarTareaCtrl.tareasModel.tarea.ObservacionesDocente}}</p>
-		    </md-whiteframe>
 		    <div style="height:10px;"></div>
 		    <div>
-      			<md-button class="md-raised">Descargar archivo</md-button>
+      			<md-button class="md-raised">Descargar adjunto</md-button>
 		    </div>
-			<div style="text-align:left;">				
-				<h3>Evaluar:</h3>
+			<div style="text-align:center;">				
+				<h3>Evaluación:</h3>
 				<div ng-show="calificarTareaCtrl.criteriosTarea.indexOf(1) >= 0">
 					<h5>Entregado:</h5>
 					<md-switch ng-model="calificarTareaCtrl.tareaEntregada" ng-change="calificarTareaCtrl.calificacionEntregaTarea();" aria-label="Switch 1" class="md-primary"></md-switch>

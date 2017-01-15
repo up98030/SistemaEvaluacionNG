@@ -1,31 +1,45 @@
 <div ui-view='header'></div>
-<div layout="row">
-<div flex="10" class="sidenav">
-	<div ui-view='left'></div>	
-</div>
-<div flex="90" style="margin:0 5% 0 0">
+
 		<div ng-controller="tareasCtrl as tarea">
-			<div layout="row">
-				<div style="text-align:center; padding:0 10%;"><h1>{{tarea.tareasModel.tarea.tareasEntity.nombreTarea}}</h1></div>
+			<div ui-view='left'></div>	
+<div layout="row">
+<div flex="90" style="margin:0 5% 0 0">
+			<div layout="row" style="text-align:center;">
+				<div class="contenedorTituloTarea" style="">
+					<h1 class="tituloTarea">
+						{{tarea.tareasModel.tarea.tareasEntity.nombreTarea}}
+					</h1>
+				</div>
 			</div>
 			<div layout="row">
-				<div style="padding:0 10%; width:100%;">
+				<div style="padding:0 10%; width:100%; text-align:center;">
 					<p>
 						{{tarea.tareasModel.tarea.tareasEntity.descripcionTarea}}
-					</p>
-					<button type="button">ArchivoAdjunto.zip</button>
+					</p>					
+					<md-button type="button" class="md-raised md-alert" style="background-color:#e9eaea">
+					<i class="fa fa-link" aria-hidden="true" style="font-size:17px;"></i>
+					Descargar Adjunto
+					</md-button>
+					<div>
+						<h4>Fecha de entrega: </h4><span>{{tarea.tareasModel.tarea.tareasEntity.fechaFin}}</span>
+					</div>
 					<div style="height:15px;"></div>
+					<h3>Comentarios: </h3>
 					<md-input-container class="md-block">
-						<label>Comentario</label>
 						<textarea ng-model="tarea.observacionesDocente" md-maxlength="150" rows="5" md-select-on-focus class="textarea-comentario"></textarea>
 					</md-input-container>
 					<div style="margin-bottom:5%; text-align:center;">
 					<md-button class="md-raised">
-						<label for="file-input">Seleccione Archivo</label>  
+						<label for="file-inputDetalle">
+						<i class="fa fa-paperclip" aria-hidden="true" style="font-size:17px;"></i>
+						Adjuntar
+						</label>  
 						</md-button>
-						<input id="file-input" type="file" ng-show="false">
+						<input id="file-inputDetalle" type="file" ng-show="false">
 						<div></div>
-					<md-button type="button" class="md-raised md-primary"  ng-click="tarea.enviarTarea();">Guardar</md-button>
+					<md-button type="button" class="md-raised md-primary" style="background-color:#003366;"  ng-click="tarea.enviarTarea();">
+					Enviar
+					</md-button>
 
 					</div>
 				</div>
@@ -46,4 +60,6 @@
 	textarea.textarea-comentario{
 		heigth:40vh;
 	}
+	
+	
 </style>

@@ -1,13 +1,10 @@
 <div ui-view='header'></div>
-<div layout="row">
-<div flex="10" class="sidenav">
-	<div ui-view='left'></div>	
-</div>
-<div flex="10"></div>
-<div flex="80">
+
 <div ng-controller="calificarTareaCtrl as calificarTareaCtrl">
+	<div ui-view='left'></div>	
+<div layout="row">
+
 	<div flex="90">
-		<div style="margin:0 auto; text-align:center;"><h1>Tareas Enviadas</h1></div>
 		<div ui-grid="calificarTareaCtrl.gridOptions" ui-grid-selection class="grid"></div>
 	</div>
 

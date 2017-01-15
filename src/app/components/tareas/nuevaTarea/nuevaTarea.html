@@ -1,15 +1,15 @@
 <div ui-view='header'></div>
-<div layout="row">
-<div flex="10" class="sidenav">
-	<div ui-view='left'></div>	
-</div>
-<div flex="80" style="margin-left:5%;">
+
 <div ng-controller="nuevaTareaCtrl as nuevaTarea">
+  <div ui-view='left'></div>  
+<div layout="row">
+<div flex="80" style="margin-left:5%;">
+ <!-- 
 	<h3>{{nuevaTarea.titulo}}</h3>
 
     <h5>Tipo Tarea:</h5>
-
-    <md-select ng-model="tipoTarea">
+-->
+    <md-select ng-model="tipoTarea" ng-hide="true">
             <md-option ng-repeat="tipo in tiposTareas" ng-value="tipo.nombreTipoTarea" ng-selected="$first">
               {{tipo.nombreTipoTarea}}
             </md-option>
@@ -24,13 +24,13 @@
           <textarea ng-model="descripcionTarea" md-maxlength="150" rows="5" md-select-on-focus></textarea>
         </md-input-container>
 
-        <h5>Archivo Adjunto</h5>
          <md-button class="md-raised">
-        <label for="file-input">Seleccione</label>  
+         <i class="fa fa-thumb-tack" aria-hidden="true" style="font-size:17px;"></i>
+        <label for="file-input">Adjuntar</label>  
       </md-button>
       <input id="file-input" type="file" ng-show="false">
 
-        <h5 ng-show="tipoTarea == 'TAREA'">Fecha Límite</h5>
+        <h4>Fecha Límite</h4>
         <h5 ng-show="tipoTarea == 'REUNION'">Fecha Reunión</h5>
          <md-datepicker ng-model="fechaFin" md-min-date="minDate" md-max-date="maxDate">
         </md-datepicker>
@@ -40,12 +40,19 @@
           <input type="time" ng-model="hora" style="width:35%;">
         </md-input-container>
 
-        <div ng-show="tipoTarea == 'TAREA'">
-          <h5>Criterios de evaluación:</h5>
+        <md-list ng-show="false">
+          <md-subheader class="md-no-sticky">Criterios de evaluación</md-subheader>
+          <md-list-item ng-repeat='criterio in criteriosEvaluacion'>
+            <p> {{ criterio.valorCriterio }}  </p>
+            <md-checkbox class="md-secondary" ng-checked="existsCriterios(criterio, criteriosSelected)" ng-click="toggleCriterios(criterio, criteriosSelected)"></md-checkbox>
+          </md-list-item>
+        </md-list>
+
+        <div ng-show="true">
+          <h4>Criterios de evaluación:</h4>
           <div ng-repeat='criterio in criteriosEvaluacion'>
-          <md-checkbox ng-checked="existsCriterios(criterio, criteriosSelected)" ng-click="toggleCriterios(criterio, criteriosSelected)">
-                 {{ criterio.valorCriterio }} 
-                </md-checkbox>        
+          <md-checkbox ng-checked="existsCriterios(criterio, criteriosSelected)" ng-click="toggleCriterios(criterio, criteriosSelected)">   {{ criterio.valorCriterio }} 
+          </md-checkbox>        
           </div>    
         </div>
         <h5 ng-show="tipoTarea == 'TAREA'">Asignar tarea a:</h5>
@@ -56,10 +63,12 @@
               </md-checkbox>        
         </div>                  
 
+        <md-button class="md-raised" ng-click="nuevaTarea.seleccionarUsuarios($event)">Asignar Docentes</md-button>
+
         <div layout="row" style="margin-top:1%;">
-        	<md-button ng-click="nuevaTarea.guardarTarea()" class="md-primary md-raised">{{nombreGuardar}}</md-button>	
+        	<md-button ng-click="nuevaTarea.guardarTarea()" class="md-primary md-raised" style="background-color:#003366;">{{nombreGuardar}}</md-button>	
         </div>
-        <md-button ng-click="subirArchivo()" >Archivo</md-button>
+        <!-- <md-button ng-click="subirArchivo()" >Archivo</md-button> -->
 </div>
 </div>
 </div>
@@ -67,5 +76,20 @@
 <style>
   .sidenav{
     border-right:2px solid #889ea6;
+  }
+  .md-calendar-day-header{
+    background-color:#dddddd;
+  }
+  .md-datepicker-calendar-pane{
+    background-color:#f6f6f6;
+  }
+  .md-calendar-date-selection-indicator .md-focus .md-calendar-selected-date{
+    
+  }
+  .md-calendar-date.md-focus.md-calendar-selected-date .md-calendar-date-selection-indicator{
+    background-color:#325b84;
+  }
+  .md-calendar-month-label{
+    font-weight:bold;
   }
 </style>

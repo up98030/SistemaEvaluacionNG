@@ -1,0 +1,37 @@
+<div layout="row" style=" height:12vh;background-color:#f6f6f6;">
+        <div flex="20" style=" width:100%;"></div>
+        <div flex="60" style=" width:100%; text-align:center;">
+                <a ui-sref="tareas" ng-click="tareas.cargarTareas('CRE');">
+	                <i class="fa fa-book subHeader-icons" aria-hidden="true">
+	                    <span class="menu-subHeader">Pendientes</span>
+	                </i>
+                </a>
+                <!-- <p style="display:inline-block; float:left;">Nuevo</p> -->
+                <a ui-sref="tareas" ng-click="tareas.cargarTareas('ENV');">
+	                <i class="fa fa-cloud-upload subHeader-icons" aria-hidden="true">
+	                    <span class="menu-subHeader">Entregadas</span>
+	                </i>
+                </a>  
+                <a ui-sref="tareas" ng-click="tareas.cargarTareas('CLF');">                              
+                     <i class="fa fa-check-circle-o subHeader-icons" aria-hidden="true">
+                        <span class="menu-subHeader">Calificadas</span>
+                    </i>
+                </a>
+                <!--<div ng-show="tareas.usuarioModel.datosUsuario.idPerfil == 2"> -->
+	    			<a ui-sref="nuevaTarea">
+		                <i class="fa fa-pencil-square-o subHeader-icons" aria-hidden="true">
+		                    <span class="menu-subHeader">Nueva</span>
+		                </i>
+                	</a>
+                <!-- </div> -->
+                <!-- <div ng-show="tareas.usuarioModel.datosUsuario.idPerfil == 2"> -->
+	    			<a ui-sref="tareasEnviadas">
+		                <i class="fa fa-dot-circle-o subHeader-icons" aria-hidden="true">
+		                    <span class="menu-subHeader">Calificar</span>
+		                </i>
+		            </a>
+                <!--</div> -->
+        </div>
+                <div flex="20" style=" width:100%;"></div>
+
+    </div>

@@ -1,0 +1,65 @@
+<div ui-view='header'></div>
+<div ui-view='left'></div>
+<div ng-controller="notasCtrl as notas">
+	<div layout="row" style="padding:1%; width:90%;">
+		<div flex="25" class="cajaResumenNotas" ng-click="notas.selectReporte('ENT')">
+			<i class="fa fa-puzzle-piece" aria-hidden="true" style="font-size:3em; display:block;"></i>
+			<br/>
+	    	<h3 class="tituloResumenNotas">Entregadas</h3>
+	    	<h5>65</h5>
+		</div>
+		<div flex="25" class="cajaResumenNotas" ng-click="notas.selectReporte('CLF')">
+			<i class="fa fa-check-square" aria-hidden="true" style="font-size:3em; display:block;"></i>
+			<br/>
+	    	<h3 class="tituloResumenNotas">Calificadas</h3>
+	    	<h5>65</h5>
+		</div>
+		<div flex="25" class="cajaResumenNotas" ng-click="notas.selectReporte('INC')">
+			<i class="fa fa-window-close-o" aria-hidden="true" style="font-size:3em; display:block;"></i>
+			<br/>
+	    	<h3 class="tituloResumenNotas">Incumplidas</h3>
+	    	<h5>65</h5>
+		</div>
+		<div flex="25" class="cajaResumenNotas" ng-click="notas.selectReporte('PRO')">
+			<i class="fa fa-area-chart" aria-hidden="true" style="font-size:3em; display:block;"></i>
+			<br/>
+	    	<h3 class="tituloResumenNotas">Promedio de notas</h3>
+	    	<h5>65</h5>
+		</div>
+	</div>
+	<div layout="row" style="padding:1%; width:90%;">
+		<div ng-if="notas.reporteSeleccionado == 'ENT'" class="contenedorTituloTarea">
+				<h1 ng-if="notas.reporteSeleccionado == 'ENT'" class="tituloTarea">Entregadas</h1>
+		</div>
+		<div ng-if="notas.reporteSeleccionado == 'CLF'" class="contenedorTituloTarea"> 
+			<h1 class="tituloTarea">Calificadas</h1>
+		</div>
+		<div ng-if="notas.reporteSeleccionado == 'INC'" class="contenedorTituloTarea">
+			<h1 class="tituloTarea">Incumplidas</h1>
+		</div>
+		<div ng-if="notas.reporteSeleccionado == 'PRO'" class="contenedorTituloTarea">
+			<h1 class="tituloTarea">Promedio</h1>
+		</div>
+	</div>
+</div>
+<style>
+	.cajaResumenNotas{
+		border:2px solid; 
+		border-color:#d4cccc; 
+		text-align:center; 
+		padding:20px; margin:0.5%;
+	}
+	.cajaResumenNotas:hover{
+		border:2px solid; 
+		border-color:#505c6a; 		
+	}
+	.tituloResumenNotas{
+		border-bottom: 1px solid #dcd6d6;
+		padding-bottom: 40px;
+	}
+	.cajaResumenNotas h5{
+		font-size: 3em;
+		margin:0;
+	}
+	.contenedor
+</style>

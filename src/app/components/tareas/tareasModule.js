@@ -3,7 +3,7 @@ var tareasController = require('./tareasController.js');
 var calificarTareaController = require('./calificarTarea/calificarTarea.js');
 var reunionesController = require('./reuniones/reuniones.js');
 
-var tareasModule = angular.module('myApp.tareas', []);
+var tareasModule = angular.module('myApp.tareas', ['ngAnimate','ngMaterial']);
 
 tareasModule.controller('nuevaTareaCtrl', nuevaTareaController);
 tareasModule.controller('tareasCtrl', tareasController);
@@ -22,7 +22,7 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
                 templateUrl:"app/components/tareas/nuevaTarea/nuevaTarea.html"
             },
             "left@nuevaTarea":{
-                templateUrl:"app/components/tareas/left.html"
+                templateUrl:"app/shared/header/tareasHeader.html"
             },
             "header@nuevaTarea":{
                 templateUrl:"app/shared/header/header.html"
@@ -36,7 +36,7 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
     			templateUrl:"app/components/tareas/tareas.html"
     		},
             "left@tareas":{
-                templateUrl:"app/components/tareas/left.html"
+                templateUrl:"app/shared/header/tareasHeader.html"
             },
             "header@tareas":{
                 templateUrl:"app/shared/header/header.html"
@@ -50,7 +50,7 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
     			templateUrl:"app/components/tareas/calificarTarea/tareasEnviadas.html"
     		},
             "left@tareasEnviadas":{
-                templateUrl:"app/components/tareas/left.html"
+                templateUrl:"app/shared/header/tareasHeader.html"
             },
             "header@tareasEnviadas":{
                 templateUrl:"app/shared/header/header.html"
@@ -64,7 +64,7 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
                 templateUrl:"app/components/tareas/calificarTarea/calificarTarea.html"
             },
             "left@calificarTarea":{
-                templateUrl:"app/components/tareas/left.html"
+                templateUrl:"app/shared/header/tareasHeader.html"
             },
             "header@calificarTarea":{
                 templateUrl:"app/shared/header/header.html"

@@ -1,7 +1,17 @@
 <div ui-view='header'></div>
 	<div ng-controller="calendarioCtrl as calendario">
+
+   <div id="authorize-div" style="display: block">
+      <span>Authorize access to Google Calendar API</span>
+      <!--Button for the user to click to initiate auth sequence -->
+      <button id="authorize-button" onclick="calendario.handleAuthClick(event)">
+        Authorize
+      </button>
+    </div>
+    <pre id="output"></pre>
+
 		
-		<calendar-md flex layout layout-fill
+		<calendar-md style="display:none;" flex layout layout-fill
   calendar-direction="direction"
   on-prev-month="prevMonth"
   on-next-month="nextMonth"
