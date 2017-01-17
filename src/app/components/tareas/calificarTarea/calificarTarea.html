@@ -26,9 +26,11 @@
 				<p>{{calificarTareaCtrl.tareasModel.tarea.ObservacionesDocente}}</p>
 		    <div style="height:10px;"></div>
 		    <div>
-      			<md-button class="md-raised">Descargar adjunto</md-button>
-		    </div>
-			<div style="text-align:center;">				
+      			<md-button type="button" class="md-raised md-alert" style="background-color:#e9eaea">
+					<i class="fa fa-link" aria-hidden="true" style="font-size:17px;"></i>
+					Descargar Adjunto
+				</md-button>
+				<div style="text-align:center;">				
 				<h3>Evaluación:</h3>
 				<div ng-show="calificarTareaCtrl.criteriosTarea.indexOf(1) >= 0">
 					<h5>Entregado:</h5>
@@ -56,14 +58,15 @@
 
 					</md-list>
 				<div style="text-align:center;">
-      				<md-button class="md-raised md-primary" ng-click="calificarTareaCtrl.enviarCalificacion();">Enviar Calificación</md-button>
+      				<md-button class="md-raised md-primary" ng-click="calificarTareaCtrl.enviarCalificacion();" style="background-color:#003366;">Calificar</md-button>
 			    </div>
 
       		</div>				
 	</div>
 </div>
 </div>
-
+</div>
+</div>
 <style>
 
  .veggie-option .md-item-text {

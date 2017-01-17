@@ -5,36 +5,11 @@
 <body>
     <div ui-view='header'></div>
     <div ng-controller="reunionesCtrl as reuniones">
-
-    <div layout="row" style=" height:12vh;background-color:#f6f6f6;">
-            <div flex="20" style=" width:100%;"></div>
-            <div flex="60" style=" width:100%; text-align:center;">
-                <a ui-sref="tareas">
-                    <i class="fa fa-address-book subHeader-icons" aria-hidden="true">
-                        <span class="menu-subHeader">Próximas</span>
-                    </i>
-                </a>
-                <a>
-                    <i class="fa fa-handshake-o subHeader-icons" aria-hidden="true">
-                        <span class="menu-subHeader">Pasadas</span>
-                    </i>
-                </a>                
-                <!-- <div ng-show="tareas.usuarioModel.datosUsuario.idPerfil == 2"> -->
-                    <a ui-sref="nuevaTarea">
-                        <i class="fa fa-calendar subHeader-icons" aria-hidden="true">
-                            <span class="menu-subHeader">Nueva</span>
-                        </i>
-                    </a>
-                </div>
-        </div>
-                <div flex="20" style=" width:100%;"></div>
-
-    </div>
+    <div ui-view='left'></div>
 
     <div layout="row">
         <div flex="100" class="contenedor-reuniones">
-            <div style="margin:0 auto; text-align:center;"><h1>Reuniones</h1></div>
-            <div ui-grid="reuniones.gridOptions" ui-grid-selection class="grid"></div>
+             <div ui-grid="reuniones.gridOptions" ui-grid-selection class="grid"></div>
         </div>
     </div>
     </div>

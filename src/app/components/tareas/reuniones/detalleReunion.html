@@ -1,0 +1,48 @@
+<div ui-view='header'></div>
+
+		<div ng-controller="reunionesCtrl as tarea">
+			<div ui-view='left'></div>	
+<div layout="row">
+<div flex="90" style="margin:0 5% 0 0">
+			<div layout="row" style="text-align:center;">
+				<div class="contenedorTituloTarea" style="">
+					<h1 class="tituloTarea">
+						{{tarea.nombreTarea}}
+						{{tarea.tareasModel.tarea.tareasEntity.nombreTarea}}
+					</h1>
+				</div>
+			</div>
+			<div layout="row">
+				<div style="padding:0 10%; width:100%; text-align:center;">
+					<p>
+						{{tarea.tareasModel.tarea.tareasEntity.descripcionTarea}}
+					</p>					
+					<md-button type="button" class="md-raised md-alert" style="background-color:#e9eaea">
+					<i class="fa fa-link" aria-hidden="true" style="font-size:17px;"></i>
+					Descargar Adjunto
+					</md-button>
+					<div>
+						<h4>Fecha de reunión: </h4><span>{{tarea.tareasModel.tarea.tareasEntity.fechaFin}}</span>
+					</div>					
+					</div>
+				</div>
+			</div>
+			<div layout="row">
+				
+			</div>
+			<a ui-sref="tarea"></a>
+		</div>
+	</div>
+
+</div>
+
+<style>
+	.sidenav{
+		border-right:2px solid #889ea6;
+	}
+	textarea.textarea-comentario{
+		heigth:40vh;
+	}
+	
+	
+</style>

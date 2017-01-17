@@ -78,9 +78,37 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
                 templateUrl:"app/components/tareas/reuniones/reuniones.html"
             },
             "left@reuniones":{
-                templateUrl:"app/components/tareas/left.html"
+                templateUrl:"app/shared/header/reunionesHeader.html"
             },
             "header@reuniones":{
+                templateUrl:"app/shared/header/header.html"
+            }
+        }
+    })
+    .state('nuevaReunion',{
+        url:"/nuevaReunion",
+        views:{
+            "":{
+                templateUrl:"app/components/tareas/reuniones/nuevaReunion.html"
+            },
+            "left@nuevaReunion":{
+                templateUrl:"app/shared/header/reunionesHeader.html"
+            },
+            "header@nuevaReunion":{
+                templateUrl:"app/shared/header/header.html"
+            }
+        }
+    })
+    .state('detalleReunion',{
+        url:"/detalleReunion",
+        views:{
+            "":{
+                templateUrl:"app/components/tareas/reuniones/detalleReunion.html"
+            },
+            "left@detalleReunion":{
+                templateUrl:"app/shared/header/reunionesHeader.html"
+            },
+            "header@detalleReunion":{
                 templateUrl:"app/shared/header/header.html"
             }
         }

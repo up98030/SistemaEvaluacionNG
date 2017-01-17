@@ -1,0 +1,21 @@
+<div layout="row" style=" height:12vh;background-color:#f6f6f6;">
+            <div flex="20" style=" width:100%;"></div>
+            <div flex="60" style=" width:100%; text-align:center;">
+                <a ui-sref="reuniones" ng-click="reuniones.cargarReuniones('PROX')">
+                    <i class="fa fa-address-book subHeader-icons" aria-hidden="true">
+                        <span class="menu-subHeader">Próximas</span>
+                    </i>
+                </a>
+                <a ui-sref="reuniones" ng-click="reuniones.cargarReuniones('PAS')">
+                    <i class="fa fa-handshake-o subHeader-icons" aria-hidden="true">
+                        <span class="menu-subHeader">Pasadas</span>
+                    </i>
+                </a>                
+                <!-- <div ng-show="tareas.usuarioModel.datosUsuario.idPerfil == 2"> -->
+                    <a ui-sref="nuevaReunion">
+                        <i class="fa fa-calendar subHeader-icons" aria-hidden="true">
+                            <span class="menu-subHeader">Nueva</span>
+                        </i>
+                    </a>
+                </div>
+        </div>

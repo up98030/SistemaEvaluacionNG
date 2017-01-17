@@ -1,13 +1,14 @@
 let app;
 /*angular.module('myApp.nuevaTarea', [])
 .controller('nuevaTareaCtrl',['$scope','$http','tareasModel',function($scope,$http,tareasModel){*/
-function nuevaTareaController ($scope,$http,tareasModel,usuarioModel){
+function nuevaTareaController ($scope,$http,tareasModel,usuarioModel, $mdDialog){
 	this.welcomeText = 'Welcome to myApp Home!';
     this.tareasModel = tareasModel;
     this.usuarioModel = usuarioModel;
     console.log("$$$$$$$$$$ MODELO");
     console.log(tareasModel.test);
     app = this;
+    this.$mdDialog = $mdDialog;
     this.titulo = 'Nueva Tarea';
     this.inputTitulo = " ";
     this.$http = $http;
@@ -29,9 +30,10 @@ function nuevaTareaController ($scope,$http,tareasModel,usuarioModel){
     this.archivoAdjunto = null;
 
     /************** ABRIR DIALOGO *****************/ 
-  /*  this.seleccionarUsuarios = function(ev){
+   /* this.seleccionarUsuarios = function(ev){
+        console.log(app.$mdDialog);
         console.log("Abriendo dialogo");
-            var confirm = app.$mdDialog.confirm()
+            var confirm = $mdDialog.confirm()
           .title('Would you like to delete your debt?')
           .textContent('All of the banks have agreed to forgive you your debts.')
           .ariaLabel('Lucky day')
@@ -47,8 +49,16 @@ function nuevaTareaController ($scope,$http,tareasModel,usuarioModel){
       //$scope.status = 'You decided to keep your debt.';
     });
 
+    }*/
+   
+    this.seleccionarUsuarios = function(ev){
+        app.$mdDialog.show({
+            targetEvent: ev,
+            template: '<md-dialog> <h1>Seleccionar Docentes</h1>'+
+            '<md-button ng-click="closeDialog();">Cerrar</md-button></md-dialog>',
+            controller: ''
+        });
     }
-*/
 
     /*********************** SUBIR ARCHIVOS **********************/
    /////obtiene el valor del input file y transforma a base 64
@@ -146,6 +156,17 @@ console.log("########## USUARIOS SELECCIONADOS1 ##########");
             console.log("CRITERIOS");
             console.log(data.data);
         });
+
+        function resetFields(){
+        app.$scope.nombreTarea = null;
+        app.$scope.descripcionTarea = null;
+        app.$scope.fechaFin = null;
+        app.archivoAdjunto = null;
+        app.tareasModel.usuariosSeleccionados = [];        
+        app.criteriosSeleccionados = [];
+        usuariosSeleccionados = [];
+    };
+
     
 
         /************************************ GUARDAR TAREA **********************************/
@@ -170,22 +191,25 @@ console.log("########## USUARIOS SELECCIONADOS1 ##########");
             }
             console.log("########## USUARIOS SELECCIONADOS ##########");
             console.log(usuariosSeleccionados);
-            
+          /*  
             if((app.$scope.tipoTarea.localeCompare("REUNION")) < 0){
-                  let criteriosSeleccionados = "";
+                  let criteriosSeleccionados = "";*/
+                   let criteriosSeleccionados = "";
             tareasModel.criteriosSeleccionados.forEach(function(e){
                 delete e.$$hashKey;
                 criteriosSeleccionados = criteriosSeleccionados + e.idCriterio + ","; 
+                criteriosSeleccionados = criteriosSeleccionados.slice(0,-1);
+
             });
-            }
-          
+            
+     /*    
             if((app.$scope.tipoTarea.localeCompare("REUNION")) < 0){                
                 console.log("########## CRITERIOS SELECCIONADOS ##########");
             criteriosSeleccionados = criteriosSeleccionados.slice(0,-1);
             console.log(criteriosSeleccionados);
             }else{
                 var criteriosSeleccionados = "";
-            }
+            }*/
 
             
         this.nombreTarea = app.$scope.nombreTarea;
@@ -235,6 +259,7 @@ console.log("########## USUARIOS SELECCIONADOS1 ##########");
         console.log("tarea");
         console.log(data);
         alert("Tarea creada correctamente");
+        resetFields();
     }, function(data){
         console.log("ERROR");
         alert("Error insertando tarea");
@@ -265,6 +290,6 @@ console.log("########## USUARIOS SELECCIONADOS1 ##########");
 
 );*/
 
-nuevaTareaController.$inject = ['$scope','$http','tareasModel','usuarioModel'];
+nuevaTareaController.$inject = ['$scope','$http','tareasModel','usuarioModel','$mdDialog'];
 
 module.exports = nuevaTareaController; 
