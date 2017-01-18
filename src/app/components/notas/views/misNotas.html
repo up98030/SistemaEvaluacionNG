@@ -1,44 +1,40 @@
 <div ui-view='header'></div>
-<div ui-view='left'></div>
 <div ng-controller="notasCtrl as notas">
+<div ui-view='left'></div>
+
 	<div layout="row" style="padding:1%; width:90%;">
-		<div flex="25" class="cajaResumenNotas" ng-click="notas.selectReporte('ENT')">
+		<div flex="25" class="cajaResumenNotas">
 			<i class="fa fa-puzzle-piece" aria-hidden="true" style="font-size:3em; display:block;"></i>
 			<br/>
 	    	<h3 class="tituloResumenNotas">Entregadas</h3>
-	    	<h5>65</h5>
+	    	<h5>{{notas.resumenEntregadas}}</h5>
 		</div>
-		<div flex="25" class="cajaResumenNotas" ng-click="notas.selectReporte('CLF')">
+		<div flex="25" class="cajaResumenNotas">
 			<i class="fa fa-check-square" aria-hidden="true" style="font-size:3em; display:block;"></i>
 			<br/>
 	    	<h3 class="tituloResumenNotas">Calificadas</h3>
-	    	<h5>65</h5>
+	    	<h5>{{notas.resumenCalificadas}}</h5>
 		</div>
-		<div flex="25" class="cajaResumenNotas" ng-click="notas.selectReporte('INC')">
+		<div flex="25" class="cajaResumenNotas">
 			<i class="fa fa-window-close-o" aria-hidden="true" style="font-size:3em; display:block;"></i>
 			<br/>
-	    	<h3 class="tituloResumenNotas">Incumplidas</h3>
-	    	<h5>65</h5>
+	    	<h3 class="tituloResumenNotas">No entregadas</h3>
+	    	<h5>{{notas.resumenNoEntregadas}}</h5>
 		</div>
-		<div flex="25" class="cajaResumenNotas" ng-click="notas.selectReporte('PRO')">
+		<div flex="25" class="cajaResumenNotas">
 			<i class="fa fa-area-chart" aria-hidden="true" style="font-size:3em; display:block;"></i>
 			<br/>
 	    	<h3 class="tituloResumenNotas">Promedio de notas</h3>
-	    	<h5>65</h5>
+	    	<h5>{{notas.resumenPromedio}}</h5>
 		</div>
 	</div>
-	<div layout="row" style="padding:1%; width:90%;">
-		<div ng-if="notas.reporteSeleccionado == 'ENT'" class="contenedorTituloTarea">
-			<h1 ng-if="notas.reporteSeleccionado == 'ENT'" class="tituloTarea">Entregadas</h1>
+	<div layout="row" style="padding:1%; width:90%;" >
+		<div class="contenedorTituloTarea" ng-show="notas.tieneNotas">
+			<h1 class="tituloTarea" style="border-bottom:none;">Reporte calificaciones</h1>
+			<div ui-grid="notas.gridOptions" class="grid"></div>
 		</div>
-		<div ng-if="notas.reporteSeleccionado == 'CLF'" class="contenedorTituloTarea"> 
-			<h1 class="tituloTarea">Calificadas</h1>
-		</div>
-		<div ng-if="notas.reporteSeleccionado == 'INC'" class="contenedorTituloTarea">
-			<h1 class="tituloTarea">Incumplidas</h1>
-		</div>
-		<div ng-if="notas.reporteSeleccionado == 'PRO'" class="contenedorTituloTarea">
-			<h1 class="tituloTarea">Promedio</h1>
+		<div class="contenedorTituloTarea" ng-show="!notas.tieneNotas">
+			<h2>No existen registros de notas</h2>
 		</div>
 	</div>
 </div>

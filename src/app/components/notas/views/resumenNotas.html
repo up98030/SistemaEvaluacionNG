@@ -1,2 +1,30 @@
 <div ui-view='header'></div>
-<div ui-view='left'></div>
+<div ng-controller="notasCtrl as notas">
+<div ui-view='left'></div>	
+	<div layout="row" style="padding:1%; width:100%;">		
+		<div ui-grid="notas.gridOptionsDocentes" class="grid" style="width:100%;"></div>
+	</div>
+</div>
+
+
+<style>
+	.cajaResumenNotas{
+		border:2px solid; 
+		border-color:#d4cccc; 
+		text-align:center; 
+		padding:20px; margin:0.5%;
+	}
+	.cajaResumenNotas:hover{
+		border:2px solid; 
+		border-color:#505c6a; 		
+	}
+	.tituloResumenNotas{
+		border-bottom: 1px solid #dcd6d6;
+		padding-bottom: 40px;
+	}
+	.cajaResumenNotas h5{
+		font-size: 3em;
+		margin:0;
+	}
+	.contenedor
+</style>

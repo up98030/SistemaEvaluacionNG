@@ -35,7 +35,9 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
         { name: 'tareasEntity.idModulo', visible: false },
         { name: 'tareasEntity.idCreadorTarea', visible: false },
         { name: 'idTarea', visible: false },
-        { name: 'observaciones',width:300 }
+        { name: 'observaciones',width:300, visible:false },
+        { name: 'observacionCalificacion',width:300, displayName:'Observación',visible:true }
+
     ],
     data : tareasData,
     
@@ -79,6 +81,7 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
                 "tipoTarea":'TAREA'
             }
          }
+         console.log(this.tareasUsuariosVO);
         this.$http.post('http://localhost:8080/sistEval/ws/tareas/', this.tareasUsuariosVO).then(function (data){
             console.log("########### TAREAS USUARIO ##############");
             console.log(data.data);

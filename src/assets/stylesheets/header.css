@@ -7,3 +7,16 @@ i.subHeader-icons{
 	font-size:2em; 
 	margin: 2% 5% 5% 5%;
 }
+
+i{
+    color:#3d3d3d;
+}
+i:active{
+    color:#000;
+}
+i:focus{
+    color:#000;
+}
+i:hover{
+    color:#000;
+}

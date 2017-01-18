@@ -26,6 +26,8 @@ function nuevaTareaController ($scope,$http,tareasModel,usuarioModel, $mdDialog)
     this.$scope.criteriosSelected = [];
     this.usuariosSeleccionados = [];
     this.criteriosSeleccionados = [];
+    console.log("DATOS USUARIO nuevaTareaController");
+    console.log(this.usuarioModel.datosUsuario);
 
     this.archivoAdjunto = null;
 

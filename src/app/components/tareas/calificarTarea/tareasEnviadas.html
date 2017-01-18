@@ -1,11 +1,11 @@
 <div ui-view='header'></div>
 
-<div ng-controller="calificarTareaCtrl as calificarTareaCtrl">
+<div ng-controller="calificarTareaCtrl as tareas">
 	<div ui-view='left'></div>	
 <div layout="row">
 
 	<div flex="90">
-		<div ui-grid="calificarTareaCtrl.gridOptions" ui-grid-selection class="grid"></div>
+		<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
 	</div>
 
 </div>

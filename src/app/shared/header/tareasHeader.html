@@ -17,21 +17,32 @@
                         <span class="menu-subHeader">Calificadas</span>
                     </i>
                 </a>
-                <!--<div ng-show="tareas.usuarioModel.datosUsuario.idPerfil == 2"> -->
-	    			<a ui-sref="nuevaTarea">
-		                <i class="fa fa-pencil-square-o subHeader-icons" aria-hidden="true">
-		                    <span class="menu-subHeader">Nueva</span>
-		                </i>
-                	</a>
-                <!-- </div> -->
-                <!-- <div ng-show="tareas.usuarioModel.datosUsuario.idPerfil == 2"> -->
-	    			<a ui-sref="tareasEnviadas">
-		                <i class="fa fa-dot-circle-o subHeader-icons" aria-hidden="true">
-		                    <span class="menu-subHeader">Calificar</span>
-		                </i>
-		            </a>
-                <!--</div> -->
+    			<a ui-sref="nuevaTarea" ng-show="tareas.usuarioModel.datosUsuario.idPerfil == 2">
+	                <i class="fa fa-pencil-square-o subHeader-icons" aria-hidden="true">
+	                    <span class="menu-subHeader">Nueva</span>
+	                </i>
+            	</a>
+    			<a ui-sref="tareasEnviadas" ng-show="tareas.usuarioModel.datosUsuario.idPerfil == 2">
+	                <i class="fa fa-dot-circle-o subHeader-icons" aria-hidden="true">
+	                    <span class="menu-subHeader">Calificar</span>
+	                </i>
+	            </a>
         </div>
                 <div flex="20" style=" width:100%;"></div>
 
     </div>
+
+<style>
+i{
+    color:#3d3d3d;
+}
+i:active{
+    color:#000;
+}
+i:focus{
+    color:#000;
+}
+i:hover{
+    color:#000;
+}
+</style>

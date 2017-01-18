@@ -1,18 +1,19 @@
 <div layout="row" style=" height:12vh;background-color:#f6f6f6;">
         <div flex="20" style=" width:100%;"></div>
         <div flex="60" style=" width:100%; text-align:center;">
-                <a ui-sref="misNotas" ng-click="tareas.cargarTareas('CRE');">
-	                <i class="fa fa-server subHeader-icons" aria-hidden="true">
+               
+                <a ui-sref="misNotas" ng-click="notas.cargarTareas('CRE');">
+	                <i class="fa fa-bar-chart subHeader-icons" aria-hidden="true">
 	                    <span class="menu-subHeader">Mis notas</span>
 	                </i>
                 </a>
                 <!-- <p style="display:inline-block; float:left;">Nuevo</p> -->
-                <a ui-sref="reportes" ng-click="tareas.cargarTareas('ENV');">
+                <!-- <a ui-sref="reportes" ng-click="tareas.cargarTareas('ENV');">
 	                <i class="fa fa-bar-chart subHeader-icons" aria-hidden="true">
 	                    <span class="menu-subHeader">Reportes</span>
 	                </i>
-                </a>  
-                <a ui-sref="notasDocentes" ng-click="tareas.cargarTareas('CLF');">                              
+                </a> --> 
+                <a ui-sref="notasDocentes" ng-click="notas.cargarTareas('CLF');" ng-show="notas.usuarioModel.datosUsuario.idPerfil == 2">                              
                      <i class="fa fa-users subHeader-icons" aria-hidden="true">
                         <span class="menu-subHeader">Notas Docentes</span>
                     </i>

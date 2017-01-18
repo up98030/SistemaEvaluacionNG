@@ -1,6 +1,6 @@
 <div ui-view='header'></div>
 
-<div ng-controller="nuevaTareaCtrl as nuevaTarea">
+<div ng-controller="nuevaTareaCtrl as tareas">
   <div ui-view='left'></div>  
 <div layout="row">
 <div flex="80" style="margin-left:5%;">
@@ -63,10 +63,10 @@
               </md-checkbox>        
         </div>                  
 
-        <md-button class="md-raised" ng-click="nuevaTarea.seleccionarUsuarios($event)">Asignar Docentes</md-button>
+        <md-button class="md-raised" ng-click="tareas.seleccionarUsuarios($event)">Asignar Docentes</md-button>
 
         <div layout="row" style="margin-top:1%;">
-        	<md-button ng-click="nuevaTarea.guardarTarea()" class="md-primary md-raised" style="background-color:#003366;">{{nombreGuardar}}</md-button>	
+        	<md-button ng-click="tareas.guardarTarea()" class="md-primary md-raised" style="background-color:#003366;">{{nombreGuardar}}</md-button>	
         </div>
         <!-- <md-button ng-click="subirArchivo()" >Archivo</md-button> -->
 </div>

@@ -2,15 +2,16 @@ let app;
 function calificarTareaController ($scope,$http,$state,tareasModel,usuarioModel){
 	app = this;	
 	this.tareasModel = tareasModel;
+    this.usuarioModel = usuarioModel;
 	this.criteriosTarea = [];
 	this.tareaEntregada = false;
 	this.valorTareaSlider = 0;
 	this.totalCalificacionTarea = 0;
-
+    this.observacionesCalificacion = "";
 	this.calcularTotalCalificacion = function(){
 		console.log(this.tareaEntregada);
 		//this.calificacionEntregaTarea();
-		this.totalCalificacionTarea += this.valorTareaSlider * 12;
+		this.totalCalificacionTarea = this.valorTareaSlider;
 	};
 
 	/********************* CALCULA EL TOTAL CON LA ENTREGA*************************/
@@ -81,8 +82,20 @@ function calificarTareaController ($scope,$http,$state,tareasModel,usuarioModel)
         	 	console.log("CALIFICAR TAREA ########");
         	 	tareasModel.tarea = row.entity;
         		console.log(tareasModel.tarea);
+                for(var i=0;i<tareasModel.tarea.tareasEntity.criterios.length;i++){
+                    console.log("tareasModel.tarea.tareasEntity.criterios.length");
+                    console.log(tareasModel.tarea.tareasEntity.criterios.charAt(i));
+                    app.criteriosTarea.push(parseInt(tareasModel.tarea.tareasEntity.criterios.charAt(i)));
+                    console.log(app.criteriosTarea);
+                } 
+                console.log("CALIFICAR TAREA22 ########");               
+                console.log(app.criteriosTarea);
+                app.tareasModel.criteriosArray =  app.criteriosTarea;
+                console.log("CALIFICAR TAREA22 ########");               
+                console.log(app.tareasModel.tarea.tareasEntity.criteriosArray);                
         		$state.go('calificarTarea');
         	}));
+
        /* console.log(gridApi.selection.on.rowSelectionChanged(app.$scope,function(row){            
             tareasModel.tarea = row.entity;
             console.log("DATOS TAREA");
@@ -116,7 +129,9 @@ function calificarTareaController ($scope,$http,$state,tareasModel,usuarioModel)
     	tareasModel.tarea.tareasEntity.fechaFin = '2016-01-01';
         tareasModel.tarea.tareasEntity.fechaInicio = '2016-01-01';
         tareasModel.tarea.fechaEnvio = '2016-01-01';
+        tareasModel.tarea.observacionCalificacion = this.observacionesCalificacion;
         delete tareasModel.tarea.FechaEnvio;
+        delete tareasModel.tarea.ArchivoEnviado;
 		tareasModel.tarea.observacionesDocente = tareasModel.tarea.ObservacionesDocente;
         delete tareasModel.tarea.ObservacionesDocente;
     	console.log("################# ENVIAR CALIFICACION ##############");
@@ -145,7 +160,7 @@ function calificarTareaController ($scope,$http,$state,tareasModel,usuarioModel)
             console.log("########### TAREAS USUARIO ##############");
             console.log(data.data);
             app.gridOptions.data = data.data;
-            app.criteriosTarea = data.data[0].tareasEntity.criterios;
+            //app.criteriosTarea = data.data[0].tareasEntity.criterios;
             console.log("CRITERIOS");
             console.log(app.criteriosTarea);
             console.log(app.criteriosTarea.length);
