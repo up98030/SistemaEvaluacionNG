@@ -26,6 +26,9 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
             },
             "header@nuevaTarea":{
                 templateUrl:"app/shared/header/header.html"
+            },
+            "footer@nuevaTarea":{
+                templateUrl:"app/shared/footer.html"
             }
         }
     })
@@ -40,6 +43,9 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
             },
             "header@tareas":{
                 templateUrl:"app/shared/header/header.html"
+            },
+            "footer@tareas":{
+                templateUrl:"app/shared/footer.html"
             }
     	}
     })
@@ -54,6 +60,9 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
             },
             "header@tareasEnviadas":{
                 templateUrl:"app/shared/header/header.html"
+            },
+            "footer@tareasEnviadas":{
+                templateUrl:"app/shared/footer.html"
             }
     	}
     })
@@ -68,6 +77,9 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
             },
             "header@calificarTarea":{
                 templateUrl:"app/shared/header/header.html"
+            },
+            "footer@calificarTarea":{
+                templateUrl:"app/shared/footer.html"
             }
         }
     })
@@ -82,6 +94,9 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
             },
             "header@reuniones":{
                 templateUrl:"app/shared/header/header.html"
+            },
+            "footer@reuniones":{
+                templateUrl:"app/shared/footer.html"
             }
         }
     })
@@ -96,6 +111,9 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
             },
             "header@nuevaReunion":{
                 templateUrl:"app/shared/header/header.html"
+            },
+            "footer@nuevaReunion":{
+                templateUrl:"app/shared/footer.html"
             }
         }
     })
@@ -110,6 +128,9 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
             },
             "header@detalleReunion":{
                 templateUrl:"app/shared/header/header.html"
+            },
+            "footer@detalleReunion":{
+                templateUrl:"app/shared/footer.html"
             }
         }
     })

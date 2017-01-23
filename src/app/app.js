@@ -17,6 +17,7 @@ require('./components/calendario/calendario.js');
 
 var tareasModule = require('./components/tareas/tareasModule.js');
 var notasModule = require('./components/notas/notasModule.js');
+var usuariosModule = require('./components/usuarios/usuariosModule.js');
 
 require('./components/tareas/detalleTarea.js');
 require('./components/usuarios/usuarios.js');
@@ -33,7 +34,7 @@ var usuarioModel = require('./models/usuarioModel.js');
 var app = angular.module('myApp', 
     [
     'ui.router','ngSanitize','ui.grid','ui.grid.selection','ngMaterial','materialCalendar','myApp.home',/*'myApp.reuniones',*/'myApp.calendario',
-    'myApp.modulos','myApp.about', 'myApp.principal',/*'myApp.tareas',*/tareasModule.name, notasModule.name,'myApp.tarea','myApp.usuarios','myApp.roles'
+    'myApp.modulos','myApp.about', 'myApp.principal',/*'myApp.tareas',*/tareasModule.name, notasModule.name,usuariosModule.name,'myApp.tarea','myApp.usuarios','myApp.roles'
 
     ]);
 
@@ -66,7 +67,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
 				},
 				"header@principal":{
 					templateUrl:"app/shared/header/header.html"
-				}
+				},
+                "footer@principal":{
+                    templateUrl:"app/shared/footer.html"
+                }
 			}
 		})
    /* .state('tareas', {
@@ -95,6 +99,9 @@ app.config(function($stateProvider, $urlRouterProvider) {
             },
             "header@tarea":{
                 templateUrl:"app/shared/header/header.html"
+            },
+            "footer@tarea":{
+                templateUrl:"app/shared/footer.html"
             }
         }
     })
@@ -131,7 +138,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			}
 		}
 	})*/
-    .state('usuarios',{
+  /*  .state('usuarios',{
         url:"/usuarios",
         views: {
             "": {
@@ -142,23 +149,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
             },
             "left@usuarios":{
                 templateUrl: "app/components/usuarios/leftUsuarios.html"
+            },
+            "footer@usuarios":{
+                templateUrl:"app/shared/footer.html"
             }
         }
-    })
-    .state('nuevoUsuario',{
-        url:"/nuevoUsuario",
-        views: {
-            "": {
-                templateUrl:"app/components/usuarios/nuevoUsuario.html"
-            },
-            "header@nuevoUsuario":{
-                templateUrl: "app/shared/header/header.html"
-            },
-            "left@nuevoUsuario":{
-                templateUrl: "app/components/usuarios/leftUsuarios.html"
-            }
-        }
-    })
+    })*/
     .state('roles',{
         url:"/roles",
         views: {

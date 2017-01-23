@@ -20,6 +20,9 @@ notasModule.config(function($stateProvider, $urlRouterProvider) {
             },
             "header@misNotas":{
                 templateUrl:"app/shared/header/header.html"
+            },
+            "footer@misNotas":{
+                templateUrl:"app/shared/footer.html"
             }
         }
     })
@@ -34,6 +37,9 @@ notasModule.config(function($stateProvider, $urlRouterProvider) {
             },
             "header@notasDocentes":{
                 templateUrl:"app/shared/header/header.html"
+            },
+            "footer@notasDocentes":{
+                templateUrl:"app/shared/footer.html"
             }
     	}
     })
@@ -48,6 +54,9 @@ notasModule.config(function($stateProvider, $urlRouterProvider) {
             },
             "header@reportes":{
                 templateUrl:"app/shared/header/header.html"
+            },
+            "footer@reportes":{
+                templateUrl:"app/shared/footer.html"
             }
     	}
     })
