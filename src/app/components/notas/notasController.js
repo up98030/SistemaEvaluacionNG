@@ -42,7 +42,7 @@ function notasController ($scope,$http,$state,tareasModel,usuarioModel){
         var criterios = {
                             "estado": estado,
                             "idUsuario": app.usuarioModel.datosUsuario.idUsuario,
-                            "idModulo": idModulo
+                            "idModulo": app.usuarioModel.datosUsuario.idModulo
                         };
 
         this.$http.post('http://localhost:8080/sistEval/ws/notasAspiranteParametros/', criterios).then(function (data){

@@ -3,7 +3,7 @@ var tareasController = require('./tareasController.js');
 var calificarTareaController = require('./calificarTarea/calificarTarea.js');
 var reunionesController = require('./reuniones/reuniones.js');
 
-var tareasModule = angular.module('myApp.tareas', ['ngAnimate','ngMaterial']);
+var tareasModule = angular.module('myApp.tareas', ['ngAnimate','ngMaterial','ngDialog']);
 
 tareasModule.controller('nuevaTareaCtrl', nuevaTareaController);
 tareasModule.controller('tareasCtrl', tareasController);

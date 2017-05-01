@@ -54,14 +54,14 @@
           </md-checkbox>        
           </div>    
         </div>
-        <h5>Asistentes:</h5>
+        <!--<h5>Asistentes:</h5>
         <div ng-repeat='usuario in usuariosModulo'>
         <md-checkbox ng-checked="exists(usuario, usuariosSelected)" ng-click="toggle(usuario, usuariosSelected)">
                {{ usuario.nombreCompleto }} 
               </md-checkbox>        
-        </div>                  
+        </div>                  -->
 
-        <md-button class="md-raised" ng-click="reuniones.seleccionarUsuarios($event)">Asignar Docentes</md-button>
+        <md-button class="md-raised" ng-click="reuniones.seleccionarUsuarios()">Asignar Docentes</md-button>
 
         <div layout="row" style="margin-top:1%;">
         	<md-button ng-click="reuniones.guardarTarea()" class="md-primary md-raised" style="background-color:#003366;">  

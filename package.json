@@ -15,6 +15,7 @@
   "devDependencies": {
     "angular-animate": "^1.5.5",
     "angular-aria": "^1.5.5",
+    "ng-dialog": "^1.1.0",
     "angular-material": "^0.11.4",
     "angular-ui-router": "^0.2.18",
     "babel-preset-es2015": "^6.9.0",
@@ -41,6 +42,7 @@
     "angular-material": "^0.11.4",
     "angular-material-calendar": "^0.2.14",
     "angular-ui-grid": "^3.1.1",
-    "angular-ui-router": "^0.2.15"
+    "angular-ui-router": "^0.2.15",
+    "ng-dialog": "^1.1.0"
   }
 }

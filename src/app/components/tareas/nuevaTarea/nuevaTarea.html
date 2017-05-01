@@ -55,15 +55,17 @@
           </md-checkbox>        
           </div>    
         </div>
-        <h5 ng-show="tipoTarea == 'TAREA'">Asignar tarea a:</h5>
+        
+        <!--<h5 ng-show="tipoTarea == 'TAREA'">Asignar tarea a:</h5>
         <h5 ng-show="tipoTarea == 'REUNION'">Asistentes:</h5>
+        
         <div ng-repeat='usuario in usuariosModulo'>
         <md-checkbox ng-checked="exists(usuario, usuariosSelected)" ng-click="toggle(usuario, usuariosSelected)">
                {{ usuario.nombreCompleto }} 
               </md-checkbox>        
-        </div>                  
+        </div>                  -->
 
-        <md-button class="md-raised" ng-click="tareas.seleccionarUsuarios($event)">Asignar Docentes</md-button>
+        <md-button class="md-raised" ng-click="tareas.seleccionarUsuarios()">Asignar Docentes</md-button>
 
         <div layout="row" style="margin-top:1%;">
         	<md-button ng-click="tareas.guardarTarea()" class="md-primary md-raised" style="background-color:#003366;">{{nombreGuardar}}</md-button>	

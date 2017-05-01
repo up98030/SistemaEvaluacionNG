@@ -1,0 +1,14 @@
+<h2>Usuarios tarea</h2>
+<div ng-repeat='usuario in usuariosModulo'>
+    <md-checkbox ng-checked="usrsModlCtrl.exists(usuario)" ng-click="usrsModlCtrl.toggle(usuario)">
+        {{ usuario.nombreCompleto }}
+    </md-checkbox>
+</div>
+<div class="row" style="text-align:center;">
+    <div class="col-md-6">
+        <button type="button" ng-click="usrsModlCtrl.test()">Aceptar</button>     
+    </div>
+    <div class="col-md-6">
+        <button type="button" ng-click="usrsModlCtrl.test()">Cancelar</button>
+    </div>
+</div>

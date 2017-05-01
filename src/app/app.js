@@ -5,7 +5,7 @@ require('angular-animate');
 //require('bootstrap');
 //require('jQuery');
 require('angular-material');
-
+require('ng-dialog');
 //require('angular-ui-grid');
 require('./components/home/home.js');
 require('./components/about/about.js');
@@ -33,7 +33,7 @@ var usuarioModel = require('./models/usuarioModel.js');
 
 var app = angular.module('myApp', 
     [
-    'ui.router','ngSanitize','ui.grid','ui.grid.selection','ngMaterial','materialCalendar','myApp.home',/*'myApp.reuniones',*/'myApp.calendario',
+    'ui.router','ngSanitize','ui.grid','ui.grid.selection','ngDialog','ngMaterial','materialCalendar','myApp.home',/*'myApp.reuniones',*/'myApp.calendario',
     'myApp.modulos','myApp.about', 'myApp.principal',/*'myApp.tareas',*/tareasModule.name, notasModule.name,usuariosModule.name,'myApp.tarea','myApp.usuarios','myApp.roles'
 
     ]);

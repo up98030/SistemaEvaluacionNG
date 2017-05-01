@@ -58,12 +58,14 @@ function usuariosController ($scope,$http,$state,tareasModel,usuarioModel){
    // var index = app.$scope.gridOptions.data.indexOf(app.usuarioEliminar);
     console.log(app.usuarioEliminar);
     delete app.usuarioEliminar.$$hashKey;
+    app.usuarioEliminar.estado = 'INA';
 
         this.$http.post('http://localhost:8080/sistEval/ws/crearUsuario/',this.usuarioEliminar).then(function (data){
         console.log("usuario");
         console.log(data);
         toastr.success('Usuario eliminado');
         //app.$scope.gridOptions.data.splice(index, 1);
+        app.consultarUsuarios();
 
     }, function(data){
         console.log("ERROR");
@@ -128,17 +130,18 @@ function usuariosController ($scope,$http,$state,tareasModel,usuarioModel){
     }
 
 
-    this.$http.get('http://localhost:8080/sistEval/ws/usuarios/').
-        success(function(data) {
-            tareasData = data;
-            completo = true;
-            app.gridOptions.data = data;
-            console.log("grid data usuarios");
-            console.log(app.gridOptions.data);
-        });
-
-
-    };
+    this.consultarUsuarios = function(){
+                app.$http.get('http://localhost:8080/sistEval/ws/usuarios/').
+            success(function(data) {
+                tareasData = data;
+                completo = true;
+                app.gridOptions.data = data;
+                console.log("grid data usuarios");
+                console.log(app.gridOptions.data);
+            });
+        };
+        this.consultarUsuarios();
+    }
 
 
 usuariosController.$inject = ['$scope','$http','tareasModel','usuarioModel','$mdDialog'];
