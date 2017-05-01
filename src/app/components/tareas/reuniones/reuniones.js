@@ -141,10 +141,12 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
         usuariosSeleccionados = [];
     };
 
+    /**************************************************************** DIALOGO >>>>>>>>>>>>>>>>>>>>>>>>>  ************** */
     this.seleccionarUsuarios = function () {
         console.log(this.ngDialog);
         this.ngDialog.open({
-            template: 'app/components/tareas/reuniones/usuariosModuloModal.html',
+            template: 'app/components/tareas/reuniones/usuariosReunionModal.html',
+            showClose: false,
             className: 'ngdialog-theme-default',
             controller: ['$scope', '$http', 'usuarioModel', 'tareasModel', function ($scope, $http, usuarioModel, tareasModel) {
                 $scope.usuariosModulo = tareasModel.usuariosModulo;
@@ -153,6 +155,22 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
                 this.test = function () {
                     console.log(usuarioModel);
                     console.log(tareasModel);
+                }
+
+                this.cancel = function () {
+                    this.usuariosSeleccionados = [];
+                    tareasModel.usuariosSeleccionados = [];
+                    ngDialog.close();
+                }
+                this.accept = function(){
+                    tareasModel.usuariosSeleccionados = this.usuariosSeleccionados;
+                    ngDialog.close();
+                }
+                this.marcarTodos = function () {
+                    for (let i = 0; i < tareasModel.usuariosModulo; i++) {
+                        this.usuariosSeleccionados.push(tareasModel.usuariosModulo[i]);
+                        this.exists($scope.usuariosModulo[i]);
+                    }
                 }
                 /******************** CHECKBOX USUARIOS *******************************/
                 this.toggle = function (item) {
@@ -165,14 +183,14 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
                     else {
                         this.usuariosSeleccionados.push(item);
                     }
-                    tareasModel.usuariosSeleccionados = this.usuariosSeleccionados;
-
                     console.log("########## USUARIOS SELECCIONADOS1 ##########");
                     console.log(this.usuariosSeleccionados);
                 };
                 this.exists = function (item) {
+                    debugger;
                     console.log(">¿<zzzzzzzzzzzzzzz Exists  ");
                     console.log(item);
+                    console.log(this.usuariosSeleccionados.indexOf(item));
                     return this.usuariosSeleccionados.indexOf(item) > -1;
                 };
             }],
@@ -183,87 +201,94 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
 
 
     /********************** CREAR REUNION *****************/
-    this.guardarTarea = function () {
-        //debugger;
-        console.log(app.$scope.tipoTarea);
-        if (tareasModel.usuariosSeleccionados != undefined) {
-            var usuariosSeleccionados = tareasModel.usuariosSeleccionados.slice(0);
-            usuariosSeleccionados.forEach(function (e) {
-                delete e.$$hashKey;
-                delete e.correoUsuario;
-                delete e.idModulo;
-                delete e.idPerfil;
-                delete e.nombreCompleto;
-                delete e.nombreUsuario;
-                delete e.password;
-                delete e.idCriterio;
-                delete e.nombreCriterio;
-                delete e.valorCriterio;
-                delete e.descripcionCriterio;
-            });
-        }
-        console.log("########## USUARIOS SELECCIONADOS ##########");
-        console.log(usuariosSeleccionados);
+    this.guardarTarea = function (form) {
+        if (form.$valid) {
+            if(tareasModel.usuariosSeleccionados && !tareasModel.usuariosSeleccionados.length > 0){
+                console.log(app.$scope.tipoTarea);
+            if (tareasModel.usuariosSeleccionados != undefined) {
+                var usuariosSeleccionados = tareasModel.usuariosSeleccionados.slice(0);
+                usuariosSeleccionados.forEach(function (e) {
+                    delete e.$$hashKey;
+                    delete e.correoUsuario;
+                    delete e.idModulo;
+                    delete e.idPerfil;
+                    delete e.nombreCompleto;
+                    delete e.nombreUsuario;
+                    delete e.password;
+                    delete e.idCriterio;
+                    delete e.nombreCriterio;
+                    delete e.valorCriterio;
+                    delete e.descripcionCriterio;
+                });
+            }
+            console.log("########## USUARIOS SELECCIONADOS ##########");
+            console.log(usuariosSeleccionados);
 
-        let criteriosSeleccionados = "";
+            let criteriosSeleccionados = "";
 
 
-        this.nombreTarea = app.$scope.nombreTarea;
-        this.descripcionTarea = app.$scope.descripcionTarea;
-        this.fechaFin = app.$scope.fechaFin;
-        this.tareaData = {
-            'nombreTarea': this.nombreTarea,
-            'descripcionTarea': this.descripcionTarea,
-            'idModulo': usuarioModel.datosUsuario.idModulo,
-            'tipoTarea': 'REUNION',
-            'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
-            'estado': 'ACT',
-            'criterios': criteriosSeleccionados,
-            'fechaInicio': new Date(),
-            'fechaFin': this.$scope.fechaFin,
-            'archivoAdjunto': this.archivoAdjunto,
-            'tareasUsuarios': tareasModel.usuariosSeleccionados
-        };
-        console.log("OBJETO TAREA #$$#$#$#$#$#$#$$#$#");
-        console.log(this.tareaData);
-
-        console.log("ARCHIVO:....");
-        var uploaded = document.getElementById("file-input");
-        var reader = new FileReader();
-
-        reader.onload = function () {
-            var arrayBuffer = this.result,
-                array = new Uint8Array(arrayBuffer),
-                binaryString = btoa(String.fromCharCode.apply(null, array));
-            this.archivoAdjunto = binaryString;
-            //Setea las horas a la fechafin
-            app.$scope.fechaFin.setHours(app.$scope.hora.getHours(), app.$scope.hora.getMinutes(), 00, 00);
+            this.nombreTarea = app.$scope.nombreTarea;
+            this.descripcionTarea = app.$scope.descripcionTarea;
+            this.fechaFin = app.$scope.fechaFin;
             this.tareaData = {
-                'nombreTarea': app.$scope.nombreTarea,
-                'descripcionTarea': app.$scope.descripcionTarea,
+                'nombreTarea': this.nombreTarea,
+                'descripcionTarea': this.descripcionTarea,
                 'idModulo': usuarioModel.datosUsuario.idModulo,
                 'tipoTarea': 'REUNION',
                 'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
                 'estado': 'ACT',
                 'criterios': criteriosSeleccionados,
                 'fechaInicio': new Date(),
-                'fechaFin': app.$scope.fechaFin,
+                'fechaFin': this.$scope.fechaFin,
                 'archivoAdjunto': this.archivoAdjunto,
                 'tareasUsuarios': tareasModel.usuariosSeleccionados
             };
-            //debugger;
-            app.$http.post('http://localhost:8080/sistEval/ws/crearTarea/', this.tareaData).then(function (data) {
-                console.log("tarea");
-                console.log(data);
-                toastr.success('Reunión creada');
-                resetFields();
-            }, function (data) {
-                console.log("ERROR");
-                toastr.success('Error creando reunión');
-            });
-            console.log(binaryString);
+            console.log("OBJETO TAREA #$$#$#$#$#$#$#$$#$#");
+            console.log(this.tareaData);
+
+            console.log("ARCHIVO:....");
+            var uploaded = document.getElementById("file-input");
+            var reader = new FileReader();
+
+            reader.onload = function () {
+                var arrayBuffer = this.result,
+                    array = new Uint8Array(arrayBuffer),
+                    binaryString = btoa(String.fromCharCode.apply(null, array));
+                this.archivoAdjunto = binaryString;
+                //Setea las horas a la fechafin
+                app.$scope.fechaFin.setHours(app.$scope.hora.getHours(), app.$scope.hora.getMinutes(), 00, 00);
+                this.tareaData = {
+                    'nombreTarea': app.$scope.nombreTarea,
+                    'descripcionTarea': app.$scope.descripcionTarea,
+                    'idModulo': usuarioModel.datosUsuario.idModulo,
+                    'tipoTarea': 'REUNION',
+                    'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
+                    'estado': 'ACT',
+                    'criterios': criteriosSeleccionados,
+                    'fechaInicio': new Date(),
+                    'fechaFin': app.$scope.fechaFin,
+                    'archivoAdjunto': this.archivoAdjunto,
+                    'tareasUsuarios': tareasModel.usuariosSeleccionados
+                };
+                //debugger;
+                app.$http.post('http://localhost:8080/sistEval/ws/crearTarea/', this.tareaData).then(function (data) {
+                    console.log("tarea");
+                    console.log(data);
+                    toastr.success('Reunión creada');
+                    resetFields();
+                }, function (data) {
+                    console.log("ERROR");
+                    toastr.error('Error creando reunión');
+                });
+                console.log(binaryString);
+            }
+            reader.readAsArrayBuffer(uploaded.files[0]);
+            }else{
+                toastr.warning('Seleccione los asistentes a la reunión');
+            }
+        } else {
+            toastr.warning('Complete todos los campos');
         }
-        reader.readAsArrayBuffer(uploaded.files[0]);
 
     };
 
