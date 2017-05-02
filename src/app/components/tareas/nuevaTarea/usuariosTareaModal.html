@@ -1,0 +1,32 @@
+<div class="modalHeader">Docentes tarea</div>
+<div>
+    <div ng-repeat='usuario in usuariosModulo'>
+        <md-checkbox ng-checked="usrsModlCtrl.exists(usuario)" ng-click="usrsModlCtrl.toggle(usuario)">
+            {{ usuario.nombreCompleto }}
+        </md-checkbox>
+    </div>
+    <div layout="row" style="text-align:center; padding:0 25%;">
+        <div flex="50">
+            <md-button ng-click="usrsModlCtrl.acceptModal()" class="md-primary md-raised" style="background-color:#436abc;">
+                Aceptar</md-button>
+        </div>
+        <div flex="50">
+            <md-button ng-click="usrsModlCtrl.cancelModal()" class="md-primary md-raised" style="background-color:#e3e3e3; color:#383838;">
+                Cancelar</md-button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .modalHeader {
+        border-bottom: 1px solid #436abc;
+        background-color: #325b84;
+        color: #fff;
+        padding: 5px;
+        font-weight: lighter;
+    }
+    
+    .ngdialog-content {
+        padding: 0 !important;
+    }
+</style>

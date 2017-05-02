@@ -1,97 +1,90 @@
 <div ui-view='header'></div>
 
 <div ng-controller="nuevaTareaCtrl as tareas">
-  <div ui-view='left'></div>  
-<div layout="row">
-<div flex="80" style="margin-left:5%;">
- <!-- 
-	<h3>{{nuevaTarea.titulo}}</h3>
+  <div ui-view='left'></div>
+  <div layout="row">
+    <form name="nuevaTareaForm" style="width:100%;">
+      <div flex="80" style="margin-left:5%;">
+        <md-select ng-model="tipoTarea" ng-hide="true">
+          <md-option ng-repeat="tipo in tiposTareas" ng-value="tipo.nombreTipoTarea" ng-selected="$first">
+            {{tipo.nombreTipoTarea}}
+          </md-option>
+        </md-select>
 
-    <h5>Tipo Tarea:</h5>
--->
-    <md-select ng-model="tipoTarea" ng-hide="true">
-            <md-option ng-repeat="tipo in tiposTareas" ng-value="tipo.nombreTipoTarea" ng-selected="$first">
-              {{tipo.nombreTipoTarea}}
-            </md-option>
-    </md-select>
-
-	 <md-input-container>
-        <label>Nombre:</label>
-        <input ng-model="nombreTarea">
-      </md-input-container>
-      <md-input-container class="md-block"">
+        <md-input-container>
+          <label>Nombre:</label>
+          <input ng-model="nombreTarea" name="nombreTarea" required>
+        </md-input-container>
+        <md-input-container class="md-block">
           <label>Descripción</label>
-          <textarea ng-model="descripcionTarea" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+          <textarea ng-model="descripcionTarea " md-maxlength="150" name="descripcionTarea" required rows="5 " md-select-on-focus></textarea>
         </md-input-container>
 
-         <md-button class="md-raised">
-         <i class="fa fa-thumb-tack" aria-hidden="true" style="font-size:17px;"></i>
-        <label for="file-input">Adjuntar</label>  
-      </md-button>
-      <input id="file-input" type="file" ng-show="false">
+        <md-button class="md-raised ">
+          <i class="fa fa-thumb-tack " aria-hidden="true " style="font-size:17px; "></i>
+          <label for="file-input ">Adjuntar</label>
+        </md-button>
+        <input id="file-input " type="file " ng-show="false ">
 
         <h4>Fecha Límite</h4>
-        <h5 ng-show="tipoTarea == 'REUNION'">Fecha Reunión</h5>
-         <md-datepicker ng-model="fechaFin" md-min-date="minDate" md-max-date="maxDate">
+        <h5 ng-show="tipoTarea=='REUNION' ">Fecha Reunión</h5>
+        <md-datepicker ng-model="fechaFin " md-min-date="minDate " md-max-date="maxDate" name="fechaTarea" required>
         </md-datepicker>
 
-        <md-input-container ng-show="tipoTarea == 'REUNION'">
+        <md-input-container ng-show="tipoTarea=='REUNION' ">
           <label>Hora: </label>
-          <input type="time" ng-model="hora" style="width:35%;">
+          <input type="time " ng-model="hora " style="width:35%; ">
         </md-input-container>
 
-        <md-list ng-show="false">
-          <md-subheader class="md-no-sticky">Criterios de evaluación</md-subheader>
+        <md-list ng-show="false ">
+          <md-subheader class="md-no-sticky ">Criterios de evaluación</md-subheader>
           <md-list-item ng-repeat='criterio in criteriosEvaluacion'>
-            <p> {{ criterio.valorCriterio }}  </p>
-            <md-checkbox class="md-secondary" ng-checked="existsCriterios(criterio, criteriosSelected)" ng-click="toggleCriterios(criterio, criteriosSelected)"></md-checkbox>
+            <p> {{ criterio.valorCriterio }} </p>
+            <md-checkbox class="md-secondary " ng-checked="existsCriterios(criterio, criteriosSelected) " ng-click="toggleCriterios(criterio,
+        criteriosSelected) "></md-checkbox>
           </md-list-item>
         </md-list>
 
-        <div ng-show="true">
+        <div ng-show="true ">
           <h4>Criterios de evaluación:</h4>
           <div ng-repeat='criterio in criteriosEvaluacion'>
-          <md-checkbox ng-checked="existsCriterios(criterio, criteriosSelected)" ng-click="toggleCriterios(criterio, criteriosSelected)">   {{ criterio.valorCriterio }} 
-          </md-checkbox>        
-          </div>    
+            <md-checkbox ng-checked="existsCriterios(criterio, criteriosSelected) " ng-click="toggleCriterios(criterio, criteriosSelected) ">
+            {{ criterio.valorCriterio }}
+            </md-checkbox>
+          </div>
         </div>
-        
-        <!--<h5 ng-show="tipoTarea == 'TAREA'">Asignar tarea a:</h5>
-        <h5 ng-show="tipoTarea == 'REUNION'">Asistentes:</h5>
-        
-        <div ng-repeat='usuario in usuariosModulo'>
-        <md-checkbox ng-checked="exists(usuario, usuariosSelected)" ng-click="toggle(usuario, usuariosSelected)">
-               {{ usuario.nombreCompleto }} 
-              </md-checkbox>        
-        </div>                  -->
 
-        <md-button class="md-raised" ng-click="tareas.seleccionarUsuarios()">Asignar Docentes</md-button>
+        <md-button class="md-raised " ng-click="tareas.seleccionarUsuarios() ">Asignar Docentes</md-button>
 
-        <div layout="row" style="margin-top:1%;">
-        	<md-button ng-click="tareas.guardarTarea()" class="md-primary md-raised" style="background-color:#003366;">{{nombreGuardar}}</md-button>	
+        <div layout="row " style="margin-top:1%; ">
+          <md-button ng-click="tareas.guardarTarea(nuevaTareaForm) " class="md-primary md-raised " style="background-color:#003366; ">{{nombreGuardar}}</md-button>
         </div>
-        <!-- <md-button ng-click="subirArchivo()" >Archivo</md-button> -->
-</div>
-</div>
+        <!-- <md-button ng-click="subirArchivo() " >Archivo</md-button> -->
+      </div>
+    </form>
+  </div>
 </div>
 
 <style>
-  .sidenav{
-    border-right:2px solid #889ea6;
+  .sidenav {
+    border-right: 2px solid #889ea6;
   }
-  .md-calendar-day-header{
-    background-color:#dddddd;
+  
+  .md-calendar-day-header {
+    background-color: #dddddd;
   }
-  .md-datepicker-calendar-pane{
-    background-color:#f6f6f6;
+  
+  .md-datepicker-calendar-pane {
+    background-color: #f6f6f6;
   }
-  .md-calendar-date-selection-indicator .md-focus .md-calendar-selected-date{
-    
+  
+  .md-calendar-date-selection-indicator .md-focus .md-calendar-selected-date {}
+  
+  .md-calendar-date.md-focus.md-calendar-selected-date .md-calendar-date-selection-indicator {
+    background-color: #325b84;
   }
-  .md-calendar-date.md-focus.md-calendar-selected-date .md-calendar-date-selection-indicator{
-    background-color:#325b84;
-  }
-  .md-calendar-month-label{
-    font-weight:bold;
+  
+  .md-calendar-month-label {
+    font-weight: bold;
   }
 </style>

@@ -138,7 +138,7 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
         app.archivoAdjunto = null;
         app.tareasModel.usuariosSeleccionados = [];
         app.criteriosSeleccionados = [];
-        usuariosSeleccionados = [];
+        app.usuariosSeleccionados = [];
     };
 
     /**************************************************************** DIALOGO >>>>>>>>>>>>>>>>>>>>>>>>>  ************** */
@@ -162,7 +162,7 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
                     tareasModel.usuariosSeleccionados = [];
                     ngDialog.close();
                 }
-                this.accept = function(){
+                this.accept = function () {
                     tareasModel.usuariosSeleccionados = this.usuariosSeleccionados;
                     ngDialog.close();
                 }
@@ -202,10 +202,11 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
 
     /********************** CREAR REUNION *****************/
     this.guardarTarea = function (form) {
+        console.log(tareasModel.usuariosSeleccionados);
         if (form.$valid) {
-            if(tareasModel.usuariosSeleccionados && !tareasModel.usuariosSeleccionados.length > 0){
+            if (tareasModel.usuariosSeleccionados != undefined && tareasModel.usuariosSeleccionados.length > 0) {
+
                 console.log(app.$scope.tipoTarea);
-            if (tareasModel.usuariosSeleccionados != undefined) {
                 var usuariosSeleccionados = tareasModel.usuariosSeleccionados.slice(0);
                 usuariosSeleccionados.forEach(function (e) {
                     delete e.$$hashKey;
@@ -220,42 +221,35 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
                     delete e.valorCriterio;
                     delete e.descripcionCriterio;
                 });
-            }
-            console.log("########## USUARIOS SELECCIONADOS ##########");
-            console.log(usuariosSeleccionados);
+                console.log("########## USUARIOS SELECCIONADOS ##########");
+                console.log(usuariosSeleccionados);
 
-            let criteriosSeleccionados = "";
+                let criteriosSeleccionados = "";
 
 
-            this.nombreTarea = app.$scope.nombreTarea;
-            this.descripcionTarea = app.$scope.descripcionTarea;
-            this.fechaFin = app.$scope.fechaFin;
-            this.tareaData = {
-                'nombreTarea': this.nombreTarea,
-                'descripcionTarea': this.descripcionTarea,
-                'idModulo': usuarioModel.datosUsuario.idModulo,
-                'tipoTarea': 'REUNION',
-                'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
-                'estado': 'ACT',
-                'criterios': criteriosSeleccionados,
-                'fechaInicio': new Date(),
-                'fechaFin': this.$scope.fechaFin,
-                'archivoAdjunto': this.archivoAdjunto,
-                'tareasUsuarios': tareasModel.usuariosSeleccionados
-            };
-            console.log("OBJETO TAREA #$$#$#$#$#$#$#$$#$#");
-            console.log(this.tareaData);
+                this.nombreTarea = app.$scope.nombreTarea;
+                this.descripcionTarea = app.$scope.descripcionTarea;
+                this.fechaFin = app.$scope.fechaFin;
+                this.tareaData = {
+                    'nombreTarea': this.nombreTarea,
+                    'descripcionTarea': this.descripcionTarea,
+                    'idModulo': usuarioModel.datosUsuario.idModulo,
+                    'tipoTarea': 'REUNION',
+                    'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
+                    'estado': 'ACT',
+                    'criterios': criteriosSeleccionados,
+                    'fechaInicio': new Date(),
+                    'fechaFin': this.$scope.fechaFin,
+                    'archivoAdjunto': this.archivoAdjunto,
+                    'tareasUsuarios': tareasModel.usuariosSeleccionados
+                };
+                console.log("OBJETO TAREA #$$#$#$#$#$#$#$$#$#");
+                console.log(this.tareaData);
 
-            console.log("ARCHIVO:....");
-            var uploaded = document.getElementById("file-input");
-            var reader = new FileReader();
+                console.log("ARCHIVO:....");
+                var uploaded = document.getElementById("file-input");
+                var reader = new FileReader();
 
-            reader.onload = function () {
-                var arrayBuffer = this.result,
-                    array = new Uint8Array(arrayBuffer),
-                    binaryString = btoa(String.fromCharCode.apply(null, array));
-                this.archivoAdjunto = binaryString;
-                //Setea las horas a la fechafin
                 app.$scope.fechaFin.setHours(app.$scope.hora.getHours(), app.$scope.hora.getMinutes(), 00, 00);
                 this.tareaData = {
                     'nombreTarea': app.$scope.nombreTarea,
@@ -281,9 +275,19 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
                     toastr.error('Error creando reunión');
                 });
                 console.log(binaryString);
-            }
-            reader.readAsArrayBuffer(uploaded.files[0]);
-            }else{
+
+                // reader.onload = function () {
+                //     debugger;
+                //     var arrayBuffer = this.result,
+                //         array = new Uint8Array(arrayBuffer),
+                //         binaryString = btoa(String.fromCharCode.apply(null, array));
+                //     this.archivoAdjunto = binaryString;
+                //     //Setea las horas a la fechafin
+                // }
+                // if(uploaded){
+                //     reader.readAsArrayBuffer(uploaded.files[0]);
+                // }
+            } else {
                 toastr.warning('Seleccione los asistentes a la reunión');
             }
         } else {
