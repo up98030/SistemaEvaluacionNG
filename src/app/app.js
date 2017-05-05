@@ -6,6 +6,7 @@ require('angular-animate');
 //require('jQuery');
 require('angular-material');
 require('ng-dialog');
+require('please-wait');
 //require('angular-ui-grid');
 require('./components/home/home.js');
 require('./components/about/about.js');

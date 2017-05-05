@@ -17,6 +17,7 @@ angular.module('myApp.principal', ['ngDialog'])
             data: this.Mydata,
             enableRowSelection: true
         };
+
         this.$http = $http;
         this.ngDialog = ngDialog;
 
@@ -24,24 +25,28 @@ angular.module('myApp.principal', ['ngDialog'])
             alert('asdf');
             console.log(this.ngDialog);
             this.ngDialog.open(
-                { template: 'app/components/principal/dialog.html',
-                    constroller:[$scope,function($scope){
+                {
+                    template: 'app/components/principal/dialog.html',
+                    constroller: [$scope, function ($scope) {
                         console.log('hihi');
                     }],
-                 className: 'ngdialog-theme-default' }
-                );
+                    className: 'ngdialog-theme-default'
+                }
+            );
         };
 
         this.openD = function () {
             alert('asdf');
             console.log(this.ngDialog);
             this.ngDialog.open(
-                { template: 'app/components/principal/dialog.html',
-                    constroller:[$scope,function($scope){
+                {
+                    template: 'app/components/principal/dialog.html',
+                    constroller: [$scope, function ($scope) {
                         console.log('hihi');
                     }],
-                 className: 'ngdialog-theme-default' }
-                );
+                    className: 'ngdialog-theme-default'
+                }
+            );
         };
 
         this.cargarReportes = function () {

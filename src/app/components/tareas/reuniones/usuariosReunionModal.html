@@ -1,7 +1,7 @@
 <div class="modalHeader">Asistentes</div>
 <div>
     <md-checkbox ng-click="usrsReunionModalCtrl.marcarTodos()" style="font-weight:bolder;">Todos</md-checkbox>
-    <div ng-repeat='usuario in usuariosModulo'>        
+    <div ng-repeat='usuario in usuariosModulo'>
         <md-checkbox ng-checked="usrsReunionModalCtrl.exists(usuario)" ng-click="usrsReunionModalCtrl.toggle(usuario)">
             {{ usuario.nombreCompleto }}
         </md-checkbox>
