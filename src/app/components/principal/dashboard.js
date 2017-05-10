@@ -8,15 +8,6 @@ angular.module('myApp.principal', ['ngDialog'])
         this.criterios = {};
         this.resumenNoEntregadas = 0;
         this.usuarioModel = usuarioModel;
-        this.Mydata = [{ name: "Moroni", age: 50 },
-        { name: "Tiancum", age: 43 },
-        { name: "Jacob", age: 27 },
-        { name: "Nephi", age: 29 },
-        { name: "Enos", age: 34 }];
-        this.gridOptions = {
-            data: this.Mydata,
-            enableRowSelection: true
-        };
 
         this.$http = $http;
         this.ngDialog = ngDialog;

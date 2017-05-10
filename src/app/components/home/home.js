@@ -1,15 +1,20 @@
 let app;
 angular.module('myApp.home', [])
-.controller('homeCtrl',['$http','$scope','$state','usuarioModel',function($http, $scope,$state,usuarioModel){
+.controller('homeCtrl',['$http','$scope','$state','usuarioModel','$localStorage', '$sessionStorage',function($http, $scope,$state,usuarioModel,$localStorage, $sessionStorage){
 	this.welcomeText = 'Welcome to myApp Home!';
 	this.test = "asdf";
 	app = this;
 	this.$http = $http;
 	this.$scope = $scope;
 	this.$state = $state;
+	this.$localStorage = $localStorage;
+	this.$sessionStorage = $sessionStorage;
 	this.usuario = "";
 	this.passwd = "";
 	this.usuarioModel= usuarioModel;
+	this.usuarioModel.datosUsuario = {};
+	this.usuarioModel.datosUsuario = this.$sessionStorage.userData;
+	console.log('LocalStorage >> ',$localStorage);
 
 	//  let  loading_screen = pleaseWait({
     //         // logo: "assets/images/pathgather.png",
@@ -46,6 +51,8 @@ angular.module('myApp.home', [])
         console.log("usuario");
 		 loading_screen.finish();
         console.log(data);
+		app.$sessionStorage.userData = data.data;
+		console.log(app.$sessionStorage);
         app.usuarioModel.datosUsuario = data.data;
         app.$state.go('principal');
     }, function(data){

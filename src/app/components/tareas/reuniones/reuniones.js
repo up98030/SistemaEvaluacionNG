@@ -1,5 +1,5 @@
 let app;
-function reunionesController($scope, $http, $state, tareasModel, usuarioModel, ngDialog) {
+function reunionesController($scope, $http, $state, tareasModel, usuarioModel, ngDialog, $sessionStorage) {
     this.Titulo = "Reuniones";
     this.$http = $http;
     this.$scope = $scope;
@@ -11,6 +11,7 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
     this.$scope.usuariosModulo = [];
     this.usuariosSeleccionados = [];
     this.$scope.usuariosSelected = [];
+    this.$sessionStorage = $sessionStorage;
     var tareasData = [];
     var fechaActual = new Date();
     this.$scope.hora = fechaActual;
@@ -85,7 +86,7 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
 
 
         this.tareasUsuariosVO = {
-            "idUsuario": usuarioModel.datosUsuario.idUsuario,
+            "idUsuario": app.$sessionStorage.userData.idUsuario,
             "estado": 'CRE',
             "fechaEnvio": fechaEnvio,
             "fechaFin": fechaFin,
@@ -103,7 +104,7 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
     }
     this.cargarReuniones("PROX");
 
-    this.datosModulo = { 'idModulo': 1 };
+    this.datosModulo = { 'idModulo': this.$sessionStorage.userData.idModulo };
     this.$http.post('http://localhost:8080/sistEval/ws/buscarUsuariosModulo/', this.datosModulo).then(function (data) {
         console.log("########### USUARIOS DE MODULO ##############");
         // console.log(data.data);
@@ -187,7 +188,6 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
                     console.log(this.usuariosSeleccionados);
                 };
                 this.exists = function (item) {
-                    debugger;
                     console.log(">¿<zzzzzzzzzzzzzzz Exists  ");
                     console.log(item);
                     console.log(this.usuariosSeleccionados.indexOf(item));
@@ -233,9 +233,9 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
                 this.tareaData = {
                     'nombreTarea': this.nombreTarea,
                     'descripcionTarea': this.descripcionTarea,
-                    'idModulo': usuarioModel.datosUsuario.idModulo,
+                    'idModulo': this.$sessionStorage.userData.idModulo,
                     'tipoTarea': 'REUNION',
-                    'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
+                    'idCreadorTarea': this.$sessionStorage.userData.idUsuario,
                     'estado': 'ACT',
                     'criterios': criteriosSeleccionados,
                     'fechaInicio': new Date(),
@@ -254,9 +254,9 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
                 this.tareaData = {
                     'nombreTarea': app.$scope.nombreTarea,
                     'descripcionTarea': app.$scope.descripcionTarea,
-                    'idModulo': usuarioModel.datosUsuario.idModulo,
+                    'idModulo': this.$sessionStorage.userData.idModulo,
                     'tipoTarea': 'REUNION',
-                    'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
+                    'idCreadorTarea': this.$sessionStorage.userData.idUsuario,
                     'estado': 'ACT',
                     'criterios': criteriosSeleccionados,
                     'fechaInicio': new Date(),
@@ -300,6 +300,6 @@ function reunionesController($scope, $http, $state, tareasModel, usuarioModel, n
 }
 
 
-reunionesController.$inject = ['$scope', '$http', '$state', 'tareasModel', 'usuarioModel', 'ngDialog'];
+reunionesController.$inject = ['$scope', '$http', '$state', 'tareasModel', 'usuarioModel', 'ngDialog','$sessionStorage'];
 
 module.exports = reunionesController; 

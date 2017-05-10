@@ -35,7 +35,7 @@
 		Usuarios
 	</md-button>
 	-->
-	<md-button ui-sref="home" class="boton-header">
+	<md-button ui-sref="home" onclick="sessionStorage.clear();" class="boton-header">
 		Salir
 	</md-button>
 
@@ -45,6 +45,12 @@
 
 </div>
 </md-toolbar>
+
+<script>
+	function logout(){
+		sessionStorage.clear();
+	}
+</script>
 
 <style>
 	.md-toolbar-tools{

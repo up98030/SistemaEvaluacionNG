@@ -7,6 +7,8 @@ require('angular-animate');
 require('angular-material');
 require('ng-dialog');
 require('please-wait');
+require('angular-file-upload');
+require('ngStorage');
 //require('angular-ui-grid');
 require('./components/home/home.js');
 require('./components/about/about.js');
@@ -34,9 +36,11 @@ var usuarioModel = require('./models/usuarioModel.js');
 
 var app = angular.module('myApp', 
     [
-    'ui.router','ngSanitize','ui.grid','ui.grid.selection','ngDialog','ngMaterial','materialCalendar','myApp.home',/*'myApp.reuniones',*/'myApp.calendario',
-    'myApp.modulos','myApp.about', 'myApp.principal',/*'myApp.tareas',*/tareasModule.name, notasModule.name,usuariosModule.name,'myApp.tarea','myApp.usuarios','myApp.roles'
-
+    'ui.router','ngSanitize','ui.grid','ui.grid.selection','ngDialog',
+    'ngMaterial','angularFileUpload','materialCalendar','myApp.home',
+    /*'myApp.reuniones',*/'myApp.calendario','myApp.modulos','myApp.about',
+    'myApp.principal',/*'myApp.tareas',*/tareasModule.name, notasModule.name,
+    usuariosModule.name,'myApp.tarea','myApp.usuarios','myApp.roles','ngStorage'
     ]);
 
 app.factory('tareasModel', tareasModel);

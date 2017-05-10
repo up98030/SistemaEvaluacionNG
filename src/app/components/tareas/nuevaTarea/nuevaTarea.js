@@ -1,7 +1,7 @@
 let app;
 /*angular.module('myApp.nuevaTarea', [])
 .controller('nuevaTareaCtrl',['$scope','$http','tareasModel',function($scope,$http,tareasModel){*/
-function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog) {
+function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog,FileUploader,$sessionStorage) {
     this.welcomeText = 'Welcome to myApp Home!';
     console.log("$$$$$$$$$$ MODELO");
     console.log(tareasModel.test);
@@ -17,6 +17,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
     this.nombreTarea = "";
     this.descripcionTarea = "";
     this.fechaFin = new Date();
+    this.$sessionStorage = $sessionStorage;
 
     this.$scope.numeros = [11, 22, 33, 446, 55, 6];
     this.$scope.usuariosModulo = [];
@@ -32,27 +33,24 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
 
     this.archivoAdjunto = null;
 
-    /************** ABRIR DIALOGO *****************/
-    /* this.seleccionarUsuarios = function(ev){
-         console.log(app.$mdDialog);
-         console.log("Abriendo dialogo");
-             var confirm = $mdDialog.confirm()
-           .title('Would you like to delete your debt?')
-           .textContent('All of the banks have agreed to forgive you your debts.')
-           .ariaLabel('Lucky day')
-           .targetEvent(ev)
-           .ok('Please do it!')
-           .cancel('Sounds like a scam');
- 
-     app.$mdDialog.show(confirm).then(function() {
-         alert("OK");
-       //$scope.status = 'You decided to get rid of your debt.';
-     }, function() {
-         alert("Cancelar");
-       //$scope.status = 'You decided to keep your debt.';
+     this.$scope.uploader = new FileUploader({
+            url: 'http://localhost:8080/sistEval/ws/crearTareaArchivo/'
      });
- 
-    }*/
+
+     this.$scope.uploader.onAfterAddingFile = function(fileItem) {
+            console.info('onAfterAddingFile', fileItem);
+            console.info('UPLOADER>>>> --- onAfterAddingFile',  app.$scope.uploader);
+        };
+        this.$scope.uploader.onBeforeUploadItem = function(item) {
+            console.info('onBeforeUploadItem', item);
+        };
+
+        this.uploadSingle = function(){
+            this.$scope.uploader.uploadAll();
+        }
+
+     console.log('uploader>>>>>');
+    //  console.log(this.uploader.upload());
 
     this.seleccionarUsuarios = function () {
         console.log(this.ngDialog);
@@ -158,7 +156,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
     }
 
     /*********************** CONSULTA USUARIOS MODULO  ***************************/
-    this.datosModulo = { 'idModulo': 1 };
+    this.datosModulo = { 'idModulo': this.$sessionStorage.userData.idModulo };
     this.$http.post('http://localhost:8080/sistEval/ws/buscarUsuariosModulo/', this.datosModulo).then(function (data) {
         console.log("########### USUARIOS DE MODULO ##############");
         console.log(data.data);
@@ -188,6 +186,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
         app.tareasModel.usuariosSeleccionados = [];
         app.criteriosSeleccionados = [];
         usuariosSeleccionados = [];
+        app.$scope.criteriosSelected = [];
     };
 
 
@@ -221,13 +220,15 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
                   if((app.$scope.tipoTarea.localeCompare("REUNION")) < 0){
                         let criteriosSeleccionados = "";*/
                 let criteriosSeleccionados = "";
+                if (tareasModel.criteriosSeleccionados === null || tareasModel.criteriosSeleccionados === undefined || tareasModel.criteriosSeleccionados.length < 1) {
+                    toastr.error('Seleccione los criterios de evaluación');
+                    return;
+                }
                 tareasModel.criteriosSeleccionados.forEach(function (e) {
                     delete e.$$hashKey;
                     criteriosSeleccionados = criteriosSeleccionados + e.idCriterio + ",";
                     criteriosSeleccionados = criteriosSeleccionados.slice(0, -1);
-
                 });
-
                 /*    
                        if((app.$scope.tipoTarea.localeCompare("REUNION")) < 0){                
                            console.log("########## CRITERIOS SELECCIONADOS ##########");
@@ -244,7 +245,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
                 this.tareaData = {
                     'nombreTarea': this.nombreTarea,
                     'descripcionTarea': this.descripcionTarea,
-                    'idModulo': usuarioModel.datosUsuario.idModulo,
+                    'idModulo': this.$sessionStorage.userData.idModulo,
                     'tipoTarea': this.$scope.tipoTarea,
                     'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
                     'estado': 'ACT',
@@ -258,40 +259,47 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
                 console.log(this.tareaData);
 
                 console.log("ARCHIVO:....");
-                var uploaded = document.getElementById("file-input");
-                var reader = new FileReader();
+                // var uploaded = document.getElementById("file-input");
+                // var reader = new FileReader();
 
-                reader.onload = function () {
-                    var arrayBuffer = this.result,
-                        array = new Uint8Array(arrayBuffer),
-                        binaryString = btoa(String.fromCharCode.apply(null, array));
-                    this.archivoAdjunto = binaryString;
+                // reader.onload = function () {
+                //     var arrayBuffer = this.result,
+                //         array = new Uint8Array(arrayBuffer),
+                //         binaryString = btoa(String.fromCharCode.apply(null, array));
+                //     this.archivoAdjunto = binaryString;
 
-                    this.tareaData = {
-                        'nombreTarea': app.$scope.nombreTarea,
-                        'descripcionTarea': app.$scope.descripcionTarea,
-                        'idModulo': usuarioModel.datosUsuario.idModulo,
-                        'tipoTarea': app.$scope.tipoTarea,
-                        'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
-                        'estado': 'ACT',
-                        'criterios': criteriosSeleccionados,
-                        'fechaInicio': new Date(),
-                        'fechaFin': app.$scope.fechaFin,
-                        'archivoAdjunto': this.archivoAdjunto,
-                        'tareasUsuarios': tareasModel.usuariosSeleccionados
-                    };
-                    //debugger;
-                    app.$http.post('http://localhost:8080/sistEval/ws/crearTarea/', this.tareaData).then(function (data) {
-                        console.log("tarea");
-                        console.log(data);
-                        toastr.success('Tarea creada');
-                        resetFields();
-                    }, function (data) {
-                        console.log("ERROR");
-                        toastr.success('Error al crear tarea');
-                    });
-                    console.log(binaryString);
-                }
+                //     this.tareaData = {
+                //         'nombreTarea': app.$scope.nombreTarea,
+                //         'descripcionTarea': app.$scope.descripcionTarea,
+                //         'idModulo': usuarioModel.datosUsuario.idModulo,
+                //         'tipoTarea': app.$scope.tipoTarea,
+                //         'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
+                //         'estado': 'ACT',
+                //         'criterios': criteriosSeleccionados,
+                //         'fechaInicio': new Date(),
+                //         'fechaFin': app.$scope.fechaFin,
+                //         'archivoAdjunto': this.archivoAdjunto,
+                //         'tareasUsuarios': tareasModel.usuariosSeleccionados
+                //     };
+                //     console.log(binaryString);
+                // }
+                let loading_screen = pleaseWait({
+                    backgroundColor: '#666666',
+                    loadingHtml: '<div class="sk-cube-grid"><div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div><div class="sk-cube sk-cube3"></div><div class="sk-cube sk-cube4"></div><div class="sk-cube sk-cube5"></div><div class="sk-cube sk-cube6"></div><div class="sk-cube sk-cube7"></div><div class="sk-cube sk-cube8"></div><div class="sk-cube sk-cube9"></div></div>'
+                });
+                app.$http.post('http://localhost:8080/sistEval/ws/crearTarea/', this.tareaData).then(function (data) {
+                    loading_screen.finish();
+                    console.log("tarea");
+                    console.log(data);
+                    toastr.success('Tarea creada');                    
+                    console.log('UsuariosModulo >>>>>>>',app.tareasModel.usuariosModulo);                    
+                    resetFields();
+                    console.log('UsuariosModulo >>>>>>>',app.tareasModel.usuariosModulo);
+                }, function (data) {
+                    loading_screen.finish();
+                    console.log("ERROR");
+                    toastr.error('Error al crear tarea');
+                });
                 // reader.readAsArrayBuffer(uploaded.files[0]);
             } else {
                 toastr.warning('Seleccione los docentes de la tarea');
@@ -321,6 +329,6 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
 
 );*/
 
-nuevaTareaController.$inject = ['$scope', '$http', 'tareasModel', 'usuarioModel', 'ngDialog'];
+nuevaTareaController.$inject = ['$scope', '$http', 'tareasModel', 'usuarioModel', 'ngDialog','FileUploader','$sessionStorage'];
 
 module.exports = nuevaTareaController; 

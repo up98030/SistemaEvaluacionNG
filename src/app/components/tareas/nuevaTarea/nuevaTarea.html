@@ -10,6 +10,39 @@
             {{tipo.nombreTipoTarea}}
           </md-option>
         </md-select>
+        <!-- *************************** UPLOADER TEST ************************************* -->
+        <!--Single
+        <input type="file" nv-file-select="" uploader="uploader" />
+        <p>Queue length: {{ uploader.queue.length }}</p>
+
+        <tr ng-repeat="item in uploader.queue[0]">
+          <td><strong>{{ item.file.name }}</strong></td>
+          <td><strong>{{ item }}</strong></td>
+          <td nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+          <td ng-show="uploader.isHTML5">
+          </td>
+          <div class="progress" style="margin-bottom: 0;">
+            <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+          </div>
+          <td>
+            <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                    </button>
+            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                    </button>
+            <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+                            <span class="glyphicon glyphicon-upload"></span> Upload all
+                        </button>
+            <button type="button" class="btn btn-success btn-s" ng-click="tareas.uploadSingle()" ng-disabled="!uploader.getNotUploadedItems().length">
+                            <span class="glyphicon glyphicon-upload"></span> Upload single
+                        </button>
+          </td>
+        </tr>-->
+        <!--<button type="button" ng-click="tareas.uploader.upload()">Upload</button>-->
+        <!--<element nv-file-drop uploader="{FileUploader}"></element>-->
+        <!-- *************************** UPLOADER TEST ************************************* -->
+
 
         <md-input-container>
           <label>Nombre:</label>
@@ -20,7 +53,7 @@
           <textarea ng-model="descripcionTarea " md-maxlength="150" name="descripcionTarea" required rows="5 " md-select-on-focus></textarea>
         </md-input-container>
 
-        <md-button class="md-raised ">
+        <md-button class="md-raised">
           <i class="fa fa-thumb-tack " aria-hidden="true " style="font-size:17px; "></i>
           <label for="file-input ">Adjuntar</label>
         </md-button>
@@ -49,7 +82,7 @@
           <h4>Criterios de evaluación:</h4>
           <div ng-repeat='criterio in criteriosEvaluacion'>
             <md-checkbox ng-checked="existsCriterios(criterio, criteriosSelected) " ng-click="toggleCriterios(criterio, criteriosSelected) ">
-            {{ criterio.valorCriterio }}
+              {{ criterio.valorCriterio }}
             </md-checkbox>
           </div>
         </div>
@@ -69,21 +102,21 @@
   .sidenav {
     border-right: 2px solid #889ea6;
   }
-  
+
   .md-calendar-day-header {
     background-color: #dddddd;
   }
-  
+
   .md-datepicker-calendar-pane {
     background-color: #f6f6f6;
   }
-  
+
   .md-calendar-date-selection-indicator .md-focus .md-calendar-selected-date {}
-  
+
   .md-calendar-date.md-focus.md-calendar-selected-date .md-calendar-date-selection-indicator {
     background-color: #325b84;
   }
-  
+
   .md-calendar-month-label {
     font-weight: bold;
   }

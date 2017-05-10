@@ -1,11 +1,13 @@
 let app;
-function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
+function tareasController ($scope,$http,$state,tareasModel,usuarioModel,$localStorage, $sessionStorage){
 	app = this;
     this.test = "TESTSS";
 	this.$scope = $scope;
 	this.$http = $http;
 	this.$state = $state;
 	this.tareasModel = tareasModel;
+    this.$localStorage = $localStorage;
+    this.$sessionStorage = $sessionStorage;
     this.observacionesDocente;
     this.usuarioModel = usuarioModel;
 	console.log("DATOS USUARIO tareasCtrl");
@@ -74,8 +76,9 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
     
     /************************** Consulta las tareas del usuario **************************/
     this.cargarTareas = function(estadoTarea){
+        console.log('Storage tareas >>>', this.$sessionStorage.userData);
         this.tareasUsuariosVO = {
-            "idUsuario": usuarioModel.datosUsuario.idUsuario,
+            "idUsuario": this.$sessionStorage.userData.idUsuario,
             "estado":estadoTarea,
             "tareasEntity":{
                 "tipoTarea":'TAREA'
@@ -133,6 +136,6 @@ function tareasController ($scope,$http,$state,tareasModel,usuarioModel){
 
 }
 
-tareasController.$inject = ['$scope','$http','$state','tareasModel','usuarioModel'];
+tareasController.$inject = ['$scope','$http','$state','tareasModel','usuarioModel','$localStorage', '$sessionStorage'];
 
 module.exports = tareasController; 
