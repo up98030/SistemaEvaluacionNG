@@ -1,6 +1,6 @@
 let app;
 angular.module('myApp.principal', ['ngDialog'])
-    .controller('principalCtrl', ['$scope', 'ngDialog', '$http', 'tareasModel', 'usuarioModel', function ($scope, ngDialog, $http, tareasModel, usuarioModel) {
+    .controller('principalCtrl', ['$scope', 'ngDialog', '$http', 'tareasModel', 'usuarioModel', '$localStorage', '$sessionStorage', function ($scope, ngDialog, $http, tareasModel, usuarioModel, $localStorage, $sessionStorage) {
         this.aboutText = 'This is the about component!';
         app = this;
         this.$scope = $scope;
@@ -8,37 +8,18 @@ angular.module('myApp.principal', ['ngDialog'])
         this.criterios = {};
         this.resumenNoEntregadas = 0;
         this.usuarioModel = usuarioModel;
+        this.$localStorage = $localStorage;
+        this.$sessionStorage = $sessionStorage;
+        this.userData = this.$sessionStorage.userData;
+        this.$scope.tareasPendientes = this.$localStorage.userSummary.tareasPendientes;
+        this.$scope.reunionesPendientes = this.$localStorage.userSummary.reunionesPendientes;
+        this.$scope.PromedioNotas = this.$localStorage.userSummary.PromedioNotas;
+        this.$scope.nombreUsuario = this.$sessionStorage.userData.nombreCompleto;
+        console.log("LocalStorage DASSHH", this.$localStorage);
+        console.log('SessionStorage >> ', this.$sessionStorage);
 
         this.$http = $http;
         this.ngDialog = ngDialog;
-
-        this.$scope.openDialog = function () {
-            alert('asdf');
-            console.log(this.ngDialog);
-            this.ngDialog.open(
-                {
-                    template: 'app/components/principal/dialog.html',
-                    constroller: [$scope, function ($scope) {
-                        console.log('hihi');
-                    }],
-                    className: 'ngdialog-theme-default'
-                }
-            );
-        };
-
-        this.openD = function () {
-            alert('asdf');
-            console.log(this.ngDialog);
-            this.ngDialog.open(
-                {
-                    template: 'app/components/principal/dialog.html',
-                    constroller: [$scope, function ($scope) {
-                        console.log('hihi');
-                    }],
-                    className: 'ngdialog-theme-default'
-                }
-            );
-        };
 
         this.cargarReportes = function () {
             var estado = null;

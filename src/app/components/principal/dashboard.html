@@ -1,123 +1,134 @@
 <div ng-controller="principalCtrl as principal">
     <div ui-view='header'></div>
-    <div layout="row" style=" height:12vh;background-color:#f6f6f6;">
-        <div flex="20" style=" width:100%;"></div>
-        <div flex="60" style=" width:100%; text-align:center;">
-                <!--<i class="fa fa-pencil-square-o subHeader-icons" aria-hidden="true">
-                    <span class="menu-subHeader">Nuevo</span>
-                </i> -->
-                <!-- <p style="display:inline-block; float:left;">Nuevo</p> -->
-                <i class="fa fa-user-circle-o subHeader-icons" aria-hidden="true">
-                    <span class="menu-subHeader">Mi Perfil</span>
-                </i>                
-                <!-- <i class="fa fa-file-text subHeader-icons" aria-hidden="true" style="font-size:2em; margin: 2% 5% 5% 5%;">
-                    <span class="menu-subHeader">Notas</span>
-                </i>
-                -->
+    <div layout="row">
+        <div flex="100" class="sidenav">
+            <div ui-view='left'></div>
         </div>
-                <div flex="20" style=" width:100%;"></div>
-               <!-- <h1 sytle="border:1px solid red">{{resumenNoEntregadas}}</h1> -->
-    </div>
-                <div layout="row" style="width:90%; height:100vh; margin: 8vh 5vw">
-                <div flex="33">
-                    <md-button style="width:100%; height:auto; z-index:0;   " ui-sref="tareas"> 
-                        <md-card style="text-align:center;">
-                             <!--<img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">-->
-                             <i class="fa fa-bookmark-o" aria-hidden="true" style="font-size:28vh; margin-bottom:25px;"></i>
+        <!--<div flex="10"></div>-->
+<!--<div flex="80">
 
-                            <md-card-title>
-                              <md-card-title-text>
-                                <span class="md-headline">Tareas</span>
-                              </md-card-title-text>
-                            </md-card-title>
-                            <md-card-content>
-                                3 Tareas pendientes
-                                <!-- 
+</div>-->
+    </div>
+
+    <!--<div layout="row" style=" height:12vh;background-color:#f6f6f6;">
+        <div flex="20" style=" width:100%; line-height:85px;">
+            <h5>Bienvenido! <span>{{nombreUsuario}}</span></h5>
+        </div>
+        <div flex="30" style=" width:100%; text-align:center;">
+            <i class="fa fa-user-circle-o subHeader-icons" ui-sref="perfil" aria-hidden="true">                    
+                    <span class="menu-subHeader">Mi Perfil</span>
+                </i>
+        </div>
+        <div flex="30" style=" width:100%; text-align:center;">
+            <i class="fa fa-user-circle-o subHeader-icons" ui-sref="principal" aria-hidden="true">                    
+                    <span class="menu-subHeader">Resumen</span>
+                </i>
+        </div>
+        <div flex="20" style=" width:100%;"></div>
+        <!-- <h1 sytle="border:1px solid red">{{resumenNoEntregadas}}</h1> -->
+    <!--</div>-->
+    <div layout="row" style="width:90%; height:100vh; margin: 8vh 5vw">
+        <div flex="33">
+            <md-button style="width:100%; height:auto; z-index:0;   " ui-sref="tareas">
+                <md-card style="text-align:center;">
+                    <!--<img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">-->
+                    <i class="fa fa-bookmark-o" aria-hidden="true" style="font-size:28vh; margin-bottom:25px;"></i>
+
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Tareas</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        {{tareasPendientes}} Tareas pendientes
+                        <!-- 
                                 <div style="width:100% height: auto;border-bottom:1px solid #d6d6d6;"></div>
                                 
                                 <h4 style="z-index="2"><a ui-sref="calendario">Subir cronograma</a></h4>
                                 <h4><a href="#">Objetivos semestre</a></h4>
                                 -->
-                            </md-card-content>
-                            <md-card-actions layout="row" layout-align="end center">
-                            </md-card-actions>
-                        </md-card>
-                    </md-button>
-                </div>
-                <div flex="33">
-                    <md-button style="width:100%; height:auto;"" ui-sref="reuniones"> 
-                        <md-card style="text-align:center;">
-                             <!--<img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">-->
-                             <i class="fa fa-calendar" aria-hidden="true" style="font-size:28vh; margin-bottom:25px;"></i>                         
+                    </md-card-content>
+                    <md-card-actions layout="row" layout-align="end center">
+                    </md-card-actions>
+                </md-card>
+            </md-button>
+        </div>
+        <div flex="33">
+            <md-button style="width:100%; height:auto;" " ui-sref="reuniones "> 
+                        <md-card style="text-align:center; ">
+                             <!--<img ng-src="{{imagePath}} " class="md-card-image " alt="Washed Out ">-->
+                             <i class="fa fa-calendar " aria-hidden="true " style="font-size:28vh; margin-bottom:25px; "></i>                         
                             <md-card-title>
                               <md-card-title-text>
-                                <span class="md-headline">Reuniones</span>
+                                <span class="md-headline ">Reuniones</span>
                               </md-card-title-text>
                             </md-card-title>
                             <md-card-content>
-                                2 reuniones se aproximan
+                                {{reunionesPendientes}} sin revisar
                                  <!-- 
-                                <div style="width:100% height: auto;border-bottom:1px solid #d6d6d6;"></div>
+                                <div style="width:100% height: auto;border-bottom:1px solid #d6d6d6; "></div>
                                  <h4 style="z-index="2"><a ui-sref="calendario">Reunion semanal</a></h4>
-                                <h4><a href="#">Reunion consejo</a></h4>
-                                -->
-                            </md-card-content>
-                            <md-card-actions layout="row" layout-align="end center">
-                            </md-card-actions>
-                        </md-card>
-                    </md-button>    
-                </div>
-                <div flex="33">                    
-                    <md-button style="width:100%; height:auto;"" ui-sref="misNotas"> 
-                        <md-card style="text-align:center;">
-                             <i class="fa fa-line-chart" aria-hidden="true" style="font-size:28vh; margin-bottom:25px;"></i>                         
-                             <!--<img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">-->
+                <h4><a href="#">Reunion consejo</a></h4>
+                -->
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="end center">
+                </md-card-actions>
+                </md-card>
+            </md-button>
+        </div>
+        <div flex="33">
+            <md-button style="width:100%; height:auto;" " ui-sref="misNotas "> 
+                        <md-card style="text-align:center; ">
+                             <i class="fa fa-line-chart " aria-hidden="true " style="font-size:28vh; margin-bottom:25px; "></i>                         
+                             <!--<img ng-src="{{imagePath}} " class="md-card-image " alt="Washed Out ">-->
                             <md-card-title>
                               <md-card-title-text>
-                                <span class="md-headline">Notas</span>
+                                <span class="md-headline ">Notas</span>
                               </md-card-title-text>
                             </md-card-title>
                             <md-card-content>
-                                65% es su nota
+                               {{PromedioNotas}} es su promedio
+                               
                                  <!-- 
-                                <div style="width:100% height: auto;border-bottom:1px solid #d6d6d6;"></div>
+                                <div style="width:100% height: auto;border-bottom:1px solid #d6d6d6; "></div>
                                  <h4 style="z-index="2"><a ui-sref="calendario">35 tareas entregadas</a></h4>
-                                <h4><a href="#">0 Tareas incumplidas</a></h4> 
-                                -->
-                            </md-card-content>
-                            <md-card-actions layout="row" layout-align="end center">
-                            </md-card-actions>
-                        </md-card>
-                    </md-button>    
-                </div>
-                </div>
-                </div>
-
-    </div>
-    <div class="footer">
-        <div layout="row" style="text-align:center;">
-
+                <h4><a href="#">0 Tareas incumplidas</a></h4>
+                -->
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="end center">
+                </md-card-actions>
+                </md-card>
+            </md-button>
         </div>
     </div>
+</div>
+
+</div>
+<div class="footer">
+    <div layout="row" style="text-align:center;">
+
+    </div>
+</div>
 
 </div>
 
 <style>
-.footer{
-    width:100%;
-    position:relative;
-    height:50px;
-    bottom:0px;
-    background-color: #1e476b;
-    color:#fff;
-}
-.contenedor-dashboard{
-    /*border:1px solid;*/
-   /* margin:5px;*/
-}
-.contenedor-principal-dashboard{
-    text-align:center;
-    padding:2% ;
-}
-   
+    .footer {
+        width: 100%;
+        position: relative;
+        height: 50px;
+        bottom: 0px;
+        background-color: #1e476b;
+        color: #fff;
+    }
+
+    .contenedor-dashboard {
+        /*border:1px solid;*/
+        /* margin:5px;*/
+    }
+
+    .contenedor-principal-dashboard {
+        text-align: center;
+        padding: 2%;
+    }
 </style>

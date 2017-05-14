@@ -1,7 +1,7 @@
 let app;
 /*angular.module('myApp.nuevaTarea', [])
 .controller('nuevaTareaCtrl',['$scope','$http','tareasModel',function($scope,$http,tareasModel){*/
-function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog,FileUploader,$sessionStorage) {
+function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog, FileUploader, $sessionStorage) {
     this.welcomeText = 'Welcome to myApp Home!';
     console.log("$$$$$$$$$$ MODELO");
     console.log(tareasModel.test);
@@ -33,23 +33,23 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
 
     this.archivoAdjunto = null;
 
-     this.$scope.uploader = new FileUploader({
-            url: 'http://localhost:8080/sistEval/ws/crearTareaArchivo/'
-     });
+    this.$scope.uploader = new FileUploader({
+        url: 'http://localhost:8080/sistEval/ws/crearTareaArchivo/'
+    });
 
-     this.$scope.uploader.onAfterAddingFile = function(fileItem) {
-            console.info('onAfterAddingFile', fileItem);
-            console.info('UPLOADER>>>> --- onAfterAddingFile',  app.$scope.uploader);
-        };
-        this.$scope.uploader.onBeforeUploadItem = function(item) {
-            console.info('onBeforeUploadItem', item);
-        };
+    this.$scope.uploader.onAfterAddingFile = function (fileItem) {
+        console.info('onAfterAddingFile', fileItem);
+        console.info('UPLOADER>>>> --- onAfterAddingFile', app.$scope.uploader);
+    };
+    this.$scope.uploader.onBeforeUploadItem = function (item) {
+        console.info('onBeforeUploadItem', item);
+    };
 
-        this.uploadSingle = function(){
-            this.$scope.uploader.uploadAll();
-        }
+    this.uploadSingle = function () {
+        this.$scope.uploader.uploadAll();
+    }
 
-     console.log('uploader>>>>>');
+    console.log('uploader>>>>>');
     //  console.log(this.uploader.upload());
 
     this.seleccionarUsuarios = function () {
@@ -57,6 +57,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
         this.ngDialog.open({
             template: 'app/components/tareas/nuevaTarea/usuariosTareaModal.html',
             className: 'ngdialog-theme-default',
+            showClose: false,
             controller: ['$scope', '$http', 'usuarioModel', 'tareasModel', function ($scope, $http, usuarioModel, tareasModel) {
                 $scope.usuariosModulo = tareasModel.usuariosModulo;
                 this.usuariosSelected = [];
@@ -291,10 +292,10 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
                     loading_screen.finish();
                     console.log("tarea");
                     console.log(data);
-                    toastr.success('Tarea creada');                    
-                    console.log('UsuariosModulo >>>>>>>',app.tareasModel.usuariosModulo);                    
+                    toastr.success('Tarea creada');
+                    console.log('UsuariosModulo >>>>>>>', app.tareasModel.usuariosModulo);
                     resetFields();
-                    console.log('UsuariosModulo >>>>>>>',app.tareasModel.usuariosModulo);
+                    console.log('UsuariosModulo >>>>>>>', app.tareasModel.usuariosModulo);
                 }, function (data) {
                     loading_screen.finish();
                     console.log("ERROR");
@@ -329,6 +330,6 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
 
 );*/
 
-nuevaTareaController.$inject = ['$scope', '$http', 'tareasModel', 'usuarioModel', 'ngDialog','FileUploader','$sessionStorage'];
+nuevaTareaController.$inject = ['$scope', '$http', 'tareasModel', 'usuarioModel', 'ngDialog', 'FileUploader', '$sessionStorage'];
 
 module.exports = nuevaTareaController; 
