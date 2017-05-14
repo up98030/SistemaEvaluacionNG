@@ -62,6 +62,7 @@ angular.module('myApp.home', [])
 					"password": this.passwd
 				};
 				console.log(data);
+				delete data.data['password'];
 				app.$sessionStorage.userData = data.data;
 				console.log(app.$sessionStorage);
 				app.usuarioModel.datosUsuario = data.data;

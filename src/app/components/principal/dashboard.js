@@ -17,9 +17,30 @@ angular.module('myApp.principal', ['ngDialog'])
         this.$scope.nombreUsuario = this.$sessionStorage.userData.nombreCompleto;
         console.log("LocalStorage DASSHH", this.$localStorage);
         console.log('SessionStorage >> ', this.$sessionStorage);
+        this.passwordConfirmation = "";
 
         this.$http = $http;
         this.ngDialog = ngDialog;
+
+        this.actualizarUsuario = function () {
+            console.log('PASSWORD ', this.userData.password);
+            if (this.userData.password && this.userData.password !== undefined && this.userData.password !== null && this.userData.password !== "" && this.userData.password !== " ") {
+                if (this.passwordConfirmation !== this.userData.password) {
+                    toastr.error('Las contraseñas no coinciden');
+                    return;
+                }
+            }
+            console.log('this.userData >>>>>>>>>>>>> ', this.userData);
+            this.$http.post('http://localhost:8080/sistEval/ws/actualizarUsuario/', this.userData).then(function (data) {
+                if(app.userData.password){
+                    app.userData.password = "";
+                    app.passwordConfirmation = "";
+                }
+                toastr.success('Usuario actualizado');
+            }, function (error) {
+                toastr.error('Error al actualizar datos usuario');
+            });
+        }
 
         this.cargarReportes = function () {
             var estado = null;
