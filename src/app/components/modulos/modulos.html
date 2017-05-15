@@ -1,6 +1,9 @@
 <div ui-view='header'></div>
-    <div ng-controller="modulosCtrl as modulos">
-    	{{modulos.welcomeText}}
+<div layout="row">
+    <div flex="100" class="sidenav">
+        <div ui-view='left'></div>
     </div>
-
-<h1>Modulos</h1>
+</div>
+<div ng-controller="modulosCtrl as modulos">
+    <div ui-grid="modulos.gridOptions" ui-grid-selection class="grid" selectable></div>
+</div>

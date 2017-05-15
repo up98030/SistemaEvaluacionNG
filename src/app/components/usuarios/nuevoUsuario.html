@@ -1,58 +1,108 @@
 <div ui-view='header'></div>
 <div ng-controller="usuariosCtrl as usuarios">
-	<div ui-view='left'></div>	
+	<div ui-view='left'></div>
 
 	<div layout="row">
-<div flex="80" style="margin-left:5%;">
-		
-      	<md-input-container>
-	        <label>Nombre usuario:</label>
-	        <input ng-model="nombreUsuario">
-      	</md-input-container>
+		<div flex="80" style="margin-left:5%;">
 
-      	<md-input-container>
-	        <label>Correo electrónico:</label>
-	        <input ng-model="correoUsuario">
-      	</md-input-container>
+			<md-input-container>
+				<label>Nombre usuario:</label>
+				<input ng-model="nombreUsuario">
+			</md-input-container>
 
-      	<md-input-container>
-	        <label>Contraseña:</label>
-	        <input ng-model="password">
-      	</md-input-container>
+			<md-input-container>
+				<label>Correo electrónico:</label>
+				<input ng-model="correoUsuario">
+			</md-input-container>
 
-      	<md-input-container>
-	        <label>Nombres:</label>
-	        <input ng-model="nombresUsuario">
-      	</md-input-container>
+			<md-input-container>
+				<label>Contraseña:</label>
+				<input ng-model="password">
+			</md-input-container>
 
-      	<md-input-container>
-	        <label>Apellidos:</label>
-	        <input ng-model="apellidosUsuario">
-      	</md-input-container>
+			<md-input-container>
+				<label>Nombres:</label>
+				<input ng-model="nombresUsuario">
+			</md-input-container>
 
-      	<md-input-container>
-	        <label>Perfil:</label>
-	        <input ng-model="perfilUsuario">
-      	</md-input-container>
+			<md-input-container>
+				<label>Apellidos:</label>
+				<input ng-model="apellidosUsuario">
+			</md-input-container>
 
-      	<md-input-container>
-	        <label>Módulo:</label>
-	        <input ng-model="moduloUsuario">
-      	</md-input-container>
+			<div layout="row" style="width:100%; text-align:center;margin-left:15%;">
+				<div flex="50">
+					<md-input-container>
+						<md-button style="width:50%; height:auto; z-index:0;" ng-click="usuarios.seleccionarPerfil();">
+							<md-card style="text-align:center;">
+								<!--<img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">-->
+								<i class="fa fa-id-badge" aria-hidden="true" style="font-size:12vw; margin-bottom:3vw;"></i>
 
-      	<div layout="row" style="margin-top:1%;">
-        	<md-button ng-click="usuarios.guardarUsuario()" class="btn-guardar-usuarios">Crear</md-button>	
-        </div>
-			
-	</div>	
+								<md-card-title>
+									<md-card-title-text>
+										<span class="md-headline" style="font-size:1.5vw;" ng-hide="usuarios.usuarioModel.perfilNuevoUsuario.nombrePerfil">Asignar Perfil</span>
+										<span class="md-headline" style="font-size:1.5vw;" ng-show="usuarios.usuarioModel.perfilNuevoUsuario.nombrePerfil">
+											Perfil
+											</span>
+									</md-card-title-text>
+								</md-card-title>
+								<md-card-content ng-show="usuarios.usuarioModel.perfilNuevoUsuario.nombrePerfil" style="font-size:1.5vw;">
+									{{usuarios.usuarioModel.perfilNuevoUsuario.nombrePerfil}}
+								</md-card-content>
+								<md-card-actions layout="row" layout-align="end center">
+								</md-card-actions>
+							</md-card>
+						</md-button>
+
+						<!--<label>Perfil:</label>
+	        <input ng-model="perfilUsuario">-->
+					</md-input-container>
+				</div>
+				<div flex="50">
+					<md-input-container>
+						<md-button style="width:50%; height:auto; z-index:0;" ng-click="usuarios.seleccionarModulo();">
+							<md-card style="text-align:center;">
+								<!--<img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">-->
+								<i class="fa fa-share-alt-square" aria-hidden="true" style="font-size:12vw; margin-bottom:3vw;"></i>
+
+								<md-card-title>
+									<md-card-title-text>
+										<span class="md-headline" style="font-size:1.5vw;" ng-hide="usuarios.usuarioModel.moduloNuevoUsuario">Asignar Módulo</span>
+										<span class="md-headline" style="font-size:1.5vw;" ng-show="usuarios.usuarioModel.moduloNuevoUsuario">Módulo</span>
+									</md-card-title-text>
+								</md-card-title>
+								<md-card-content ng-show="usuarios.usuarioModel.moduloNuevoUsuario.nombreModulo" style="font-size:1.5vw;">
+									{{usuarios.usuarioModel.moduloNuevoUsuario.nombreModulo}}
+								</md-card-content>
+								<md-card-actions layout="row" layout-align="end center">
+								</md-card-actions>
+							</md-card>
+						</md-button>
+
+						<!--<label>Perfil:</label>
+	        <input ng-model="perfilUsuario">-->
+					</md-input-container>
+				</div>
+			</div>
+
+			<!--<md-input-container>
+				<label>Módulo:</label>
+				<input ng-model="moduloUsuario">
+			</md-input-container>-->
+
+			<div layout="row" style="margin-top:1%;">
+				<md-button ng-click="usuarios.guardarUsuario()" class="btn-guardar-usuarios">Crear</md-button>
+			</div>
+
+		</div>
 	</div>
 </div>
 </div>
 
 <style>
-	.btn-guardar-usuarios{
-		background-color:#003366 !important;
-		margin-left:50%;
-		color:#fff;
+	.btn-guardar-usuarios {
+		background-color: #003366 !important;
+		margin-left: 50%;
+		color: #fff;
 	}
 </style>

@@ -20,15 +20,15 @@
                 <input ng-model="principal.userData.correoUsuario">
             </md-input-container>
 
-            <div layout="row" style="margin-top:1%;border:1px solid #999999;border-radius:12px;">
+            <div layout="row" style="margin-top:1%;border:1px solid #999999;border-radius:6px;border-top:1px solid #27779a;">
                 <div flex="100">
-                    <div style="text-align:center; background-color:#27779a;">
+                    <div style="text-align:center; background-color:#27779a;border-top-radius:6px;z-index:99;">
                         <div style="padding:5px;">
                             <i class="fa fa-lock shadow-depth" style="font-size:2em;" aria-hidden="true"></i>
                             <!--<div class="shadow-depth"><strong>Contraseña</strong></div><strong>-->
                         </div>
                     </div>
-                    <div style="padding:1%">
+                    <div style="padding:1%;">
                     <md-input-container>
                         <label>Nueva contraseña:</label>
                         <input type="password" ng-model="principal.userData.password" ng-trim="true">
