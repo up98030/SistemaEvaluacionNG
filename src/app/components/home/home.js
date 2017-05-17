@@ -67,6 +67,23 @@ angular.module('myApp.home', [])
 				console.log(app.$sessionStorage);
 				app.usuarioModel.datosUsuario = data.data;
 
+
+				let periodoActivo = "";
+				app.$http.get('http://localhost:8080/sistEval/ws/periodos/').
+					success(function (data) {
+						console.log("Periodos");
+						console.log(data);
+						data.filter(function (p) {
+							console.log('PP>> ', p);
+							if (p.estado === 'ACT') {
+								periodoActivo = p;
+							}
+						});
+						console.log('Periodo activo >> ', periodoActivo);
+						app.$sessionStorage.userData.idPeriodo = periodoActivo['idPeriodo'];
+
+						
+
 				/******************** RESUMEN DE NOTAS ******************/
 				app.$http.post('http://localhost:8080/sistEval/ws/summary/', angular.toJson(app.$sessionStorage.userData)).then(function (data) {
 					app.$state.go('principal');
@@ -77,6 +94,9 @@ angular.module('myApp.home', [])
 					toastr.error("No se pudo obtener resumen de tareas y notas usuario");
 					loading_screen.finish();
 				});
+
+
+					});
 			}, function (data) {
 				toastr.error("Usuario o contraseña incorrectos");
 				loading_screen.finish();

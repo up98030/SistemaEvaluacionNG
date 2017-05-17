@@ -1,0 +1,17 @@
+<div class="modalHeader">Nuevo período</div>
+
+<md-input-container>
+    <label>Nombre:</label>
+    <input ng-model="nombrePeriodo">
+</md-input-container>
+
+    <div layout="row" style="text-align:center; padding:0 25%;">
+        <div flex="50">
+            <md-button ng-click="acceptNuevoPeriodo()" class="md-primary md-raised" style="background-color:#436abc;">
+                Aceptar</md-button>
+        </div>
+        <div flex="50">
+            <md-button ng-click="cancelNuevoPeriodo()" class="md-primary md-raised" style="background-color:#e3e3e3; color:#383838;">
+                Cancelar</md-button>
+        </div>
+    </div>

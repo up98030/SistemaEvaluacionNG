@@ -9,6 +9,23 @@ usuariosModule.config(function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise("/");
 	
 	$stateProvider
+    .state('settings',{
+        url:"/settings",
+        views:{
+             "": {
+                templateUrl:"app/components/settings/settings.html"
+            },
+            "left@settings":{
+                templateUrl:"app/shared/header/settingsHeader.html"
+            },
+            "header@settings":{
+                templateUrl:"app/shared/header/header.html"
+            },
+            "footer@settings":{
+                templateUrl:"app/shared/footer.html"
+            }
+        }
+    })
     .state('nuevoModulo',{
         url:"/nuevoModulo",
         views:{

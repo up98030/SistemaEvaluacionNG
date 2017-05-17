@@ -1,0 +1,113 @@
+<div ui-view='header'></div>
+<div layout="row">
+    <div flex="100" class="sidenav">
+        <div ui-view='left'></div>
+    </div>
+</div>
+<div ng-controller="usuariosCtrl as usuarios">
+    <div flex="100" style="text-align:center;">
+
+        <div class="periodos-content">
+            <div class="periodos-header">
+                Período activo
+            </div>
+            <div style="border: 1px solid #b2b2b2;">
+                <h3>{{periodoActivo}}</h3>
+            </div>
+        </div>
+
+        <div style="border: 1px solid #b2b2b2; margin:3% 30%; border-radius:10px;">
+            <div class="buttons-header">
+                <i class="fa fa-cogs" aria-hidden="true"></i>
+            </div>
+            <div style="margin-top:1%;">
+                <md-button ng-click="usuarios.seleccionarPeriodo()" class="btn-select-periodo">Seleccionar período</md-button>
+            </div>
+            <div style="margin-top:1%;">
+                <md-button ng-click="usuarios.nuevoPeriodo()" class="btn-nuevo-periodo">Nuevo período</md-button>
+            </div </div>
+        </div>
+    </div>
+
+    <style>
+        .fa-cogs {
+            font-size: 1.5em;
+            margin-top: 1px;
+        }
+
+        .buttons-header {
+            text-align: center;
+            height: 30px;
+            background-color: #4d5a99;
+            color: #fff;
+        }
+
+        .buttons-header i {
+            color: rgba(0, 0, 0, 0.6);
+            text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .periodos-content {
+            padding: 0 5vw;
+            margin: 0 30%;
+            border-radius: 10px;
+        }
+
+        .btn-select-periodo:focus {
+            background-color: #6b7881 !important;
+            color: #fff;
+        }
+
+        .btn-select-periodo:active {
+            background-color: #6b7881 !important;
+            color: #fff;
+        }
+
+        .btn-select-periodo:visited {
+            background-color: #6b7881 !important;
+            color: #fff;
+        }
+
+        .btn-select-periodo:hover {
+            background-color: #6b7881 !important;
+            color: #fff;
+        }
+
+        .btn-select-periodo {
+            background-color: #8696a2;
+            color: #fff;
+        }
+
+        .btn-nuevo-periodo:focus {
+            background-color: #614856 !important;
+            color: #fff;
+        }
+
+        .btn-nuevo-periodo:hover {
+            background-color: #614856 !important;
+            color: #fff;
+        }
+
+        .btn-nuevo-periodo:active {
+            background-color: #614856 !important;
+            color: #fff;
+        }
+
+        .btn-nuevo-periodo:visited {
+            background-color: #614856 !important;
+            color: #fff;
+        }
+
+        .btn-nuevo-periodo {
+            background-color: #8B687C;
+            color: #fff;
+        }
+
+        .periodos-header {
+            background-color: #4d5a99;
+            height: 8vh;
+            color: #fff;
+            font-weight: bolder;
+            line-height: 8vh;
+        }
+    </style>
