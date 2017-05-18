@@ -101,7 +101,9 @@ angular.module('myApp.tareas', [])
                      {name: "tarea", age: 29},
                      {name: "tarea", age: 34}];
                      
-
+    this.descargarArchivoTarea = function(){
+        alert('asdf');
+    }
    
     console.log(tareasData);
 

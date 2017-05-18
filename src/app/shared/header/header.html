@@ -3,6 +3,11 @@
 </head>
 
 <!-- The top toolbar -->
+<div class="logo">
+	<a href="http://www.ups.edu.ec/" target="_blank">
+		<img ng-src="http://s.pictub.club/2017/05/18/7IPDhQ.png">
+	</a>
+</div>
 <md-toolbar class="md-primary">
 	<div class="md-toolbar-tools">
 		<!--
@@ -62,6 +67,18 @@
 </script>
 
 <style>
+	.logo {
+		position: absolute;
+		padding-top: 1px;
+		z-index: 99;
+		margin-left: 30px;
+	}
+
+	.logo img {
+		-webkit-filter: drop-shadow(5px 5px 5px #222);
+		filter: drop-shadow(9px 3px 4px rgba(0,0,0,0.5));
+	}
+
 	.right-icons {
 		color: rgba(0, 0, 0, 0.6);
 		text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.1);

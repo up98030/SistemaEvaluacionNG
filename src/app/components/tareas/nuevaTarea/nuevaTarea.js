@@ -34,7 +34,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
     this.archivoAdjunto = null;
 
     this.$scope.uploader = new FileUploader({
-        url: 'http://localhost:8080/sistEval/ws/crearTareaArchivo/'
+        url: 'http://localhost:8080/sistEval/ws/uploadFile/'
     });
 
     this.$scope.uploader.onAfterAddingFile = function (fileItem) {
@@ -49,8 +49,28 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
         this.$scope.uploader.uploadAll();
     }
 
-    console.log('uploader>>>>>');
-    //  console.log(this.uploader.upload());
+    this.getBase64 = function (file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            console.log(reader.result);
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+    }
+
+
+    this.upload2 = function () {
+        let formData = new FormData();
+        let file = document.getElementById('fileTest');
+
+        console.log('fileee>> ', file.files[0]);
+        let filename = file.files[0].name;
+        console.log('Extension ', filename.split('.').pop());
+
+        this.getBase64(file.files[0]);
+    }
 
     this.seleccionarUsuarios = function () {
         console.log(this.ngDialog);
@@ -230,78 +250,64 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
                     criteriosSeleccionados = criteriosSeleccionados + e.idCriterio + ",";
                     criteriosSeleccionados = criteriosSeleccionados.slice(0, -1);
                 });
-                /*    
-                       if((app.$scope.tipoTarea.localeCompare("REUNION")) < 0){                
-                           console.log("########## CRITERIOS SELECCIONADOS ##########");
-                       criteriosSeleccionados = criteriosSeleccionados.slice(0,-1);
-                       console.log(criteriosSeleccionados);
-                       }else{
-                           var criteriosSeleccionados = "";
-                       }*/
 
+                let formData = new FormData();
+                let file = document.getElementById('fileTest');
 
-                this.nombreTarea = app.$scope.nombreTarea;
-                this.descripcionTarea = app.$scope.descripcionTarea;
-                this.fechaFin = app.$scope.fechaFin;
-                this.tareaData = {
-                    'nombreTarea': this.nombreTarea,
-                    'descripcionTarea': this.descripcionTarea,
-                    'idModulo': this.$sessionStorage.userData.idModulo,
-                    'tipoTarea': this.$scope.tipoTarea,
-                    'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
-                    'estado': 'ACT',
-                    'criterios': criteriosSeleccionados,
-                    'fechaInicio': new Date(),
-                    'fechaFin': this.$scope.fechaFin,
-                    'archivoAdjunto': this.archivoAdjunto,
-                    'tareasUsuarios': tareasModel.usuariosSeleccionados
+                // formData.append('file', file.files[0]);
+                console.log('fileee>> ', file.files[0]);
+                // let filename = file.files[0].name;
+                filename = file.files[0].name.split('.').pop();
+
+                var reader = new FileReader();
+                reader.readAsDataURL(file.files[0]);
+                reader.onload = function () {
+                    let archivoBase64 = reader.result;
+
+                    this.nombreTarea = app.$scope.nombreTarea;
+                    this.descripcionTarea = app.$scope.descripcionTarea;
+                    this.fechaFin = app.$scope.fechaFin;
+                    this.tareaData = {
+                        'nombreTarea': this.nombreTarea,
+                        'descripcionTarea': this.descripcionTarea,
+                        'idModulo': app.$sessionStorage.userData.idModulo,
+                        'tipoTarea': 'TAR',
+                        'idCreadorTarea': app.$sessionStorage.userData.idUsuario,
+                        'estado': 'ACT',
+                        'criterios': criteriosSeleccionados,
+                        'fechaInicio': new Date(),
+                        'fechaFin': this.fechaFin,
+                        'archivoAdjunto': archivoBase64,
+                        'tareasUsuarios': tareasModel.usuariosSeleccionados,
+                        'extensionArchivo':filename,
+                        'idPeriodo': app.$sessionStorage.userData.idPeriodo
+                    };
+                    console.log("OBJETO TAREA #$$#$#$#$#$#$#$$#$#");
+                    console.log(this.tareaData);
+
+                    console.log("ARCHIVO:....");
+                    let loading_screen = pleaseWait({
+                        backgroundColor: '#666666',
+                        loadingHtml: '<div class="sk-cube-grid"><div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div><div class="sk-cube sk-cube3"></div><div class="sk-cube sk-cube4"></div><div class="sk-cube sk-cube5"></div><div class="sk-cube sk-cube6"></div><div class="sk-cube sk-cube7"></div><div class="sk-cube sk-cube8"></div><div class="sk-cube sk-cube9"></div></div>'
+                    });
+                    app.$http.post('http://localhost:8080/sistEval/ws/crearTarea/', this.tareaData).then(function (data) {
+                        loading_screen.finish();
+                        console.log("tarea");
+                        console.log(data);
+                        toastr.success('Tarea creada');
+                        console.log('UsuariosModulo >>>>>>>', app.tareasModel.usuariosModulo);
+                        resetFields();
+                        console.log('UsuariosModulo >>>>>>>', app.tareasModel.usuariosModulo);
+                    }, function (data) {
+                        loading_screen.finish();
+                        console.log("ERROR");
+                        toastr.error('Error al crear tarea');
+                    });
+
                 };
-                console.log("OBJETO TAREA #$$#$#$#$#$#$#$$#$#");
-                console.log(this.tareaData);
-
-                console.log("ARCHIVO:....");
-                // var uploaded = document.getElementById("file-input");
-                // var reader = new FileReader();
-
-                // reader.onload = function () {
-                //     var arrayBuffer = this.result,
-                //         array = new Uint8Array(arrayBuffer),
-                //         binaryString = btoa(String.fromCharCode.apply(null, array));
-                //     this.archivoAdjunto = binaryString;
-
-                //     this.tareaData = {
-                //         'nombreTarea': app.$scope.nombreTarea,
-                //         'descripcionTarea': app.$scope.descripcionTarea,
-                //         'idModulo': usuarioModel.datosUsuario.idModulo,
-                //         'tipoTarea': app.$scope.tipoTarea,
-                //         'idCreadorTarea': usuarioModel.datosUsuario.idUsuario,
-                //         'estado': 'ACT',
-                //         'criterios': criteriosSeleccionados,
-                //         'fechaInicio': new Date(),
-                //         'fechaFin': app.$scope.fechaFin,
-                //         'archivoAdjunto': this.archivoAdjunto,
-                //         'tareasUsuarios': tareasModel.usuariosSeleccionados
-                //     };
-                //     console.log(binaryString);
-                // }
-                let loading_screen = pleaseWait({
-                    backgroundColor: '#666666',
-                    loadingHtml: '<div class="sk-cube-grid"><div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div><div class="sk-cube sk-cube3"></div><div class="sk-cube sk-cube4"></div><div class="sk-cube sk-cube5"></div><div class="sk-cube sk-cube6"></div><div class="sk-cube sk-cube7"></div><div class="sk-cube sk-cube8"></div><div class="sk-cube sk-cube9"></div></div>'
-                });
-                app.$http.post('http://localhost:8080/sistEval/ws/crearTarea/', this.tareaData).then(function (data) {
-                    loading_screen.finish();
-                    console.log("tarea");
-                    console.log(data);
-                    toastr.success('Tarea creada');
-                    console.log('UsuariosModulo >>>>>>>', app.tareasModel.usuariosModulo);
-                    resetFields();
-                    console.log('UsuariosModulo >>>>>>>', app.tareasModel.usuariosModulo);
-                }, function (data) {
-                    loading_screen.finish();
-                    console.log("ERROR");
-                    toastr.error('Error al crear tarea');
-                });
-                // reader.readAsArrayBuffer(uploaded.files[0]);
+                reader.onerror = function (error) {
+                    console.log('Error: ', error);
+                };
             } else {
                 toastr.warning('Seleccione los docentes de la tarea');
             }
@@ -309,6 +315,22 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
             toastr.warning('Complete todos los campos');
         }
     };
+
+    this.getBase64 = function (file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            console.log(reader.result);
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+    }
+
+
+    this.upload2 = function () {
+        this.getBase64(file.files[0]);
+    }
 
     this.Mydata = [{ name: "ntarea", age: 50 },
     { name: "ntarea", age: 43 },
