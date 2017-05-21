@@ -4,7 +4,7 @@
         <div ui-view='left'></div>
     </div>
 </div>
-<div ng-controller="usuariosCtrl as usuarios">
+<div ng-controller="settingsCtrl as settings">
     <div flex="100" style="text-align:center;">
 
         <div class="periodos-content">
@@ -21,10 +21,10 @@
                 <i class="fa fa-cogs" aria-hidden="true"></i>
             </div>
             <div style="margin-top:1%;">
-                <md-button ng-click="usuarios.seleccionarPeriodo()" class="btn-select-periodo">Seleccionar período</md-button>
+                <md-button ng-click="settings.seleccionarPeriodo()" class="btn-select-periodo">Seleccionar período</md-button>
             </div>
             <div style="margin-top:1%;">
-                <md-button ng-click="usuarios.nuevoPeriodo()" class="btn-nuevo-periodo">Nuevo período</md-button>
+                <md-button ng-click="settings.nuevoPeriodo()" class="btn-nuevo-periodo">Nuevo período</md-button>
             </div </div>
         </div>
     </div>

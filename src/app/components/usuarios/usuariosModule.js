@@ -1,14 +1,33 @@
 var usuariosController = require('./usuarios.js');
+var settingsController = require('../settings/settings.js');
 
 var usuariosModule = angular.module('myApp.usuarios', ['ngAnimate','ngMaterial','ngDialog']);
 
 usuariosModule.controller('usuariosCtrl', usuariosController);
+usuariosModule.controller('settingsCtrl', settingsController);
 
 usuariosModule.config(function($stateProvider, $urlRouterProvider) {
 	
 	$urlRouterProvider.otherwise("/");
 	
 	$stateProvider
+    .state('categorias',{
+        url:"/categorias",
+        views:{
+             "": {
+                templateUrl:"app/components/settings/categorias/categorias.html"
+            },
+            "left@categorias":{
+                templateUrl:"app/shared/header/settingsHeader.html"
+            },
+            "header@categorias":{
+                templateUrl:"app/shared/header/header.html"
+            },
+            "footer@categorias":{
+                templateUrl:"app/shared/footer.html"
+            }
+        }
+    })
     .state('settings',{
         url:"/settings",
         views:{
@@ -27,7 +46,7 @@ usuariosModule.config(function($stateProvider, $urlRouterProvider) {
         }
     })
     .state('nuevoModulo',{
-        url:"/nuevoModulo",
+        url:"/nuevoGrupo",
         views:{
              "": {
                 templateUrl:"app/components/modulos/nuevoModulo.html"
@@ -44,7 +63,7 @@ usuariosModule.config(function($stateProvider, $urlRouterProvider) {
         }
     })
     .state('listaModulos',{
-        url:"/modulos",
+        url:"/grupos",
         views:{
              "": {
                 templateUrl:"app/components/modulos/modulos.html"

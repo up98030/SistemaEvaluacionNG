@@ -263,7 +263,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
                 reader.readAsDataURL(file.files[0]);
                 reader.onload = function () {
                     let archivoBase64 = reader.result;
-
+                    console.log(app.$sessionStorage);
                     this.nombreTarea = app.$scope.nombreTarea;
                     this.descripcionTarea = app.$scope.descripcionTarea;
                     this.fechaFin = app.$scope.fechaFin;
@@ -271,7 +271,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
                         'nombreTarea': this.nombreTarea,
                         'descripcionTarea': this.descripcionTarea,
                         'idModulo': app.$sessionStorage.userData.idModulo,
-                        'tipoTarea': 'TAR',
+                        'tipoTarea': 'TAREA',
                         'idCreadorTarea': app.$sessionStorage.userData.idUsuario,
                         'estado': 'ACT',
                         'criterios': criteriosSeleccionados,

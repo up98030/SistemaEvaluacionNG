@@ -1,0 +1,152 @@
+<div ui-view='header'></div>
+<div layout="row">
+    <div flex="100" class="sidenav">
+        <div ui-view='left'></div>
+    </div>
+</div>
+<div ng-controller="settingsCtrl as settings" layout="column">
+
+
+    <md-content class="md-padding autocomplete" layout="column">
+        <div layout="row">
+            <div flex="30">
+                <md-input-container>
+                    <label>Nueva categoría</label>
+                    <input ng-model="settings.tareasModel.nuevaCategoria.nombreTipoTarea">
+                </md-input-container>
+            </div>
+            <div flex="50">
+                <md-input-container>
+                    <label>Descripción</label>
+                    <input ng-model="settings.tareasModel.nuevaCategoria.descripcionTipoTarea">
+                </md-input-container>
+            </div>
+            <div flex="20">
+                <span>
+            <md-button ng-click="settings.crearCategoria();" class="addCategoryButton">Agregar</md-button>
+            </span>
+            </div>
+        </div>
+
+
+        <!--<md-contact-chips ng-model="settings.contacts" md-contacts="settings.querySearch($query)" md-contact-name="name" md-contact-image="image"
+            md-contact-email="email" md-require-match="true" md-highlight-flags="i" filter-selected="settings.filterSelected" placeholder="">
+        </md-contact-chips>-->
+        <md-list class="fixedRows">
+            <md-subheader class="md-no-sticky">Categorías</md-subheader>
+            <md-list-item class="md-2-line contact-item" ng-repeat="categoria in settings.categorias">
+                <img ng-src="{{categoria.imagen}}" class="md-avatar" alt="{{categoria.nombreTipoTarea}}" />
+                <div class="md-list-item-text compact">
+                    <div style="text-align:right;">
+                        <i class="fa fa-window-close" style="color:#d3325a;" ng-click="settings.eliminarCategoria(categoria.idTiposTareas);" aria-hidden="true"></i>
+                    </div>
+                    <h3>{{categoria.nombreTipoTarea}}</h3>
+                    <p>{{categoria.descripcionTipoTarea}}</p>
+                    <!--<p>{{categoria.calificacion}}</p>-->
+                </div>
+            </md-list-item>
+            <!--<md-list-item class="md-2-line contact-item selected" ng-repeat="(index, contact) in settings.contacts">
+                <img ng-src="{{contact.image}}" class="md-avatar" alt="{{contact.name}}" />
+                <div class="md-list-item-text compact">
+                    <h3>{{contact.name}}</h3>
+                    <p>{{contact.email}}</p>
+                </div>
+            </md-list-item>-->
+        </md-list>
+    </md-content>
+</div>
+
+<style>
+    .addCategoryButton {
+        color: #fff;
+        padding: 4px;
+        background-color: #993299;
+    }
+
+    .addCategoryButton:hover {
+        background-color: #a64ca6 !important;
+    }
+
+    .addCategoryButton:active {
+        background-color: #a64ca6 !important;
+    }
+
+    .addCategoryButton:focus {
+        background-color: #a64ca6 !important;
+    }
+
+    .addCategoryButton:visited {
+        background-color: #a64ca6 !important;
+    }
+
+    .contact-item {
+        float: left;
+    }
+
+    .chipsdemoContactChips md-content.autocomplete {
+        min-height: 250px;
+    }
+
+    .chipsdemoContactChips md-content.autocomplete input {
+        min-width: 400px;
+    }
+
+    .chipsdemoContactChips .md-item-text.compact {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .chipsdemoContactChips .contact-item {
+        box-sizing: border-box;
+    }
+
+    .chipsdemoContactChips .contact-item.selected {
+        opacity: 0.5;
+    }
+
+    .chipsdemoContactChips .contact-item.selected h3 {
+        opacity: 0.5;
+    }
+
+    .chipsdemoContactChips .contact-item .md-list-item-text {
+        padding: 14px 0;
+        max-width: 190px;
+    }
+
+    .chipsdemoContactChips .contact-item .md-list-item-text h3 {
+        margin: 0 !important;
+        padding: 0;
+        line-height: 1.2em !important;
+    }
+
+    .chipsdemoContactChips .contact-item .md-list-item-text h3,
+    .chipsdemoContactChips .contact-item .md-list-item-text p {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    @media (min-width: 960px) {
+        .chipsdemoContactChips .contact-item {
+            float: left;
+            width: 33%;
+        }
+    }
+
+    .chipsdemoContactChips md-contact-chips {
+        margin-bottom: 10px;
+    }
+
+    .chipsdemoContactChips .md-chips {
+        padding: 5px 0 8px;
+    }
+
+    .chipsdemoContactChips .fixedRows {
+        height: 250px;
+        overflow: hidden;
+    }
+    /*
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be foundin the LICENSE file at http://material.angularjs.org/HEAD/license.
+*/
+</style>
