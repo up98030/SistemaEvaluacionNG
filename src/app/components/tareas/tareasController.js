@@ -13,6 +13,20 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
     console.log("DATOS USUARIO tareasCtrl");
     console.log(this.usuarioModel.datosUsuario);
 
+    /****************  CARGAR CATEGORÍAS **************** */
+    this.obtenerCategorias = function () {
+        $http.get('http://localhost:8080/sistEval/ws/getTiposTareas/').then(function (data) {
+            app.tareasModel.categoriasTareas = data.data;
+            console.log('Categorias',app.tareasModel.categoriasTareas);
+            // $scope.gridOptionsCriterios.data = data.data;
+        }, function (error) {
+            toastr.error('Error al obtener categorias');
+        });
+    }
+    this.obtenerCategorias();
+
+    /************************FIN CARGAR CATEGORÍAS********************** */
+
     /************************** Grid de tareas **************************/
     this.gridOptions = {
         enableRowSelection: true,
@@ -80,14 +94,25 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
         this.tareasUsuariosVO = {
             "idUsuario": this.$sessionStorage.userData.idUsuario,
             "estado": estadoTarea,
-            "tareasEntity": {
-                "tipoTarea": 'TAREA'
-            }
+            // "tareasEntity": {
+            //     "tipoTarea": 'TAREA'
+            // }
         }
         console.log(this.tareasUsuariosVO);
         this.$http.post('http://localhost:8080/sistEval/ws/tareas/', this.tareasUsuariosVO).then(function (data) {
             console.log("########### TAREAS USUARIO ##############");
             console.log(data.data);
+            let tareasUsuario = data.data;
+            for(let i=0;i<app.tareasModel.categoriasTareas.length;i++){
+                app.tareasModel.categoriasTareas[i].numeroTareasUsuario = 0;
+                for(let j=0;j<tareasUsuario.length;j++){
+                    if(tareasUsuario[j].tareasEntity.idTipoTarea === app.tareasModel.categoriasTareas[i].idTiposTareas){
+                        app.tareasModel.categoriasTareas[i].numeroTareasUsuario++;
+                    }
+                }
+            }
+
+            console.log('Categorias tareas  contadors',app.tareasModel.categoriasTareas);
             app.gridOptions.data = data.data;
         });
     }

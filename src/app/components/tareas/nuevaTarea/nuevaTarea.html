@@ -5,8 +5,8 @@
   <div layout="row">
     <form name="nuevaTareaForm" style="width:100%;">
       <div flex="80" style="margin-left:5%;">
-        <md-select ng-model="tipoTarea" ng-hide="true">
-          <md-option ng-repeat="tipo in tiposTareas" ng-value="tipo.nombreTipoTarea" ng-selected="$first">
+        <md-select ng-model="tareas.tareasModel.nuevaTarea.idTipoTarea" ng-change="tareas.tipoListener()">
+          <md-option ng-repeat="tipo in tiposTareas" ng-value="tipo.idTiposTareas" ng-selected="$first">
             {{tipo.nombreTipoTarea}}
           </md-option>
         </md-select>

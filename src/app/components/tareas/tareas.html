@@ -1,76 +1,138 @@
+
 <head>
-    <link rel="stylesheet" type="text/css" href="/node_modules/angular-ui-grid/ui-grid.css" />
+	<link rel="stylesheet" type="text/css" href="/node_modules/angular-ui-grid/ui-grid.css" />
 </head>
 <div ui-view='header'></div>
 <div ng-controller="tareasCtrl as tareas">
 	<div ui-view='left'></div>
-
-	<div layout="row">
-		<div flex="10"></div>
-		<div flex="80">
-			<div layout="row">
-				<div flex="90">
-				<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
-
-
-<!--
-					<md-content class="md-padding contenedorGridTareas"">
-						<md-tabs class="md-subhead" md-selected="tareas.selectedIndex" md-change="tareas.cambioTab();" md-align-tabs="{{data.bottom ? 'bottom' : 'top'}}">
-							<md-tab id="tab1" md-on-select="tareas.cargarTareas('CRE');">
-								<md-tab-label><span class="label-tab">Pendientes</span></md-tab-label>
-								<md-tab-body class="tabContentGrid">
-								</md-tab-body>
-							</md-tab>
-							<md-tab id="tab2" md-on-select="tareas.cargarTareas('ENV');">
-								<md-tab-label><span class="label-tab">Entregadas</span></md-tab-label>
-								<md-tab-body>
-									<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
-								</md-tab-body>
-							</md-tab>
-							<md-tab id="tab3" md-on-select="tareas.cargarTareas('CLF');">
-								<md-tab-label>Calificadas</md-tab-label>
-								<md-tab-body> -->
-									<!-- <div style="margin:0 auto; text-align:center;"><h1>Calificadas</h1></div> -->
-									<!--<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
-								</md-tab-body>
-							</md-tab> -->
-						</md-tabs>
-					</md-content>
-				</div>	
-			</div>		
+	<div>
+		<div layout="row" style="flex-wrap:wrap;">
+			<md-whiteframe class="md-whiteframe-1dp" ng-repeat = "categoria in tareas.tareasModel.categoriasTareas" ui-sref="listaTareas"
+			style="background-color:#00d27f; color:#fff;" flex="25" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
+				<div layout="column" style="width:100%;text-align:center;">
+					<div flex="70" style="width:100%; padding-top:7vh; font-size:2.3em;">{{categoria.nombreTipoTarea}}</div>
+					<div flex="30" style="border-top:1px solid #00a865; background-color:#00bd72; text-align:right;padding-top:10px;padding-right:35px; font-size:2em;">
+						<strong>{{categoria.numeroTareasUsuario}}</strong>
+					</div>
+				</div>
+			</md-whiteframe>
 		</div>
 	</div>
+
+	<!-- GRID TAREAS ---->
+	<!--<div flex="90">
+				<div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>-->
+</div>
+<!--</div>-->
+
+</md-content>
+</div>
+</div>
+</div>
+</div>
 </div>
 <!--<div ui-view='footer'></div>-->
 
 <style>
-<!-- GRIDS -->
-.contenedorGridTareas{
-	min-height:300px !important;
-	height:400px !important;
-	border:1px solid red;
-}
-	.md-active span.label-tab{
-	color:#088da5;
-	}
-	span.label-tab{
-	color:#242075;
-	}
-	.sidenav{
-		border-right:2px solid #889ea6;
-	}
-	.tabsdemoStaticTabs md-tab-content:nth-child(1) {
-	background-color: #42A5F5; }
-	.tabsdemoStaticTabs md-tab-content:nth-child(2) {
-	background-color: #689F38; }
-	.tabsdemoStaticTabs md-tab-content:nth-child(3) {
-	background-color: #26C6DA; }
-	.tabsdemoStaticTabs .after-tabs-area > span {
-	margin-top: 25px;
-	padding-right: 15px;
-	vertical-align: middle;
-	line-height: 30px;
-	height: 35px; }	
-</style>
-	
+	/** WHITEFRAMES **/
 
+	.md-whiteframe-1dp {
+		height: 180px;
+		margin: 1% 4%;
+	}
+
+	.whiteframedemoBasicClassUsage {
+		/* For breakpoint `-xs` */
+		/* For breakpoint `-sm` */
+		/* For breakpoint `-md` */
+		/* For breakpoint `-gt-md` */
+	}
+
+	.whiteframedemoBasicClassUsage md-whiteframe {
+		background: #fff;
+		margin: 30px;
+		height: 100px;
+	}
+
+	@media (max-width: 599px) {
+		.whiteframedemoBasicClassUsage md-whiteframe {
+			margin: 7px;
+			height: 50px;
+			background-color: #c8e4fa;
+		}
+		.whiteframedemoBasicClassUsage md-whiteframe>span {
+			font-size: 0.4em;
+		}
+	}
+
+	@media (min-width: 600px) and (max-width: 959px) {
+		.whiteframedemoBasicClassUsage md-whiteframe {
+			margin: 20px;
+			height: 75px;
+		}
+		.whiteframedemoBasicClassUsage md-whiteframe>span {
+			font-size: 0.6em;
+		}
+	}
+
+	@media (min-width: 960px) and (max-width: 1279px) {
+		.whiteframedemoBasicClassUsage md-whiteframe {
+			margin: 20px;
+			height: 90px;
+			background-color: #fcddde;
+		}
+		.whiteframedemoBasicClassUsage md-whiteframe>span {
+			font-size: 0.9em;
+		}
+	}
+
+	@media (min-width: 1280px) {
+		.whiteframedemoBasicClassUsage md-whiteframe {
+			margin: 25px;
+			height: 100px;
+			background-color: #F2FCE2;
+		}
+		.whiteframedemoBasicClassUsage md-whiteframe>span {
+			font-size: 1.0em;
+		}
+	}
+	/*** GRIDS ***/
+
+	.contenedorGridTareas {
+		min-height: 300px !important;
+		height: 400px !important;
+		border: 1px solid red;
+	}
+
+	.md-active span.label-tab {
+		color: #088da5;
+	}
+
+	span.label-tab {
+		color: #242075;
+	}
+
+	.sidenav {
+		border-right: 2px solid #889ea6;
+	}
+
+	.tabsdemoStaticTabs md-tab-content:nth-child(1) {
+		background-color: #42A5F5;
+	}
+
+	.tabsdemoStaticTabs md-tab-content:nth-child(2) {
+		background-color: #689F38;
+	}
+
+	.tabsdemoStaticTabs md-tab-content:nth-child(3) {
+		background-color: #26C6DA;
+	}
+
+	.tabsdemoStaticTabs .after-tabs-area>span {
+		margin-top: 25px;
+		padding-right: 15px;
+		vertical-align: middle;
+		line-height: 30px;
+		height: 35px;
+	}
+</style>

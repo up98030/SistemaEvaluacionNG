@@ -31,6 +31,30 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
     console.log("DATOS USUARIO nuevaTareaController");
     console.log(this.usuarioModel.datosUsuario);
 
+
+    /****************  CARGAR CATEGORÍAS **************** */
+    this.tipoListener = function(){
+        for(let i=0;i<app.tareasModel.categoriasTareas.length;i++){
+            if(this.tareasModel.nuevaTarea.idTipoTarea === app.tareasModel.categoriasTareas[i].idTiposTareas){
+                console.log(app.tareasModel.categoriasTareas[i].criterios);
+            }
+        }
+        console.log(this.tareasModel.nuevaTarea.idTipoTarea);
+    }
+    this.obtenerCategorias = function () {
+        $http.get('http://localhost:8080/sistEval/ws/getTiposTareas/').then(function (data) {
+            app.tareasModel.categoriasTareas = data.data;
+            console.log('Categorias',app.tareasModel.categoriasTareas);
+            // $scope.gridOptionsCriterios.data = data.data;
+        }, function (error) {
+            toastr.error('Error al obtener categorias');
+        });
+    }
+    this.obtenerCategorias();
+
+    /************************FIN CARGAR CATEGORÍAS********************** */
+
+
     this.archivoAdjunto = null;
 
     this.$scope.uploader = new FileUploader({
@@ -271,7 +295,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
                         'nombreTarea': this.nombreTarea,
                         'descripcionTarea': this.descripcionTarea,
                         'idModulo': app.$sessionStorage.userData.idModulo,
-                        'tipoTarea': 'TAREA',
+                        'idTipoTarea': tareasModel.nuevaTarea.idTipoTarea,
                         'idCreadorTarea': app.$sessionStorage.userData.idUsuario,
                         'estado': 'ACT',
                         'criterios': criteriosSeleccionados,

@@ -1,0 +1,58 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="/node_modules/angular-ui-grid/ui-grid.css" />
+</head>
+<div ui-view='header'></div>
+<div ng-controller="tareasCtrl as tareas">
+    <div ui-view='left'></div>
+    <div layout="row" style="flex-wrap:wrap;">
+        <!-- GRID TAREAS ---->
+        <div flex="90">
+            <div ui-grid="tareas.gridOptions" ui-grid-selection class="grid"></div>
+        </div>
+    </div>
+    <!--</div>-->
+
+</div>
+<!--<div ui-view='footer'></div>-->
+
+<style>
+    /*** GRIDS ***/
+
+    .contenedorGridTareas {
+        min-height: 300px !important;
+        height: 400px !important;
+        border: 1px solid red;
+    }
+
+    .md-active span.label-tab {
+        color: #088da5;
+    }
+
+    span.label-tab {
+        color: #242075;
+    }
+
+    .sidenav {
+        border-right: 2px solid #889ea6;
+    }
+
+    .tabsdemoStaticTabs md-tab-content:nth-child(1) {
+        background-color: #42A5F5;
+    }
+
+    .tabsdemoStaticTabs md-tab-content:nth-child(2) {
+        background-color: #689F38;
+    }
+
+    .tabsdemoStaticTabs md-tab-content:nth-child(3) {
+        background-color: #26C6DA;
+    }
+
+    .tabsdemoStaticTabs .after-tabs-area>span {
+        margin-top: 25px;
+        padding-right: 15px;
+        vertical-align: middle;
+        line-height: 30px;
+        height: 35px;
+    }
+</style>

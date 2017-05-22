@@ -32,6 +32,23 @@ tareasModule.config(function($stateProvider, $urlRouterProvider) {
             }
         }
     })
+    .state('listaTareas',{
+    	url:"/listaTareas",
+    	views:{
+    		"":{
+    			templateUrl:"app/components/tareas/listaTareas.html"
+    		},
+            "left@listaTareas":{
+                templateUrl:"app/shared/header/tareasHeader.html"
+            },
+            "header@listaTareas":{
+                templateUrl:"app/shared/header/header.html"
+            },
+            "footer@listaTareas":{
+                templateUrl:"app/shared/footer.html"
+            }
+    	}
+    })
     .state('tareas',{
     	url:"/tareas",
     	views:{
