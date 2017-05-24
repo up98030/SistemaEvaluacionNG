@@ -12,18 +12,84 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
     this.usuarioModel = usuarioModel;
     console.log("DATOS USUARIO tareasCtrl");
     console.log(this.usuarioModel.datosUsuario);
+    this.$scope.tareasModel = {};
+    this.$scope.tareasModel.categoriasTareas = [];
+    this.$scope.tareasModel.gruposTareas = [];
+    this.tareasModel.usuarios = [];
 
     /****************  CARGAR CATEGORÍAS **************** */
     this.obtenerCategorias = function () {
         $http.get('http://localhost:8080/sistEval/ws/getTiposTareas/').then(function (data) {
             app.tareasModel.categoriasTareas = data.data;
-            console.log('Categorias',app.tareasModel.categoriasTareas);
+            for (let i = 0; i < app.tareasModel.categoriasTareas.length; i++) {
+                let tiposObj = {
+                    'nombreTipoTarea': app.tareasModel.categoriasTareas[i]['nombreTipoTarea'],
+                    'idTiposTareas': app.tareasModel.categoriasTareas[i]['idTiposTareas']
+                };
+                app.$scope.tareasModel.categoriasTareas.push(tiposObj);
+            }
+            console.log('Categorias', app.tareasModel.categoriasTareas);
             // $scope.gridOptionsCriterios.data = data.data;
         }, function (error) {
             toastr.error('Error al obtener categorias');
         });
     }
     this.obtenerCategorias();
+
+    this.obtenerModulos = function () {
+        console.log(this.moduloObj);
+        this.$http.get('http://localhost:8080/sistEval/ws/modulos/').then(function (data) {
+            console.log('MODULOS', data);
+            for (let i = 0; i < data.data.length; i++) {
+                let modulosObj = {
+                    'idModulo': data.data[i].idModulo,
+                    'nombreModulo': data.data[i].nombreModulo
+                }
+                app.$scope.tareasModel.gruposTareas.push(modulosObj);
+            }
+        }, function (error) {
+            toastr.error('Error al obtener modulos');
+        });
+    }
+
+    this.obtenerModulos();
+
+    this.consultarUsuarios = function () {
+        app.$http.get('http://localhost:8080/sistEval/ws/usuarios/').
+            success(function (data) {
+                console.log('app.tareasModel.usuarios', app.tareasModel.usuarios);
+                app.tareasModel.usuarios = data;
+                console.log('app.tareasModel.usuarios', app.tareasModel.usuarios);
+                console.log('usuarios >>>', data);
+            });
+    };
+    this.consultarUsuarios();
+
+    this.$scope.obtenerResponsableGrid = function (index) {
+        console.log('index', index);
+        for (let i = 0; i < app.tareasModel.usuarios.length; i++) {
+            console.log(app.tareasModel.usuarios[i]['idUsuario']);
+            console.log(app.tareasModel.usuarios[i]['correoUsuario']);
+            if (app.tareasModel.usuarios[i]['idUsuario'] === index) {
+                return app.tareasModel.usuarios[i]['nombreCompleto'];
+            }
+        }
+    }
+
+    this.$scope.obtenerCategoriaGrid = function (index) {
+        for (let i = 0; i < this.tareasModel.categoriasTareas.length; i++) {
+            if (this.tareasModel.categoriasTareas[i]['idTiposTareas'] === index) {
+                return this.tareasModel.categoriasTareas[i]['nombreTipoTarea'];
+            }
+        }
+    }
+    this.$scope.obtenerGrupoGrid = function (index) {
+        for (let i = 0; i < this.tareasModel.gruposTareas.length; i++) {
+            if (this.tareasModel.gruposTareas[i]['idModulo'] === index) {
+                return this.tareasModel.gruposTareas[i]['nombreModulo'];
+            }
+        }
+    }
 
     /************************FIN CARGAR CATEGORÍAS********************** */
 
@@ -43,16 +109,40 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
             { name: 'archivoAdjunto', visible: false },
             { name: 'calificacion', visible: false },
             { name: 'tareasEntity.descripcionTarea', width: 300, displayName: 'Descripcion Tarea', visible: false },
+            {
+                name: 'tareasEntity.idTipoTarea',
+                width: 300,
+                displayName: 'Categoría',
+                visible: true,
+                cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.obtenerCategoriaGrid(row.entity.tareasEntity.idTipoTarea)}}</div>',
+                cellFilter: 'mapGender',
+                editDropdownValueLabel: 'Tipo',
+                editDropdownOptionsArray: app.$scope.tareasModel.categoriasTareas
+            },
             { name: 'estado', visible: false },
             { name: 'observacionesDocente', visible: false },
             { name: 'fechaEnvio', visible: false },
+            { name: 'tareasEntity.fechaInicio', width: 200, displayName: 'Fecha Inicio', visible: true },
             { name: 'tareasEntity.fechaFin', width: 200, displayName: 'Fecha Entrega' },
-            { name: 'tareasEntity.fechaInicio', width: 200, displayName: 'Fecha Inicio', visible: false },
-            { name: 'tareasEntity.idModulo', visible: false },
-            { name: 'tareasEntity.idCreadorTarea', visible: false },
+            {
+                name:
+                'tareasEntity.idModulo',
+                width: 200,
+                visible: true,
+                displayName: 'Grupo',
+                cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.obtenerGrupoGrid(row.entity.tareasEntity.idModulo)}}</div>',
+            },
+            {
+                name:
+                'tareasEntity.idCreadorTarea',
+                width: 200,
+                visible: true,
+                displayName: 'Responsable',
+                cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.obtenerResponsableGrid(row.entity.tareasEntity.idCreadorTarea)}}</div>'
+            },
             { name: 'idTarea', visible: false },
             { name: 'observaciones', width: 300, visible: false },
-            { name: 'observacionCalificacion', width: 300, displayName: 'Observación', visible: true }
+            { name: 'observacionCalificacion', width: 300, displayName: 'Observación', visible: false }
 
         ],
         data: tareasData,
@@ -99,20 +189,24 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
             // }
         }
         console.log(this.tareasUsuariosVO);
+        let loading_screen = pleaseWait({
+            backgroundColor: '#666666',
+            loadingHtml: '<div class="sk-cube-grid"><div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div><div class="sk-cube sk-cube3"></div><div class="sk-cube sk-cube4"></div><div class="sk-cube sk-cube5"></div><div class="sk-cube sk-cube6"></div><div class="sk-cube sk-cube7"></div><div class="sk-cube sk-cube8"></div><div class="sk-cube sk-cube9"></div></div>'
+        });
         this.$http.post('http://localhost:8080/sistEval/ws/tareas/', this.tareasUsuariosVO).then(function (data) {
             console.log("########### TAREAS USUARIO ##############");
             console.log(data.data);
             let tareasUsuario = data.data;
-            for(let i=0;i<app.tareasModel.categoriasTareas.length;i++){
+            for (let i = 0; i < app.tareasModel.categoriasTareas.length; i++) {
                 app.tareasModel.categoriasTareas[i].numeroTareasUsuario = 0;
-                for(let j=0;j<tareasUsuario.length;j++){
-                    if(tareasUsuario[j].tareasEntity.idTipoTarea === app.tareasModel.categoriasTareas[i].idTiposTareas){
+                for (let j = 0; j < tareasUsuario.length; j++) {
+                    if (tareasUsuario[j].tareasEntity.idTipoTarea === app.tareasModel.categoriasTareas[i].idTiposTareas) {
                         app.tareasModel.categoriasTareas[i].numeroTareasUsuario++;
                     }
                 }
             }
-
-            console.log('Categorias tareas  contadors',app.tareasModel.categoriasTareas);
+            loading_screen.finish();
+            console.log('Categorias tareas  contadors', app.tareasModel.categoriasTareas);
             app.gridOptions.data = data.data;
         });
     }
