@@ -7,11 +7,11 @@
 	<div ui-view='left'></div>
 	<div>
 		<div layout="row" style="flex-wrap:wrap;">
-			<md-whiteframe class="md-whiteframe-1dp" ng-repeat = "categoria in tareas.tareasModel.categoriasTareas" ui-sref="listaTareas"
-			style="background-color:#00d27f; color:#fff;" flex="25" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
+			<md-whiteframe class="md-whiteframe-1dp" ng-repeat = "categoria in tareas.tareasModel.categoriasTareasColor" ui-sref="listaTareas"
+			style="background-color:{{categoria.color.fondo}}; color:#fff;" flex="25" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center">
 				<div layout="column" style="width:100%;text-align:center;">
 					<div flex="70" style="width:100%; padding-top:7vh; font-size:2.3em;">{{categoria.nombreTipoTarea}}</div>
-					<div flex="30" style="border-top:1px solid #00a865; background-color:#00bd72; text-align:right;padding-top:10px;padding-right:35px; font-size:2em;">
+					<div flex="30" style="border-top:1px solid {{categoria.color.borde}}; background-color:{{categoria.color.sombra}}; text-align:right;padding-top:10px;padding-right:35px; font-size:2em;">
 						<strong>{{categoria.numeroTareasUsuario}}</strong>
 					</div>
 				</div>
@@ -39,6 +39,7 @@
 	.md-whiteframe-1dp {
 		height: 180px;
 		margin: 1% 4%;
+		color:#fff;
 	}
 
 	.whiteframedemoBasicClassUsage {

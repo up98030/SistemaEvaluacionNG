@@ -26,7 +26,7 @@ function settingsController($scope, $http, $state, tareasModel, usuarioModel, ng
             console.log('Categorias', app.categorias);
             for (let i = 0; i < app.categorias.length; i++) {
                 let gravatar = app.CryptoJS.MD5(app.categorias[i].nombreTipoTarea);
-                app.categorias[i].imagen = 'http://www.gravatar.com/avatar/' + gravatar + '?s=50&d=retro';
+                app.categorias[i].imagen = 'http://www.gravatar.com/avatar/' + gravatar + '?s=50&d=identicon';
             }
             console.log(app.categorias);
             // $scope.gridOptionsCriterios.data = data.data;

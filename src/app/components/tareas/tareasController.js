@@ -16,19 +16,45 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
     this.$scope.tareasModel.categoriasTareas = [];
     this.$scope.tareasModel.gruposTareas = [];
     this.tareasModel.usuarios = [];
+    this.tareasModel.categoriasColors = [];
+    this.tareasModel.categoriasTareasColor = [];
+    this.coloresCategorias = function () {
+        let celeste = { 'fondo': '#43A5CF', 'borde': '#3584a5', 'sombra': '#3c94ba' }
+        this.tareasModel.categoriasColors.push(celeste);
+        let verde = { 'fondo': '#00d27f', 'borde': '#00a865', 'sombra': '#00bd72' }
+        this.tareasModel.categoriasColors.push(verde);
+        let purpura = { 'fondo': '#BE29EC', 'borde': '#9820bc', 'sombra': '#ab24d4' }
+        this.tareasModel.categoriasColors.push(purpura);
+        let rosa = { 'fondo': '#FF00A9', 'borde': '#cc0087', 'sombra': '#e50098' }
+        this.tareasModel.categoriasColors.push(rosa);
+        let navy = { 'fondo': '#2E4045', 'borde': '#243337', 'sombra': '#29393e' }
+        this.tareasModel.categoriasColors.push(navy);
+        let rojo = { 'fondo': '#E42F43', 'borde': '#b62535', 'sombra': '#cd2a3c' }
+        this.tareasModel.categoriasColors.push(rojo);
+        let azul = { 'fondo': '#3A329B', 'borde': '#2e287c', 'sombra': '#342d8b' }
+        this.tareasModel.categoriasColors.push(azul);
+        let tomate = { 'fondo': '#F27D0C', 'borde': '#c16409', 'sombra': '#d9700a' }
+        this.tareasModel.categoriasColors.push(tomate);
+        // let cafe = {'fondo': '', 'borde':'','sombra':''}
+    }
+    this.coloresCategorias();
 
     /****************  CARGAR CATEGORÍAS **************** */
     this.obtenerCategorias = function () {
         $http.get('http://localhost:8080/sistEval/ws/getTiposTareas/').then(function (data) {
             app.tareasModel.categoriasTareas = data.data;
             for (let i = 0; i < app.tareasModel.categoriasTareas.length; i++) {
+                // for (let j = 0; j < app.tareasModel.categoriasColors.length; j++) {
                 let tiposObj = {
                     'nombreTipoTarea': app.tareasModel.categoriasTareas[i]['nombreTipoTarea'],
-                    'idTiposTareas': app.tareasModel.categoriasTareas[i]['idTiposTareas']
+                    'idTiposTareas': app.tareasModel.categoriasTareas[i]['idTiposTareas'],
+                    'color': app.tareasModel.categoriasColors[i]
                 };
+                app.tareasModel.categoriasTareasColor.push(tiposObj);
                 app.$scope.tareasModel.categoriasTareas.push(tiposObj);
+                // }
             }
-            console.log('Categorias', app.tareasModel.categoriasTareas);
+            console.log('Categorias>>>>> ', app.tareasModel.categoriasTareasColor);
             // $scope.gridOptionsCriterios.data = data.data;
         }, function (error) {
             toastr.error('Error al obtener categorias');
@@ -197,11 +223,11 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
             console.log("########### TAREAS USUARIO ##############");
             console.log(data.data);
             let tareasUsuario = data.data;
-            for (let i = 0; i < app.tareasModel.categoriasTareas.length; i++) {
-                app.tareasModel.categoriasTareas[i].numeroTareasUsuario = 0;
+            for (let i = 0; i < app.tareasModel.categoriasTareasColor.length; i++) {
+                app.tareasModel.categoriasTareasColor[i].numeroTareasUsuario = 0;
                 for (let j = 0; j < tareasUsuario.length; j++) {
-                    if (tareasUsuario[j].tareasEntity.idTipoTarea === app.tareasModel.categoriasTareas[i].idTiposTareas) {
-                        app.tareasModel.categoriasTareas[i].numeroTareasUsuario++;
+                    if (tareasUsuario[j].tareasEntity.idTipoTarea === app.tareasModel.categoriasTareasColor[i].idTiposTareas) {
+                        app.tareasModel.categoriasTareasColor[i].numeroTareasUsuario++;
                     }
                 }
             }
@@ -214,17 +240,18 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
     this.cargarTareas('CRE');
 
     this.descargarArchivoTarea = function () {
+        console.log(tareasModel.tarea);
         let headers = {
             'Accept': 'application/octet-stream',
             'Content-Type': 'application/octet-stream',
         };
-        this.$http.get('http://localhost:8080/sistEval/ws/tareas/' + tareasModel.tarea.idTarea + '/' + tareasModel.tarea.idUsuario, headers).then(function (data) {
-            // app.$scope.tiposTareas = data.data;
-            saveAs(data);
-            console.log("TIPOSTAREAS");
-            console.log(data);
-        });
-        console.log(tareasModel.tarea);
+        this.$http.get('http://localhost:8080/sistEval/ws/tareas/' + tareasModel.tarea.idTarea + '/' + tareasModel.tarea.idUsuario,
+            headers).then(function (data) {
+                // app.$scope.tiposTareas = data.data;
+                saveAs(data);
+                console.log("TIPOSTAREAS");
+                console.log(data);
+            });
     }
 
 

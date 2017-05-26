@@ -18,7 +18,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
     this.descripcionTarea = "";
     this.fechaFin = new Date();
     this.$sessionStorage = $sessionStorage;
-
+    this.tareasModel.CryptoJS = CryptoJS;
     this.$scope.numeros = [11, 22, 33, 446, 55, 6];
     this.$scope.usuariosModulo = [];
     this.tareasModel.usuariosModulo = [];
@@ -28,14 +28,15 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
     this.$scope.criteriosSelected = [];
     this.usuariosSeleccionados = [];
     this.criteriosSeleccionados = [];
+    this.tareasModel.gruposUsuarios = [];
     console.log("DATOS USUARIO nuevaTareaController");
     console.log(this.usuarioModel.datosUsuario);
 
 
     /****************  CARGAR CATEGORÍAS **************** */
-    this.tipoListener = function(){
-        for(let i=0;i<app.tareasModel.categoriasTareas.length;i++){
-            if(this.tareasModel.nuevaTarea.idTipoTarea === app.tareasModel.categoriasTareas[i].idTiposTareas){
+    this.tipoListener = function () {
+        for (let i = 0; i < app.tareasModel.categoriasTareas.length; i++) {
+            if (this.tareasModel.nuevaTarea.idTipoTarea === app.tareasModel.categoriasTareas[i].idTiposTareas) {
                 console.log(app.tareasModel.categoriasTareas[i].criterios);
             }
         }
@@ -44,7 +45,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
     this.obtenerCategorias = function () {
         $http.get('http://localhost:8080/sistEval/ws/getTiposTareas/').then(function (data) {
             app.tareasModel.categoriasTareas = data.data;
-            console.log('Categorias',app.tareasModel.categoriasTareas);
+            console.log('Categorias', app.tareasModel.categoriasTareas);
             // $scope.gridOptionsCriterios.data = data.data;
         }, function (error) {
             toastr.error('Error al obtener categorias');
@@ -106,10 +107,69 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
                 $scope.usuariosModulo = tareasModel.usuariosModulo;
                 this.usuariosSelected = [];
                 this.usuariosSeleccionados = [];
+                $scope.gruposUsuarios = [];
+                $scope.showUsuariosGrid = false;
+                this.hola = 'hola';
                 this.test = function () {
                     console.log(usuarioModel);
                     console.log(tareasModel);
                 }
+
+                // this.cargarGridUsuarios = function () {
+                    $scope.gridOptionsUsuarios = {
+                        enableRowSelection: true,
+                        enableFullRowSelection: false,
+                        rowHeader: false,
+                        enableSelectAll: true,
+                        rowHeight: 30,
+                        multiSelect: true,
+                        columnDefs: [
+
+                            { name: 'idUsuario', visible: true, displayName: 'Id', width: 50 },
+                            { name: 'nombreUsuario', visible: true, displayName: 'Nombre', minWidth: 150, width: '*' },
+                            { name: 'correoUsuario', visible: true, displayName: 'Nombre', minWidth: 150, width: '*' },
+                            { name: 'nombreCompleto', visible: true, displayName: 'Nombre', minWidth: 150, width: '*' },
+                            { name: 'idPerfil', visible: true, displayName: 'Nombre', minWidth: 150, width: '*' },
+                            // { name: 'descripcionCriterio', visible: true, displayName: 'Descripción', width: 150, minWidth: 200 },
+                        ]
+                    }
+                // }
+                /***************************CARGAR USUARIOS CATEGORIA ****************/
+                $scope.cargarUsuariosId = function (idCategoria) {      
+                    $scope.showUsuariosGrid = $scope.showUsuariosGrid === false ? true : false;              
+                    let loading_screen = pleaseWait({
+                        backgroundColor: '#666666',
+                        loadingHtml: '<div class="sk-cube-grid"><div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div><div class="sk-cube sk-cube3"></div><div class="sk-cube sk-cube4"></div><div class="sk-cube sk-cube5"></div><div class="sk-cube sk-cube6"></div><div class="sk-cube sk-cube7"></div><div class="sk-cube sk-cube8"></div><div class="sk-cube sk-cube9"></div></div>'
+                    });
+                    this.datosModulo = { 'idModulo': idCategoria };
+                    $http.post('http://localhost:8080/sistEval/ws/buscarUsuariosModulo/', this.datosModulo).then(function (data) {
+                        console.log("########### USUARIOS DE MODULO ##############");
+                        console.log(data.data);
+                        $scope.gridOptionsUsuarios.data = data.data;
+                        loading_screen.finish();
+                    });
+                }
+                /********************** OBTENER MODULOS ************* */
+                this.obtenerModulos = function () {
+                    console.log(this.moduloObj);
+                    $http.get('http://localhost:8080/sistEval/ws/modulos/').then(function (data) {
+                        console.log('GRUPOS ', data.data);
+                        $scope.gruposUsuarios = data.data;
+                        for (let i = 0; i < $scope.gruposUsuarios.length; i++) {
+                            let gravatar = CryptoJS.MD5($scope.gruposUsuarios[i].nombreModulo);
+                            $scope.gruposUsuarios[i].imagen = 'http://www.gravatar.com/avatar/' + gravatar + '?s=50&d=retro';
+                        }
+                        let gravatarTodos = CryptoJS.MD5('Todos');
+                        $scope.imagenTodos = 'http://www.gravatar.com/avatar/' + gravatarTodos + '?s=50&d=retro';
+
+
+                        // app.gridOptions.data = data.data;
+                    }, function (error) {
+                        toastr.error('Error al obtener modulos');
+                    });
+                }
+
+                this.obtenerModulos();
                 /******************** CHECKBOX USUARIOS *******************************/
                 this.toggle = function (item) {
                     console.log("Tooogle>>>>");
@@ -303,7 +363,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
                         'fechaFin': this.fechaFin,
                         'archivoAdjunto': archivoBase64,
                         'tareasUsuarios': tareasModel.usuariosSeleccionados,
-                        'extensionArchivo':filename,
+                        'extensionArchivo': filename,
                         'idPeriodo': app.$sessionStorage.userData.idPeriodo
                     };
                     console.log("OBJETO TAREA #$$#$#$#$#$#$#$$#$#");

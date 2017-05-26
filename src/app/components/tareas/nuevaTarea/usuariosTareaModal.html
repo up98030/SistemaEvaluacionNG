@@ -1,23 +1,132 @@
-<div class="modalHeader">Docentes tarea</div>
+<div class="modalHeader" ng-hide="showUsuariosGrid">Grupos docentes</div>
+<div class="modalHeader" ng-show="showUsuariosGrid">Seleccionar docentes</div>
 <div>
-    <div ng-repeat='usuario in usuariosModulo'>
-        <md-checkbox ng-checked="usrsModlCtrl.exists(usuario)" ng-click="usrsModlCtrl.toggle(usuario)">
-            {{ usuario.nombreCompleto }}
-        </md-checkbox>
+    <div layout="row" style="flex-wrap:wrap;" ng-hide="showUsuariosGrid">
+        <md-whiteframe class="md-whiteframe-1dp" flex="25" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout layout-align="center center"
+            ng-click="cargarUsuariosId(null)">
+            <div layout="column" style="width:100%;text-align:center;">
+                <div flex="30" style="width:100%; font-size:1.1em; padding-top:12px; border-bottom:1px solid #b2b2b2;">
+                    <strong>Todos</strong>
+                </div>
+                <div flex="70" style="width:100%;">
+                    <img ng-src="{{imagenTodos}}" class="md-avatar" alt="Todos" style="margin-top:20%;" />
+                </div>
+            </div>
+        </md-whiteframe>
+
+        <md-whiteframe class="md-whiteframe-1dp" ng-repeat="grupos in gruposUsuarios" flex="25" flex-sm="45" flex-gt-sm="35" flex-gt-md="25"
+            layout layout-align="center center" ng-click="cargarUsuariosId(grupos.idModulo)">
+            <div layout="column" style="width:100%;text-align:center;">
+                <div flex="30" style="width:100%; font-size:1.1em; padding-top:12px; border-bottom:1px solid #b2b2b2;">
+                    {{grupos.nombreModulo}}
+                </div>
+                <div flex="70" style="width:100%;">
+                    <img ng-src="{{grupos.imagen}}" class="md-avatar" alt="{{grupos.nombreModulo}}" style="margin-top:20%;" />
+                </div>
+            </div>
+        </md-whiteframe>
     </div>
-    <div layout="row" style="text-align:center; padding:0 25%;">
-        <div flex="50">
-            <md-button ng-click="usrsModlCtrl.acceptModal()" class="md-primary md-raised" style="background-color:#436abc;">
-                Aceptar</md-button>
+    <div ng-show="showUsuariosGrid">
+        <div layout="row" style="text-align:center;">
+            <div flex="33">
+                <md-button ng-click="usrsModlCtrl.acceptModal()" class="md-primary md-raised" style="background-color:#436abc;">
+                            Aceptar</md-button>
+            </div>
+            <div flex="33">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </div>
+            <div flex="33">
+                <md-button ng-click="usrsModlCtrl.acceptModal()" class="md-primary md-raised" style="background-color:#436abc;">
+                            Cancelar</md-button>
+            </div>
         </div>
-        <div flex="50">
-            <md-button ng-click="usrsModlCtrl.cancelModal()" class="md-primary md-raised" style="background-color:#e3e3e3; color:#383838;">
-                Cancelar</md-button>
+        <div layout="column" >
+                <div ui-grid="gridOptionsUsuarios" ui-grid-selection class="grid"></div>
+            <!--<div flex="15">
+                <div layout="row" style="text-align:center; padding:0 25%;" ng-hide="true">
+                    <div flex="50">
+                        <md-button ng-click="usrsModlCtrl.acceptModal()" class="md-primary md-raised" style="background-color:#436abc;">
+                            Aceptar</md-button>
+                    </div>
+                    <div flex="50">
+                        <md-button ng-click="usrsModlCtrl.cancelModal()" class="md-primary md-raised" style="background-color:#e3e3e3; color:#383838;">
+                            Cancelar</md-button>
+                    </div>
+                </div>
+            </div>-->
         </div>
     </div>
 </div>
 
 <style>
+    .ngdialog-content {
+        width: 50% !important;
+        /*height:60vh;*/
+    }
+
+    .md-whiteframe-1dp {
+        border-radius: 15px;
+        height: 180px;
+        margin: 1% 4%;
+        color: #14141e;
+    }
+
+    .whiteframedemoBasicClassUsage {
+        /* For breakpoint `-xs` */
+        /* For breakpoint `-sm` */
+        /* For breakpoint `-md` */
+        /* For breakpoint `-gt-md` */
+    }
+
+    .whiteframedemoBasicClassUsage md-whiteframe {
+        background: #fff;
+        margin: 30px;
+        height: 100px;
+    }
+
+    @media (max-width: 599px) {
+        .whiteframedemoBasicClassUsage md-whiteframe {
+            margin: 7px;
+            height: 50px;
+            background-color: #c8e4fa;
+        }
+        .whiteframedemoBasicClassUsage md-whiteframe>span {
+            font-size: 0.4em;
+        }
+    }
+
+    @media (min-width: 600px) and (max-width: 959px) {
+        .whiteframedemoBasicClassUsage md-whiteframe {
+            margin: 20px;
+            height: 75px;
+        }
+        .whiteframedemoBasicClassUsage md-whiteframe>span {
+            font-size: 0.6em;
+        }
+    }
+
+    @media (min-width: 960px) and (max-width: 1279px) {
+        .whiteframedemoBasicClassUsage md-whiteframe {
+            margin: 20px;
+            height: 90px;
+            background-color: #fcddde;
+        }
+        .whiteframedemoBasicClassUsage md-whiteframe>span {
+            font-size: 0.9em;
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .whiteframedemoBasicClassUsage md-whiteframe {
+            margin: 25px;
+            height: 100px;
+            background-color: #F2FCE2;
+        }
+        .whiteframedemoBasicClassUsage md-whiteframe>span {
+            font-size: 1.0em;
+        }
+    }
+
     .modalHeader {
         border-bottom: 1px solid #436abc;
         background-color: #325b84;
@@ -25,7 +134,7 @@
         padding: 5px;
         font-weight: lighter;
     }
-    
+
     .ngdialog-content {
         padding: 0 !important;
     }
