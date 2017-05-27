@@ -28,20 +28,22 @@
     </div>
     <div ng-show="showUsuariosGrid">
         <div layout="row" style="text-align:center;">
-            <div flex="33">
-                <md-button ng-click="usrsModlCtrl.acceptModal()" class="md-primary md-raised" style="background-color:#436abc;">
-                            Aceptar</md-button>
+            <div flex="33" style="text-align:right;">
+                <md-button ng-click="crearTarea();" class="md-primary md-raised" style="background-color:#436abc;">
+                    Aceptar
+                    </md-button>
             </div>
-            <div flex="33">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            <div flex="33" ng-click="regresarCategorias();">
+                <i class="fa fa-arrow-left flecha-regreso" aria-hidden="true"></i>
             </div>
-            <div flex="33">
+            <div flex="33" style="text-align:left;">
                 <md-button ng-click="usrsModlCtrl.acceptModal()" class="md-primary md-raised" style="background-color:#436abc;">
-                            Cancelar</md-button>
+                    Cancelar</md-button>
             </div>
         </div>
-        <div layout="column" >
-                <div ui-grid="gridOptionsUsuarios" ui-grid-selection class="grid"></div>
+        <div layout="column">
+            <div ui-grid="gridOptionsUsuarios" ui-grid-selection class="grid"></div>
+            <!--<div ui-grid="gridOptionsUsuarios" ui-grid-selection class="grid">No existen usuarios de esta categoría</div>-->
             <!--<div flex="15">
                 <div layout="row" style="text-align:center; padding:0 25%;" ng-hide="true">
                     <div flex="50">
@@ -59,6 +61,15 @@
 </div>
 
 <style>
+    .flecha-regreso {
+        vertical-align: middle;
+        line-height: 17px;
+        border: 1px solid #b2b2b2;
+        padding: 9px 33px;
+        margin: 5px;
+        border-radius: 8px;
+    }
+
     .ngdialog-content {
         width: 50% !important;
         /*height:60vh;*/

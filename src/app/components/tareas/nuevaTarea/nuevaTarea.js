@@ -24,6 +24,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
     this.tareasModel.usuariosModulo = [];
     this.$scope.criteriosEvaluacion = [];
     this.$scope.tiposTareas = [];
+    this.tareasModel.tareasCtrl = this;
     this.$scope.usuariosSelected = [];
     this.$scope.criteriosSelected = [];
     this.usuariosSeleccionados = [];
@@ -116,27 +117,44 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
                 }
 
                 // this.cargarGridUsuarios = function () {
-                    $scope.gridOptionsUsuarios = {
-                        enableRowSelection: true,
-                        enableFullRowSelection: false,
-                        rowHeader: false,
-                        enableSelectAll: true,
-                        rowHeight: 30,
-                        multiSelect: true,
-                        columnDefs: [
+                $scope.gridOptionsUsuarios = {
+                    enableRowSelection: true,
+                    enableFullRowSelection: false,
+                    rowHeader: false,
+                    enableSelectAll: true,
+                    rowHeight: 30,
+                    multiSelect: true,
+                    columnDefs: [
 
-                            { name: 'idUsuario', visible: true, displayName: 'Id', width: 50 },
-                            { name: 'nombreUsuario', visible: true, displayName: 'Nombre', minWidth: 150, width: '*' },
-                            { name: 'correoUsuario', visible: true, displayName: 'Nombre', minWidth: 150, width: '*' },
-                            { name: 'nombreCompleto', visible: true, displayName: 'Nombre', minWidth: 150, width: '*' },
-                            { name: 'idPerfil', visible: true, displayName: 'Nombre', minWidth: 150, width: '*' },
-                            // { name: 'descripcionCriterio', visible: true, displayName: 'Descripción', width: 150, minWidth: 200 },
-                        ]
-                    }
+                        { name: 'idUsuario', visible: false, displayName: 'Id', width: 50 },
+                        { name: 'nombreUsuario', visible: false, displayName: 'Nombre', minWidth: 150, width: '*' },
+                        { name: 'nombreCompleto', visible: true, displayName: 'Nombre', minWidth: 150, width: '*' },
+                        { name: 'correoUsuario', visible: true, displayName: 'Correo', minWidth: 150, width: '*' },
+                        { name: 'idPerfil', visible: false, displayName: 'Perfil', minWidth: 150, width: '*' },
+                        // { name: 'descripcionCriterio', visible: true, displayName: 'Descripción', width: 150, minWidth: 200 },
+                    ]
+                }
+                $scope.gridOptionsUsuarios.onRegisterApi = function (gridApi) {
+                    $scope.gridOptionsUsuarios['gridApi'] = gridApi;
+                    gridApi.selection.on.rowSelectionChanged(app.$scope, function (row) {
+                        // console.log("Grid API");
+                        // console.log(row.entity);
+                    });
+                }
+
+                $scope.crearTarea = function () {
+                    console.log($scope.gridOptionsUsuarios['gridApi'].selection.getSelectedRows());
+                    tareasModel.usuariosSeleccionados = $scope.gridOptionsUsuarios['gridApi'].selection.getSelectedRows();
+                    tareasModel.tareasCtrl.guardarTarea();
+                }
                 // }
                 /***************************CARGAR USUARIOS CATEGORIA ****************/
-                $scope.cargarUsuariosId = function (idCategoria) {      
-                    $scope.showUsuariosGrid = $scope.showUsuariosGrid === false ? true : false;              
+                $scope.regresarCategorias = function () {
+                    $scope.showUsuariosGrid = false;
+                }
+
+                $scope.cargarUsuariosId = function (idCategoria) {
+                    $scope.showUsuariosGrid = $scope.showUsuariosGrid === false ? true : false;
                     let loading_screen = pleaseWait({
                         backgroundColor: '#666666',
                         loadingHtml: '<div class="sk-cube-grid"><div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div><div class="sk-cube sk-cube3"></div><div class="sk-cube sk-cube4"></div><div class="sk-cube sk-cube5"></div><div class="sk-cube sk-cube6"></div><div class="sk-cube sk-cube7"></div><div class="sk-cube sk-cube8"></div><div class="sk-cube sk-cube9"></div></div>'
@@ -288,7 +306,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
         app.$scope.descripcionTarea = null;
         app.$scope.fechaFin = null;
         app.archivoAdjunto = null;
-        app.tareasModel.usuariosSeleccionados = [];
+        // app.tareasModel.usuariosSeleccionados = [];
         app.criteriosSeleccionados = [];
         usuariosSeleccionados = [];
         app.$scope.criteriosSelected = [];
@@ -298,7 +316,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
 
     /************************************ GUARDAR TAREA **********************************/
     this.guardarTarea = function (form) {
-        if (form.$valid) {
+        // if (form.$valid) {
             if (tareasModel.usuariosSeleccionados != undefined && tareasModel.usuariosSeleccionados.length > 0) {
                 console.log(tareasModel.usuariosSeleccionados);
                 //debugger;
@@ -395,9 +413,9 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
             } else {
                 toastr.warning('Seleccione los docentes de la tarea');
             }
-        } else {
-            toastr.warning('Complete todos los campos');
-        }
+        // } else {
+        //     toastr.warning('Complete todos los campos');
+        // }
     };
 
     this.getBase64 = function (file) {
