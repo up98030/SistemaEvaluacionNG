@@ -17,6 +17,7 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
     this.$scope.tareasModel.gruposTareas = [];
     this.tareasModel.usuarios = [];
     this.tareasModel.categoriasColors = [];
+    // this.tareasModel.habilitarAdjuntarArchivo = false;
     this.tareasModel.categoriasTareasColor = [];
     this.coloresCategorias = function () {
         let celeste = { 'fondo': '#43A5CF', 'borde': '#3584a5', 'sombra': '#3c94ba' }
@@ -186,6 +187,7 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
             console.log("DATOS TAREA");
             console.log(tareasModel.tarea);
             var tarea = row.entity;
+            app.criterio = tarea.tareasEntity.criterios;
             app.archivoAdjunto = tarea.archivoAdjunto;
             app.descripcionTarea = tarea.descripcionTarea;
             app.fechaFin = tarea.fechaFin;
@@ -196,6 +198,10 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
             console.log(app.nombreTarea);
             $scope.$apply();
             app.$scope.$digest();
+            app.tareasModel.habilitarAdjuntarArchivo = false;
+            if (row.entity.tareasEntity.criterios.localeCompare("1") === 0 || row.entity.tareasEntity.criterios.localeCompare("3") === 0) {
+                app.tareasModel.habilitarAdjuntarArchivo = true;
+            }
             app.$state.go('tarea');
             app.$scope.$watch();
 

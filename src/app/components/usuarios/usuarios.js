@@ -11,9 +11,9 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
     this.$scope.periodoActivo = "";
     this.gridOptions = {
         enableRowSelection: true,
-        enableFullRowSelection: false,
+        enableFullRowSelection: true,
         rowHeader: false,
-        enableSelectAll: true,
+        enableSelectAll: false,
         rowHeight: 30,
         multiSelect: false,
         columnDefs: [
@@ -31,6 +31,13 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
         ],
         data: null
     };
+    this.gridOptions.onRegisterApi = function(gridApi){
+        this.gridOptions['gridApi'] = gridApi;
+        gridApi.selection.on.rowSelectionChanged(app.$scope, (row)=>{
+            console.log("Usuarios selection");
+            console.log(row.entity);
+        })
+    }
 
 
     /***************** INICIO CONTROLADOR DIALOGOS PERFILES ******************** */
@@ -46,7 +53,7 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
                     rowHeader: false,
                     enableSelectAll: true,
                     rowHeight: 30,
-                    multiSelect: false,
+                    multiSelect: true,
                     columnDefs: [
                         { name: 'idPerfil', visible: true, displayName: 'Id', width: 50 },
                         { name: 'nombrePerfil', visible: true, displayName: 'Nombre', width: '*', minWidth: 200 },
@@ -61,6 +68,7 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
                 };
 
                 $scope.acceptPerfiles = function () {
+                    console.log(usuarioModel.perfiles);
                     console.log(usuarioModel.moduloNuevoUsuario);
                     ngDialog.close();
                 }
@@ -89,6 +97,7 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
 
     /***************** INICIO CONTROLADOR MODULOS ******************** */
     this.seleccionarModulo = function () {
+        this.usuarioModel.modulos = [];
         this.ngDialog.open({
             template: 'app/components/usuarios/modulos/modulosModal.html',
             className: 'ngdialog-theme-default',
@@ -100,7 +109,7 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
                     rowHeader: false,
                     enableSelectAll: true,
                     rowHeight: 30,
-                    multiSelect: false,
+                    multiSelect: true,
                     columnDefs: [
                         { name: 'idModulo', visible: true, displayName: 'Id', width: 50 },
                         { name: 'nombreModulo', visible: true, displayName: 'Nombre', width: '*', minWidth: 200 },
@@ -109,6 +118,7 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
                 }
 
                 $scope.gridOptionsModulos.onRegisterApi = function (gridApi) {
+                    $scope.gridOptionsModulos['gridApi'] = gridApi;
                     gridApi.selection.on.rowSelectionChanged(app.$scope, function (row) {
                         // console.log("Grid API");
                         // console.log(row.entity);
@@ -116,8 +126,13 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
                     });
                 };
 
+                $scope.crearGrupo = function(){
+                    ngDialog.close();
+                }
+
                 $scope.acceptModulos = function () {
-                    console.log(usuarioModel.moduloNuevoUsuario);
+                    usuarioModel.modulos = $scope.gridOptionsModulos['gridApi'].selection.getSelectedRows();
+                    console.log(usuarioModel.modulos);
                     ngDialog.close();
                 }
 
@@ -187,7 +202,8 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
             'idPerfil': this.usuarioModel.perfilNuevoUsuario.idPerfil,
             'estado': 'ACT',
             'idModulo': this.usuarioModel.moduloNuevoUsuario.idModulo,
-        };
+            'modulos': this.usuarioModel.modulos
+        }
         /*   this.userId = this.$scope.idUsuario;
            this.userNom = this.$scope.nombreUsuario;
            this.userPwd = this.$scope.userpwd;

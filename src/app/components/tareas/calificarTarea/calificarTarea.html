@@ -26,18 +26,19 @@
 				<p>{{tareas.tareasModel.tarea.ObservacionesDocente}}</p>
 		    <div style="height:10px;"></div>
 		    <div>
-      			<md-button type="button" class="md-raised md-alert" style="background-color:#e9eaea">
+      			<md-button ng-show="tareas.habilitarDescargarArchivoEnviado" type="button" class="md-raised md-alert" style="background-color:#e9eaea">
 					<i class="fa fa-link" aria-hidden="true" style="font-size:17px;"></i>
 					Descargar Adjunto
 				</md-button>
 				<h3>Evaluación:</h3>
-				<div ng-show="tareas.tareasModel.criteriosArray.indexOf(1) >= 0" style="text-align:center;">
+				<div ng-show="tareas.habilitarSwitchAsistencia" style="text-align:center;">
 					<h5>Entregado:</h5>
 					<h5>
 					<md-switch ng-model="tareas.tareaEntregada" ng-change="tareas.calificacionEntregaTarea();" aria-label="Switch 1" class="md-primary" style="margin: 0 0 0 48%;"></md-switch>
 					</h5>
 				</div>
-				<div ng-show="tareas.tareasModel.criteriosArray.indexOf(2) >= 0">	
+				{{tareas.habilitarSwitchAsistencia}}
+				<div ng-show="tareas.habilitarCalificacion">	
 					<h5>Calificación</h5>
 					 <md-slider flex class="md-primary" md-discrete ng-model="tareas.valorTareaSlider" step="1" min="0" max="100" aria-label="rating" ng-change="tareas.calcularTotalCalificacion();" style="margin: 0 0 0 5%;">
 	     			</md-slider>     								

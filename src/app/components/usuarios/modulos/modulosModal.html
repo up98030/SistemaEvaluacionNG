@@ -1,7 +1,17 @@
-<div class="modalHeader">Grupo docente</div>
+<div class="modalHeader">
+    <div layout="row">
+        <div flex="50">Grupo docente</div>
+        <div flex="50" style="text-align:right;">
+            <span ui-sref="nuevoModulo" ng-click="crearGrupo();" class="botonNuevoGrupo">
+                <i class="fa fa-cubes" aria-hidden="true" style="color:#fff;"></i>
+                Crear grupo
+            </span>
+        </div>
+    </div>
+</div>
 <div>
     <div ui-grid="gridOptionsModulos" ui-grid-selection class="grid" selectable style="height:200px;"></div>
-    
+
     <div layout="row" style="text-align:center; padding:0 25%;">
         <div flex="50">
             <md-button ng-click="acceptModulos()" class="md-primary md-raised" style="background-color:#436abc;">
@@ -15,6 +25,12 @@
 </div>
 
 <style>
+    .botonNuevoGrupo {
+        border: 1px solid #b2b2b2;
+        padding: 5px 10px 6px;
+        border-radius: 10px;
+    }
+
     .modalHeader {
         border-bottom: 1px solid #436abc;
         background-color: #325b84;

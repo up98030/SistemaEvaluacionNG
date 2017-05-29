@@ -13,7 +13,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
     this.inputTitulo = " ";
     this.$http = $http;
     this.$scope = $scope;
-    this.$scope.nombreGuardar = "Guardar";
+    this.$scope.nombreGuardar = "Crear tarea";
     this.nombreTarea = "";
     this.descripcionTarea = "";
     this.fechaFin = new Date();
@@ -32,6 +32,30 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
     this.tareasModel.gruposUsuarios = [];
     console.log("DATOS USUARIO nuevaTareaController");
     console.log(this.usuarioModel.datosUsuario);
+
+    this.$scope.gridOptionsCriterios = {
+        enableRowSelection: true,
+        enableFullRowSelection: false,
+        rowHeader: false,
+        enableSelectAll: false,
+        rowHeight: 30,
+        multiSelect: false,
+        columnDefs: [
+            { name: 'idCriterio', visible: false, displayName: 'Id', width: 50 },
+            { name: 'nombreCriterio', visible: false, displayName: 'Nombre Completo', width: 200 },
+            { name: 'estado', visible: false },
+            { name: 'valorCriterio', minWidth: 250, width:'*',displayName:'Criterio' },
+            { name: 'descripcionCriterio', visible: true, minWidth: 250, width:'*',displayName:'Descripción' }           
+        ],
+        data: null
+    };
+
+    this.$scope.gridOptionsCriterios.onRegisterApi = function(gridApi){
+        app.$scope.gridOptionsCriterios['gridApi'] = gridApi;
+        gridApi.selection.on.rowSelectionChanged(app.$scope, (row)=>{
+            console.log(gridApi.selection.getSelectedRows());
+        });
+    }
 
 
     /****************  CARGAR CATEGORÍAS **************** */
@@ -144,8 +168,9 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
 
                 $scope.crearTarea = function () {
                     console.log($scope.gridOptionsUsuarios['gridApi'].selection.getSelectedRows());
-                    tareasModel.usuariosSeleccionados = $scope.gridOptionsUsuarios['gridApi'].selection.getSelectedRows();
-                    tareasModel.tareasCtrl.guardarTarea();
+                    tareasModel.usuariosSeleccionados = angular.copy($scope.gridOptionsUsuarios['gridApi'].selection.getSelectedRows());
+                    // tareasModel.tareasCtrl.guardarTarea();
+                    ngDialog.close();
                 }
                 // }
                 /***************************CARGAR USUARIOS CATEGORIA ****************/
@@ -297,6 +322,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
     /*********************** CONSULTA CRITERIOS  ***************************/
     this.$http.get('http://localhost:8080/sistEval/ws/getCriterios/').then(function (data) {
         app.$scope.criteriosEvaluacion = data.data;
+        app.$scope.gridOptionsCriterios.data = data.data;
         console.log("CRITERIOS");
         console.log(data.data);
     });
@@ -308,7 +334,7 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
         app.archivoAdjunto = null;
         // app.tareasModel.usuariosSeleccionados = [];
         app.criteriosSeleccionados = [];
-        usuariosSeleccionados = [];
+        // usuariosSeleccionados = [];
         app.$scope.criteriosSelected = [];
     };
 
@@ -317,102 +343,89 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
     /************************************ GUARDAR TAREA **********************************/
     this.guardarTarea = function (form) {
         // if (form.$valid) {
-            if (tareasModel.usuariosSeleccionados != undefined && tareasModel.usuariosSeleccionados.length > 0) {
-                console.log(tareasModel.usuariosSeleccionados);
-                //debugger;
-                console.log(app.$scope.tipoTarea);
-                if (tareasModel.usuariosSeleccionados != undefined) {
-                    var usuariosSeleccionados = tareasModel.usuariosSeleccionados.slice(0);
-                    usuariosSeleccionados.forEach(function (e) {
-                        delete e.$$hashKey;
-                        delete e.correoUsuario;
-                        delete e.idModulo;
-                        delete e.idPerfil;
-                        delete e.nombreCompleto;
-                        delete e.nombreUsuario;
-                        delete e.password;
-                        delete e.idCriterio;
-                        delete e.nombreCriterio;
-                        delete e.valorCriterio;
-                        delete e.descripcionCriterio;
-                    });
-                }
-                console.log("########## USUARIOS SELECCIONADOS ##########");
-                console.log(usuariosSeleccionados);
-                /*  
-                  if((app.$scope.tipoTarea.localeCompare("REUNION")) < 0){
-                        let criteriosSeleccionados = "";*/
-                let criteriosSeleccionados = "";
-                if (tareasModel.criteriosSeleccionados === null || tareasModel.criteriosSeleccionados === undefined || tareasModel.criteriosSeleccionados.length < 1) {
-                    toastr.error('Seleccione los criterios de evaluación');
-                    return;
-                }
-                tareasModel.criteriosSeleccionados.forEach(function (e) {
+        if (tareasModel.usuariosSeleccionados != undefined && tareasModel.usuariosSeleccionados.length > 0) {
+            console.log(tareasModel.usuariosSeleccionados);
+            //debugger;
+            console.log(app.$scope.tipoTarea);
+            if (tareasModel.usuariosSeleccionados != undefined) {
+                var usuariosSeleccionados = tareasModel.usuariosSeleccionados.slice(0);
+                usuariosSeleccionados.forEach(function (e) {
                     delete e.$$hashKey;
-                    criteriosSeleccionados = criteriosSeleccionados + e.idCriterio + ",";
-                    criteriosSeleccionados = criteriosSeleccionados.slice(0, -1);
+                    delete e.correoUsuario;
+                    delete e.idModulo;
+                    delete e.idPerfil;
+                    delete e.nombreCompleto;
+                    delete e.nombreUsuario;
+                    delete e.password;
+                    delete e.idCriterio;
+                    delete e.nombreCriterio;
+                    delete e.valorCriterio;
+                    delete e.descripcionCriterio;
+                });
+            }
+            console.log("########## USUARIOS SELECCIONADOS ##########");
+            console.log(usuariosSeleccionados);
+
+            let formData = new FormData();
+            let file = document.getElementById('fileTest');
+
+            // formData.append('file', file.files[0]);
+            console.log('fileee>> ', file.files[0]);
+            // let filename = file.files[0].name;
+            filename = file.files[0].name.split('.').pop();
+
+            var reader = new FileReader();
+            reader.readAsDataURL(file.files[0]);
+            reader.onload = function () {
+                let archivoBase64 = reader.result;
+                console.log(app.$sessionStorage);
+                this.nombreTarea = app.$scope.nombreTarea;
+                this.descripcionTarea = app.$scope.descripcionTarea;
+                this.fechaFin = app.$scope.fechaFin;
+                this.tareaData = {
+                    'nombreTarea': this.nombreTarea,
+                    'descripcionTarea': this.descripcionTarea,
+                    'idModulo': app.$sessionStorage.userData.idModulo,
+                    'idTipoTarea': tareasModel.nuevaTarea.idTipoTarea,
+                    'idCreadorTarea': app.$sessionStorage.userData.idUsuario,
+                    'estado': 'ACT',
+                    'criterios': app.$scope.gridOptionsCriterios.gridApi.selection.getSelectedRows()[0].idCriterio,
+                    'fechaInicio': new Date(),
+                    'fechaFin': this.fechaFin,
+                    'archivoAdjunto': archivoBase64,
+                    'tareasUsuarios': tareasModel.usuariosSeleccionados,
+                    'extensionArchivo': filename,
+                    'idPeriodo': app.$sessionStorage.userData.idPeriodo
+                };
+                console.log("OBJETO TAREA #$$#$#$#$#$#$#$$#$#");
+                console.log(this.tareaData);
+
+                console.log("ARCHIVO:....");
+                let loading_screen = pleaseWait({
+                    backgroundColor: '#666666',
+                    loadingHtml: '<div class="sk-cube-grid"><div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div><div class="sk-cube sk-cube3"></div><div class="sk-cube sk-cube4"></div><div class="sk-cube sk-cube5"></div><div class="sk-cube sk-cube6"></div><div class="sk-cube sk-cube7"></div><div class="sk-cube sk-cube8"></div><div class="sk-cube sk-cube9"></div></div>'
+                });
+                app.$http.post('http://localhost:8080/sistEval/ws/crearTarea/', this.tareaData).then(function (data) {
+                    loading_screen.finish();
+                    console.log("tarea");
+                    console.log(data);
+                    toastr.success('Tarea creada');
+                    console.log('UsuariosModulo >>>>>>>', app.tareasModel.usuariosModulo);
+                    resetFields();
+                    console.log('UsuariosModulo >>>>>>>', app.tareasModel.usuariosModulo);
+                }, function (data) {
+                    loading_screen.finish();
+                    console.log("ERROR");
+                    toastr.error('Error al crear tarea');
                 });
 
-                let formData = new FormData();
-                let file = document.getElementById('fileTest');
-
-                // formData.append('file', file.files[0]);
-                console.log('fileee>> ', file.files[0]);
-                // let filename = file.files[0].name;
-                filename = file.files[0].name.split('.').pop();
-
-                var reader = new FileReader();
-                reader.readAsDataURL(file.files[0]);
-                reader.onload = function () {
-                    let archivoBase64 = reader.result;
-                    console.log(app.$sessionStorage);
-                    this.nombreTarea = app.$scope.nombreTarea;
-                    this.descripcionTarea = app.$scope.descripcionTarea;
-                    this.fechaFin = app.$scope.fechaFin;
-                    this.tareaData = {
-                        'nombreTarea': this.nombreTarea,
-                        'descripcionTarea': this.descripcionTarea,
-                        'idModulo': app.$sessionStorage.userData.idModulo,
-                        'idTipoTarea': tareasModel.nuevaTarea.idTipoTarea,
-                        'idCreadorTarea': app.$sessionStorage.userData.idUsuario,
-                        'estado': 'ACT',
-                        'criterios': criteriosSeleccionados,
-                        'fechaInicio': new Date(),
-                        'fechaFin': this.fechaFin,
-                        'archivoAdjunto': archivoBase64,
-                        'tareasUsuarios': tareasModel.usuariosSeleccionados,
-                        'extensionArchivo': filename,
-                        'idPeriodo': app.$sessionStorage.userData.idPeriodo
-                    };
-                    console.log("OBJETO TAREA #$$#$#$#$#$#$#$$#$#");
-                    console.log(this.tareaData);
-
-                    console.log("ARCHIVO:....");
-                    let loading_screen = pleaseWait({
-                        backgroundColor: '#666666',
-                        loadingHtml: '<div class="sk-cube-grid"><div class="sk-cube sk-cube1"></div><div class="sk-cube sk-cube2"></div><div class="sk-cube sk-cube3"></div><div class="sk-cube sk-cube4"></div><div class="sk-cube sk-cube5"></div><div class="sk-cube sk-cube6"></div><div class="sk-cube sk-cube7"></div><div class="sk-cube sk-cube8"></div><div class="sk-cube sk-cube9"></div></div>'
-                    });
-                    app.$http.post('http://localhost:8080/sistEval/ws/crearTarea/', this.tareaData).then(function (data) {
-                        loading_screen.finish();
-                        console.log("tarea");
-                        console.log(data);
-                        toastr.success('Tarea creada');
-                        console.log('UsuariosModulo >>>>>>>', app.tareasModel.usuariosModulo);
-                        resetFields();
-                        console.log('UsuariosModulo >>>>>>>', app.tareasModel.usuariosModulo);
-                    }, function (data) {
-                        loading_screen.finish();
-                        console.log("ERROR");
-                        toastr.error('Error al crear tarea');
-                    });
-
-                };
-                reader.onerror = function (error) {
-                    console.log('Error: ', error);
-                };
-            } else {
-                toastr.warning('Seleccione los docentes de la tarea');
-            }
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        } else {
+            toastr.warning('Seleccione los docentes de la tarea');
+        }
         // } else {
         //     toastr.warning('Complete todos los campos');
         // }

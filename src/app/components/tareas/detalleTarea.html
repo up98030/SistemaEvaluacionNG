@@ -3,7 +3,7 @@
 <div ng-controller="tareasCtrl as tareas">
 	<div ui-view='left'></div>
 	<div layout="row">
-		<div flex="90" style="margin:0 5% 0 0">
+		<div flex="100" style="margin:0 5% 0 0">
 			<div layout="row" style="text-align:center;">
 				<div class="contenedorTituloTarea" style="">
 					<h1 class="tituloTarea">
@@ -16,12 +16,15 @@
 					<p>
 						{{tareas.tareasModel.tarea.tareasEntity.descripcionTarea}}
 					</p>
-					<a target="_self" href="http://www.pdf995.com/samples/archivoTarea.pdf" download="foo.pdf">
-						<md-button class="md-raised md-alert" style="background-color:#e9eaea" type="button">
-							<i class="fa fa-link" aria-hidden="true" style="font-size:17px;"></i> Descargar Adjunto
-						</md-button>
-					</a>
-<!--
+					<!-- *********************************** ARCHIVO DE TAREA *********************************** -->
+					<div ng-show="tareas.tareasModel.tarea.tareasEntity.archivoAdjunto.length > 0">
+						<a target="_self" href="http://www.pdf995.com/samples/archivoTarea.pdf" download="foo.pdf">
+							<md-button class="md-raised md-alert" style="background-color:#e9eaea" type="button">
+								<i class="fa fa-link" aria-hidden="true" style="font-size:17px;"></i> Descargar Adjunto
+							</md-button>
+						</a>
+					</div>
+					<!--
 					<md-button type="button" class="md-raised md-alert" ng-click="tareas.descargarArchivoTarea()" style="background-color:#e9eaea">
 						<br>
 						<a href="http://localhost:8080/sistEval/ws/tareas/3/1" download>test</a>
@@ -29,6 +32,7 @@
 					<i class="fa fa-link" aria-hidden="true" style="font-size:17px;"></i>
 					Descargar Adjunto
 					</md-button>-->
+					<!-- *********************************** FECHA DE ENTREGA *********************************** -->
 					<div>
 						<h4>Fecha de entrega: </h4><span>{{tareas.tareasModel.tarea.tareasEntity.fechaFin}}</span>
 					</div>
@@ -37,8 +41,9 @@
 					<md-input-container class="md-block">
 						<textarea ng-model="tareas.observacionesDocente" md-maxlength="150" rows="5" md-select-on-focus class="textarea-comentario"></textarea>
 					</md-input-container>
+					<!-- *********************************** ARCHIVO A ENVIAR *********************************** -->
 					<div style="margin-bottom:5%; text-align:center;">
-						<md-button class="md-raised">
+						<md-button class="md-raised" ng-show="tareas.tareasModel.habilitarAdjuntarArchivo">
 							<label for="file-inputDetalle">
 						<i class="fa fa-paperclip" aria-hidden="true" style="font-size:17px;"></i>
 						Adjuntar

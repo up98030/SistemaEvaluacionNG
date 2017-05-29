@@ -4,7 +4,7 @@
   <div ui-view='left'></div>
   <div layout="row">
     <form name="nuevaTareaForm" style="width:100%;">
-      <div flex="80" style="margin-left:5%;">
+      <div flex="100" style="margin-left:5%;margin-right:5%;">
         <md-select ng-model="tareas.tareasModel.nuevaTarea.idTipoTarea" ng-change="tareas.tipoListener()">
           <md-option ng-repeat="tipo in tiposTareas" ng-value="tipo.idTiposTareas" ng-selected="$first">
             {{tipo.nombreTipoTarea}}
@@ -21,7 +21,7 @@
         </md-input-container>
 
         <input class="ng-hide" id="fileTest" multiple type="file" />
-        <label for="fileTest" class="md-button md-raised md-primary">
+        <label for="fileTest" class="md-button md-raised md-primary" style="background-color:#0dabb8;">
           <i class="fa fa-thumb-tack " aria-hidden="true " style="font-size:17px; "></i>
           &nbsp;Adjuntar
         </label>
@@ -47,20 +47,22 @@
 
         <div ng-show="true ">
           <h4>Criterios de evaluación:</h4>
-          <div ng-repeat='criterio in criteriosEvaluacion'>
+          <!--<div ng-repeat='criterio in criteriosEvaluacion'>
             <md-checkbox ng-checked="existsCriterios(criterio, criteriosSelected) " ng-click="toggleCriterios(criterio, criteriosSelected) ">
               {{ criterio.valorCriterio }}
             </md-checkbox>
-          </div>
+          </div>-->
+          <div ui-grid="gridOptionsCriterios" ui-grid-selection class="grid" selectable></div>
         </div>
 
-        <md-button class="md-raised " ng-click="tareas.seleccionarUsuarios() ">
+        <div layout="row " style="margin-top:1%; text-align:center; margin-left:40%;">
+          <md-button class="md-raised " ng-click="tareas.seleccionarUsuarios()" style="display:block;">
           <i class="fa fa-address-book-o " aria-hidden="true " style="font-size:2em;vertical-align:middle; "></i> Asignar
           Docentes
         </md-button>
-
-        <div layout="row " style="margin-top:1%; ">
-          <md-button ng-click="tareas.guardarTarea(nuevaTareaForm) " class="md-primary md-raised " style="background-color:#003366; ">{{nombreGuardar}}</md-button>
+        </div>
+        <div layout="row " style="margin-top:1%; text-align:center; margin-left:44%;">
+          <md-button ng-click="tareas.guardarTarea(nuevaTareaForm) " class="md-primary md-raised " style="background-color:#003366; display:block;">{{nombreGuardar}}</md-button>
         </div>
         <!-- <md-button ng-click="subirArchivo() " >Archivo</md-button> -->
       </div>
