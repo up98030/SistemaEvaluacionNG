@@ -28,14 +28,14 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
         this.tareasModel.categoriasColors.push(purpura);
         let rosa = { 'fondo': '#FF00A9', 'borde': '#cc0087', 'sombra': '#e50098' }
         this.tareasModel.categoriasColors.push(rosa);
+        let tomate = { 'fondo': '#F27D0C', 'borde': '#c16409', 'sombra': '#d9700a' }
+        this.tareasModel.categoriasColors.push(tomate);
         let navy = { 'fondo': '#2E4045', 'borde': '#243337', 'sombra': '#29393e' }
         this.tareasModel.categoriasColors.push(navy);
         let rojo = { 'fondo': '#E42F43', 'borde': '#b62535', 'sombra': '#cd2a3c' }
         this.tareasModel.categoriasColors.push(rojo);
         let azul = { 'fondo': '#3A329B', 'borde': '#2e287c', 'sombra': '#342d8b' }
         this.tareasModel.categoriasColors.push(azul);
-        let tomate = { 'fondo': '#F27D0C', 'borde': '#c16409', 'sombra': '#d9700a' }
-        this.tareasModel.categoriasColors.push(tomate);
         // let cafe = {'fondo': '', 'borde':'','sombra':''}
     }
     this.coloresCategorias();
@@ -119,7 +119,11 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
     }
 
     /************************FIN CARGAR CATEGORÍAS********************** */
-
+    this.filterCategories = [
+        { 'idTipoTarea': 1 },
+        { 'idTipoTarea': 2 },
+        { 'idTipoTarea': 3 },
+    ];
     /************************** Grid de tareas **************************/
     this.gridOptions = {
         enableRowSelection: true,
@@ -142,9 +146,13 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
                 displayName: 'Categoría',
                 visible: true,
                 cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.obtenerCategoriaGrid(row.entity.tareasEntity.idTipoTarea)}}</div>',
-                cellFilter: 'mapGender',
-                editDropdownValueLabel: 'Tipo',
-                editDropdownOptionsArray: app.$scope.tareasModel.categoriasTareas
+                // cellFilter: 'mapGender',
+                // editDropdownValueLabel: 'Tipo',
+                // editDropdownOptionsArray: app.$scope.tareasModel.categoriasTareas,
+                filter: {
+                    type: 'select',
+                    selectOptions: this.filterCategories,
+                }
             },
             { name: 'estado', visible: false },
             { name: 'observacionesDocente', visible: false },

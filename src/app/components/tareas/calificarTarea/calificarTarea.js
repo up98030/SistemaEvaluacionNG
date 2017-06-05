@@ -8,6 +8,13 @@ function calificarTareaController($scope, $http, $state, tareasModel, usuarioMod
     this.valorTareaSlider = 0;
     this.totalCalificacionTarea = 0;
     this.observacionesCalificacion = "";
+    this.test = 'TESTTT';
+    this.$scope = $scope;
+    this.seccionesVisibles = {
+        'descargarArchivoEnviado':false,
+        'switchEntregado':false,
+        'switchAsistencia':false
+    }
     this.calcularTotalCalificacion = function () {
         console.log(this.tareaEntregada);
         //this.calificacionEntregaTarea();
@@ -86,10 +93,14 @@ function calificarTareaController($scope, $http, $state, tareasModel, usuarioMod
             app.habilitarSwitchAsistencia = false;
             app.habilitarCalificacion = false;
             app.habilitarDescargarArchivoEnviado = false;
+            app.$scope.visible = false;
             /***********************************************/
             /***** SWITCH ENTREGADO ********/
             if (row.entity.tareasEntity.criterios.localeCompare("1") === 0 || row.entity.tareasEntity.criterios.localeCompare("3") === 0) {
-                app.habilitarDescargarArchivoEnviado = true;
+                app.seccionesVisibles.descargarArchivoEnviado = true;
+                app.$scope.visible = true;
+                console.log('descargarArchivoEnviado');
+                console.log(app.seccionesVisibles.descargarArchivoEnviado);
             }
             /***** CALIFICACION ********/
             if (row.entity.tareasEntity.criterios.localeCompare("3") === 0 || row.entity.tareasEntity.criterios.localeCompare("4") || row.entity.tareasEntity.criterios.localeCompare("6")) {

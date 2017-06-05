@@ -23,11 +23,11 @@
         <div flex="20" style=" width:100%;"></div>
         <!-- <h1 sytle="border:1px solid red">{{resumenNoEntregadas}}</h1> -->
     <!--</div>-->
-    <div layout="row" style="width:90%; height:100vh; margin: 8vh 5vw">
+    <! -- ********************************* RESUMEN *********************************-->
+    <!--<div layout="row" style="width:90%; height:100vh; margin: 8vh 5vw">
         <div flex="33">
             <md-button style="width:100%; height:auto; z-index:0;   " ui-sref="tareas">
                 <md-card style="text-align:center;">
-                    <!--<img ng-src="{{imagePath}}" class="md-card-image" alt="Washed Out">-->
                     <i class="fa fa-bookmark-o" aria-hidden="true" style="font-size:28vh; margin-bottom:25px;"></i>
 
                     <md-card-title>
@@ -37,12 +37,6 @@
                     </md-card-title>
                     <md-card-content>
                         {{tareasPendientes}} Tareas pendientes
-                        <!-- 
-                                <div style="width:100% height: auto;border-bottom:1px solid #d6d6d6;"></div>
-                                
-                                <h4 style="z-index="2"><a ui-sref="calendario">Subir cronograma</a></h4>
-                                <h4><a href="#">Objetivos semestre</a></h4>
-                                -->
                     </md-card-content>
                     <md-card-actions layout="row" layout-align="end center">
                     </md-card-actions>
@@ -50,9 +44,8 @@
             </md-button>
         </div>
         <div flex="33">
-            <md-button style="width:100%; height:auto;" " ui-sref="reuniones "> 
+            <md-button style="width:100%; height:auto;" ui-sref="reuniones "> 
                         <md-card style="text-align:center; ">
-                             <!--<img ng-src="{{imagePath}} " class="md-card-image " alt="Washed Out ">-->
                              <i class="fa fa-calendar " aria-hidden="true " style="font-size:28vh; margin-bottom:25px; "></i>                         
                             <md-card-title>
                               <md-card-title-text>
@@ -61,11 +54,6 @@
                             </md-card-title>
                             <md-card-content>
                                 {{reunionesPendientes}} sin revisar
-                                 <!-- 
-                                <div style="width:100% height: auto;border-bottom:1px solid #d6d6d6; "></div>
-                                 <h4 style="z-index="2"><a ui-sref="calendario">Reunion semanal</a></h4>
-                <h4><a href="#">Reunion consejo</a></h4>
-                -->
                 </md-card-content>
                 <md-card-actions layout="row" layout-align="end center">
                 </md-card-actions>
@@ -73,10 +61,9 @@
             </md-button>
         </div>
         <div flex="33">
-            <md-button style="width:100%; height:auto;" " ui-sref="misNotas "> 
+            <md-button style="width:100%; height:auto;" ui-sref="misNotas "> 
                         <md-card style="text-align:center; ">
                              <i class="fa fa-line-chart " aria-hidden="true " style="font-size:28vh; margin-bottom:25px; "></i>                         
-                             <!--<img ng-src="{{imagePath}} " class="md-card-image " alt="Washed Out ">-->
                             <md-card-title>
                               <md-card-title-text>
                                 <span class="md-headline ">Notas</span>
@@ -85,18 +72,84 @@
                             <md-card-content>
                                {{PromedioNotas}} es su promedio
                                
-                                 <!-- 
-                                <div style="width:100% height: auto;border-bottom:1px solid #d6d6d6; "></div>
-                                 <h4 style="z-index="2"><a ui-sref="calendario">35 tareas entregadas</a></h4>
+                                 <h4 style="z-index:2"><a ui-sref="calendario">35 tareas entregadas</a></h4>
                 <h4><a href="#">0 Tareas incumplidas</a></h4>
-                -->
                 </md-card-content>
                 <md-card-actions layout="row" layout-align="end center">
                 </md-card-actions>
                 </md-card>
             </md-button>
         </div>
+    </div>-->
+    <!------------------------------------RESUMEN 2 --------------------------------- -->
+    <div style="margin-left:7%;">
+        <h4>Bienvenido! {{principal.$sessionStorage.userData.nombreCompleto}}</h4>
     </div>
+    <div layout="row" style="width:90%; height:100vh; margin: 8vh 5vw">
+        <div flex="50">
+            <md-button style="width:100%; height:auto; z-index:0;   " ui-sref="tareas">
+                <md-card style="text-align:center;">
+                    <i class="fa fa-bookmark-o" aria-hidden="true" style="font-size:28vh; margin-bottom:25px;"></i>
+
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">Tareas</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        Mis tareas pendientes
+                    </md-card-content>
+                    <md-card-actions layout="row" layout-align="end center">
+                    </md-card-actions>
+                </md-card>
+            </md-button>
+        </div>
+        <div flex="50" ng-show="principal.$sessionStorage.userData.idPerfil != 1">
+            <md-button style="width:100%; height:auto;" ui-sref="nuevaTarea">
+                <md-card style="text-align:center; ">
+                    <i class="fa fa-pencil-square-o " aria-hidden="true " style="font-size:28vh; margin-bottom:25px; "></i>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline ">Crear Tarea</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        Crear y asignar una tarea
+                    </md-card-content>
+                    <md-card-actions layout="row" layout-align="end center">
+                    </md-card-actions>
+                </md-card>
+            </md-button>
+        </div>
+        <div flex="50" ng-show="principal.$sessionStorage.userData.idPerfil == 1">
+            <md-button style="width:100%; height:auto;" ui-sref="misNotas">
+                <md-card style="text-align:center; ">
+                    <i class="fa fa-line-chart " aria-hidden="true " style="font-size:28vh; margin-bottom:25px; "></i>
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline ">Notas</span>
+                        </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                        Revisar mi resumen de notas
+                    </md-card-content>
+                    <md-card-actions layout="row" layout-align="end center">
+                    </md-card-actions>
+                </md-card>
+            </md-button>
+        </div>
+    </div>
+    <!-- ****************************** BIENVENIDA **********************************-->
+    <!--<div layout="row">
+        <h1>Sistema de Evaluación Docente</h1>
+    </div>
+    <div layout="row">
+        <div flex="40">
+            <i class="fa fa-handshake-o" style="font-size:8em;" aria-hidden="true"></i>
+        </div>
+        <div flex="60" style="font-size:3.2em;">Bienvenido! Pablo Guerra</div>
+    </div>-->
+    <!-- ******************************************************************************** -->
 </div>
 
 </div>
