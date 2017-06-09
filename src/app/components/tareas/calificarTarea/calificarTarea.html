@@ -3,12 +3,8 @@
 <div ng-controller="calificarTareaCtrl as tareas">
 	<div ui-view='left'></div>
 	<div layout="row">
-		<div flex="90">
-			{{tareas.test}} 
-			{{tareas.seccionesVisibles.descargarArchivoEnviado}}
-			{{tareas.seccionesVisibles.switchEntregado}}
-			{{tareas.seccionesVisibles.switchAsistencia}}
-			{{visible}}
+		<div flex="100">
+			<!--{{tareas.tareasModel.tarea}} -->
 
 			<div layout="row" style="text-align:center;">
 				<div class="contenedorTituloTarea" style="">
@@ -16,9 +12,10 @@
 				</div>
 			</div>
 			<div style="margin:0 auto; text-align:center;">
-				<strong>Docente:</strong>
-				<div>{{calificarTareaCtrl.tareasModel.tarea.usuariosEntity.nombreCompleto}}</div>
-				<div style="height:10px;"></div>
+				<strong>Envió:</strong>
+				<div style="height:5px;"></div>
+				<div>{{tareas.tareasModel.tarea.usuariosEntity.nombreCompleto}}</div>
+				<div style="height:15px;"></div>
 				<span><strong>Comentario:</strong></span>
 				<!-- <div style="margin:0 auto; text-align:left;border:1px solid;">
 				<p>{{calificarTareaCtrl.tareasModel.tarea.ObservacionesDocente}}</p>
@@ -29,30 +26,29 @@
 			      <h2 class="md-flex">Comentario:</h2>
 			    </div>
 		    </md-toolbar> -->
-				<p>{{tareas.tareasModel.tarea.ObservacionesDocente}}</p>
+				<p style="margin-top:7px;">{{tareas.tareasModel.tarea.ObservacionesDocente}}</p>
 				<div style="height:10px;"></div>
 				<div>
-					{{tareas.habilitarDescargarArchivoEnviado}}
-					<md-button ng-show="tareas.habilitarDescargarArchivoEnviado" type="button" class="md-raised md-alert" style="background-color:#e9eaea">
+					<md-button ng-show="tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 1 || tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 3 " 
+					type="button" class="md-raised md-alert" style="background-color:#e9eaea">
 						<i class="fa fa-link" aria-hidden="true" style="font-size:17px;"></i> Descargar Adjunto
 					</md-button>
-					<h3>Evaluación:</h3>
-					<div ng-show="tareas.habilitarSwitchAsistencia" style="text-align:center;">
-						<h5>Entregado:</h5>
+					<div ng-show="tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 5 || tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 6 || tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 2" style="text-align:center;">
+						<h5 ng-show="tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 2">Entregado:</h5>
+						<h5 ng-show="tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 6 || tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 5">Asistencia:</h5>
 						<h5>
 							<md-switch ng-model="tareas.tareaEntregada" ng-change="tareas.calificacionEntregaTarea();" aria-label="Switch 1" class="md-primary"
 							 style="margin: 0 0 0 48%;"></md-switch>
 						</h5>
 					</div>
-					{{tareas.habilitarSwitchAsistencia}}
-					<div ng-show="tareas.habilitarCalificacion">
+					<div ng-show="tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 3 || tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 4 || tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 6 ">
 						<h5>Calificación</h5>
 						<md-slider flex class="md-primary" md-discrete ng-model="tareas.valorTareaSlider" step="1" min="0" max="100" aria-label="rating"
-						 ng-change="tareas.calcularTotalCalificacion();" style="margin: 0 0 0 5%;">
+						 ng-change="tareas.calcularTotalCalificacion();" style="margin: 0 4%;">
 						</md-slider>
 					</div>
 					<h3>Observaciones: </h3>
-					<md-input-container class="md-block" style="margin: 0 0 0 5%;">
+					<md-input-container class="md-block" style="margin: 0 5%;">
 						<textarea ng-model="tareas.observacionesCalificacion" md-maxlength="150" rows="5" md-select-on-focus class="textarea-comentario"></textarea>
 					</md-input-container>
 					<div ng-show="tareas.tareasModel.criteriosArray.indexOf(3) >= 0">
@@ -60,14 +56,13 @@
 						<h3>{{tareas.tareasModel.tarea.FechaEnvio}}</h3>
 					</div>
 
-					<md-list>
+					<md-list ng-show="tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 3 || tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 4 || tareas.tareasModel.tarea.tareasEntity.idTipoTarea == 6 ">
 						<md-list-item class="md-2-line veggie-option" layout-wrap>
 							<div class="md-item-text md-whiteframe-z1" flex>
 								<h3>Total:</h3>
 								<p>{{tareas.totalCalificacionTarea}}</p>
 							</div>
 						</md-list-item>
-
 					</md-list>
 					<div style="text-align:center;">
 						<md-button class="md-raised md-primary" ng-click="tareas.enviarCalificacion();" style="background-color:#003366;">Calificar</md-button>

@@ -74,7 +74,7 @@ function calificarTareaController($scope, $http, $state, tareasModel, usuarioMod
             { name: 'tareasEntity.idModulo', visible: false },
             { name: 'tareasEntity.idCreadorTarea', visible: false },
             { name: 'idTarea', visible: false },
-            { name: 'observaciones', width: 300 }
+            { name: 'observaciones', width: 300, visible:false }
         ],
         data: tareasData,
     };
@@ -141,6 +141,9 @@ function calificarTareaController($scope, $http, $state, tareasModel, usuarioMod
     this.enviarCalificacion = function () {
         console.log(tareasModel.tarea);
         tareasModel.tarea.calificacion = this.totalCalificacionTarea;
+        if((tareasModel.tarea.tareasEntity.idTipoTarea == 2 || tareasModel.tarea.tareasEntity.idTipoTarea == 5) && app.tareaEntregada){
+            tareasModel.tarea.calificacion = 100;
+        }
         tareasModel.tarea.estado = 'CLF';
         tareasModel.tarea.FechaEnvio = '2016-01-01';
         tareasModel.tarea.tareasEntity.fechaFin = '2016-01-01';

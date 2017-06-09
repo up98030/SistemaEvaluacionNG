@@ -23,6 +23,13 @@ angular.module('myApp.principal', ['ngDialog'])
         this.$http = $http;
         this.ngDialog = ngDialog;
 
+        this.logOut = function(){
+            this.$sessionStorage = null;
+            this.$localStorage = null;
+            this.userData = null;
+            this.$scope = null;
+        }
+
         this.actualizarUsuario = function () {
             console.log('PASSWORD ', this.userData.password);
             if (this.userData.password && this.userData.password !== undefined && this.userData.password !== null && this.userData.password !== "" && this.userData.password !== " ") {

@@ -4,10 +4,14 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
     this.$http = $http;
     this.$scope = $scope;
     this.usuarioModel = usuarioModel;
+    this.$state = $state;
     this.$scope.titulo = "asdf";
+    this.passwordConfirmation = "";
     this.usuarioEliminar = {};
     console.log('ngDialog', ngDialog);
     this.ngDialog = ngDialog;
+    app.usuarioModel.perfilesUsuario = [];
+    app.usuarioModel.modulosUsuario = [];
     this.$scope.periodoActivo = "";
     this.gridOptions = {
         enableRowSelection: true,
@@ -18,12 +22,29 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
         multiSelect: false,
         columnDefs: [
             { name: 'idUsuario', visible: true, displayName: 'Id', width: 50 },
-            { name: 'nombreCompleto', visible: true, displayName: 'Nombre Completo', width: 200 },
+            { name: 'nombreCompleto', visible: true, displayName: 'Nombres', minWidth: 200, width: '*' },
             { name: 'nombreUsuario', visible: false },
             { name: 'correoUsuario', width: 250 },
-            { name: 'estado', visible: true, width: 250 },
-            { name: 'idPerfil', width: 200, displayName: 'Perfil' },
-            { name: 'idModulo', width: 200, displayName: 'Modulo' },
+            {
+                name: 'estado',
+                visible: false,
+                width: 250,
+            },
+            {
+                name: 'idPerfil',
+                minWidth: 200,
+                width: '*',
+                displayName: 'Perfil',
+                cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.obtenerPerfilesGrid(row.entity.idPerfil)}}</div>',
+            },
+            {
+                name:
+                'idModulo',
+                minWidth: 200,
+                width: '*',
+                displayName: 'Modulo',
+                cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.obtenerModulosGrid(row.entity.idModulo)}}</div>',
+            },
             {
                 name: 'acciones', width: 150, visible: true,
                 cellTemplate: '<div class="ui-grid-cell-contents" style="text-align:center;" ng-click="grid.appScope.eliminarUsuario(row.entity)"><i class="fa fa-trash" style="color:#cc3333;" aria-hidden="true"></i></div>'
@@ -31,14 +52,73 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
         ],
         data: null
     };
-    this.gridOptions.onRegisterApi = function(gridApi){
+
+    this.actualizarUsuario = function () {
+        console.log('PASSWORD ', this.userData.password);
+        if (this.userData.password && this.userData.password !== undefined && this.userData.password !== null && this.userData.password !== "" && this.userData.password !== " ") {
+            if (this.passwordConfirmation !== this.userData.password) {
+                toastr.error('Las contraseñas no coinciden');
+                return;
+            }
+        }
+        console.log('this.userData >>>>>>>>>>>>> ', this.userData);
+        this.$http.post('http://localhost:8080/sistEval/ws/actualizarUsuario/', this.userData).then(function (data) {
+            if (app.userData.password) {
+                app.userData.password = "";
+                app.passwordConfirmation = "";
+            }
+            toastr.success('Usuario actualizado');
+        }, function (error) {
+            toastr.error('Error al actualizar datos usuario');
+        });
+    }
+
+    this.gridOptions.onRegisterApi = function (gridApi) {
         this.gridOptions['gridApi'] = gridApi;
-        gridApi.selection.on.rowSelectionChanged(app.$scope, (row)=>{
+        gridApi.selection.on.rowSelectionChanged(app.$scope, (row) => {
+            // app.usuariosModel.usuarioSeleccionado = row.entity;
             console.log("Usuarios selection");
-            console.log(row.entity);
+            // console.log(app.usuariosModel.usuarioSeleccionado);
         })
     }
 
+    this.obtenerPerfiles = function () {
+        console.log(this.moduloObj);
+        $http.get('http://localhost:8080/sistEval/ws/perfiles/').then(function (data) {
+            app.usuarioModel.perfilesUsuario = data.data;
+        }, function (error) {
+            toastr.error('Error al obtener perfiles');
+        });
+    }
+    this.obtenerPerfiles();
+
+    this.obtenerModulos = function () {
+        console.log(this.moduloObj);
+        $http.get('http://localhost:8080/sistEval/ws/modulos/').then(function (data) {
+            console.log('MODULOS', data);
+            app.usuarioModel.modulosUsuario = data.data;
+        }, function (error) {
+            toastr.error('Error al obtener modulos');
+        });
+    }
+    this.obtenerModulos();
+
+
+    this.$scope.obtenerPerfilesGrid = function (index) {
+        for (let i = 0; i < app.usuarioModel.perfilesUsuario.length; i++) {
+            if (app.usuarioModel.perfilesUsuario[i]['idPerfil'] === index) {
+                return app.usuarioModel.perfilesUsuario[i]['nombrePerfil'];
+            }
+        }
+    }
+
+    this.$scope.obtenerModulosGrid = function (index) {
+        for (let i = 0; i < app.usuarioModel.modulosUsuario.length; i++) {
+            if (app.usuarioModel.modulosUsuario[i]['idModulo'] === index) {
+                return app.usuarioModel.modulosUsuario[i]['nombreModulo'];
+            }
+        }
+    }
 
     /***************** INICIO CONTROLADOR DIALOGOS PERFILES ******************** */
     this.seleccionarPerfil = function () {
@@ -123,10 +203,11 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
                         // console.log("Grid API");
                         // console.log(row.entity);
                         usuarioModel.moduloNuevoUsuario = row.entity;
+                        app.userData = row.entity;
                     });
                 };
 
-                $scope.crearGrupo = function(){
+                $scope.crearGrupo = function () {
                     ngDialog.close();
                 }
 
@@ -162,10 +243,14 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
         console.log(gridApi);
         console.log(gridApi.selection.on.rowSelectionChanged(app.$scope, function (row) {
             console.log(gridApi);
-            console.log("Grid API");
+            app.usuarioModel.usuarioSeleccionado = row.entity
+            console.log("Usuario seleccionado");
+            app.$state.go('editarUsuario');
             console.log(row.entity);
             app.usuarioEliminar = row.entity;
             tareasModel.tarea = row.entity;
+            app.userData = row.entity;
+            console.log('UserData >>> ', app.userData);
             var tarea = row.entity;
             $scope.test = tarea.nombreTarea;
         }));
@@ -251,7 +336,11 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
     }
 
     this.consultarUsuarios = function () {
-        app.$http.get('http://localhost:8080/sistEval/ws/usuarios/').
+        let header = {
+            "Accept": "text/plain;charset=UTF-8",
+            // "Accept-Charset": "charset=utf-8"
+        };
+        app.$http.get('http://localhost:8080/sistEval/ws/usuarios/', header).
             success(function (data) {
                 tareasData = data;
                 completo = true;

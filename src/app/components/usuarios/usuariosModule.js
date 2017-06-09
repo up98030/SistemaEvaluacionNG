@@ -11,6 +11,23 @@ usuariosModule.config(function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise("/");
 	
 	$stateProvider
+    .state('editarUsuario',{
+        url:"/editarUsuario",
+        views:{
+             "": {
+                templateUrl:"app/components/usuarios/editarUsuario.html"
+            },
+            "left@editarUsuario":{
+                templateUrl:"app/shared/header/usuariosHeader.html"
+            },
+            "header@editarUsuario":{
+                templateUrl:"app/shared/header/header.html"
+            },
+            "footer@editarUsuario":{
+                templateUrl:"app/shared/footer.html"
+            }
+        }
+    })
     .state('categorias',{
         url:"/categorias",
         views:{

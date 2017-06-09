@@ -250,22 +250,61 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
             app.gridOptions.data = data.data;
         });
     }
-
     this.cargarTareas('CRE');
+
 
     this.descargarArchivoTarea = function () {
         console.log(tareasModel.tarea);
-        let headers = {
-            'Accept': 'application/octet-stream',
-            'Content-Type': 'application/octet-stream',
-        };
-        this.$http.get('http://localhost:8080/sistEval/ws/tareas/' + tareasModel.tarea.idTarea + '/' + tareasModel.tarea.idUsuario,
-            headers).then(function (data) {
-                // app.$scope.tiposTareas = data.data;
-                saveAs(data);
-                console.log("TIPOSTAREAS");
-                console.log(data);
-            });
+
+        // var binary = '';
+        // var bytes = new Uint8Array(256);
+        // var len = bytes.byteLength;
+        // for (var i = 0; i < len; i++) {
+        //     binary += String.fromCharCode(bytes[i]);
+        // }
+        // console.log(bytes);
+
+        // var base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(tareasModel.tarea.tareasEntity.archivoAdjunto)));
+
+        var string = new TextDecoder('utf-8').decode(tareasModel.tarea.tareasEntity.archivoAdjunto);
+
+        // var bb = new BlobBuilder();
+        // bb.append(tareasModel.tarea.tareasEntity.archivoAdjunto);
+        // var f = new FileReader();
+        // f.onload = function (e) {
+        //     callback(e.target.result)
+        // }
+        // f.readAsText(bb.getBlob());
+
+        console.log(string);
+        var binaryString = window.atob(string);
+        var binaryLen = binaryString.length;
+        var bytes = new Uint8Array(binaryLen);
+        for (var i = 0; i < binaryLen; i++) {
+            var ascii = binaryString.charCodeAt(i);
+            bytes[i] = ascii;
+        }
+
+        var blob = new Blob([byte]);
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        var fileName = reportName + ".gif";
+        link.download = fileName;
+        link.click();
+
+
+
+        // let headers = {
+        //     'Accept': 'application/octet-stream',
+        //     'Content-Type': 'application/octet-stream',
+        // };
+        // this.$http.get('http://localhost:8080/sistEval/ws/tareas/' + tareasModel.tarea.idTarea + '/' + tareasModel.tarea.idUsuario,
+        //     headers).then(function (data) {
+        //         // app.$scope.tiposTareas = data.data;
+        //         saveAs(data);
+        //         console.log("TIPOSTAREAS");
+        //         console.log(data);
+        //     });
     }
 
 
@@ -280,32 +319,40 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
         console.log(tareasModel.tarea);
 
         let file = document.getElementById('file-inputDetalle');
-
+        console.log(file.files);
         // formData.append('file', file.files[0]);
-        console.log('fileee>> ', file.files[0]);
-        // let filename = file.files[0].name;
-        filename = file.files[0].name.split('.').pop();
+        if (file.files && file.files != null && file.files != undefined && file.files.length > 0 && file.files['length'] > 0) {
+            filename = file.files[0].name.split('.').pop();
 
-        var reader = new FileReader();
-        reader.readAsDataURL(file.files[0]);
-        reader.onload = function () {
-            let archivoBase64 = reader.result;
-            var arrayBuffer = this.result,
+            var reader = new FileReader();
+            reader.readAsDataURL(file.files[0]);
+            reader.onload = function () {
+                let archivoBase64 = reader.result;
+                var arrayBuffer = this.result,
 
-                array = new Uint8Array(arrayBuffer),
-                binaryString = btoa(String.fromCharCode.apply(null, array));
-            this.archivoAdjuntoDetalle = binaryString;
-            tareasModel.tarea.archivoAdjunto = archivoBase64;
+                    array = new Uint8Array(arrayBuffer),
+                    binaryString = btoa(String.fromCharCode.apply(null, array));
+                this.archivoAdjuntoDetalle = binaryString;
+                tareasModel.tarea.archivoAdjunto = archivoBase64;
 
+                app.$http.post('http://localhost:8080/sistEval/ws/enviarTarea/', tareasModel.tarea).then(function (data) {
+                    console.log("########### TAREAS USUARIO ENVIADA ##############");
+                    console.log(data.data);
+                    toastr.success('Tarea Enviada');
+                    $state.go('listaTareas');
+                });
+
+            }
+        } else {
             app.$http.post('http://localhost:8080/sistEval/ws/enviarTarea/', tareasModel.tarea).then(function (data) {
                 console.log("########### TAREAS USUARIO ENVIADA ##############");
                 console.log(data.data);
                 toastr.success('Tarea Enviada');
-                $state.go('tareas');
+                $state.go('listaTareas');
             });
-
         }
-
+        console.log('fileee>> ', file.files[0]);
+        // let filename = file.files[0].name;
     }
     this.cambioTab = function () {
         alert("asdf");

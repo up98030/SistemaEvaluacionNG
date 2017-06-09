@@ -54,19 +54,20 @@ function nuevaTareaController($scope, $http, tareasModel, usuarioModel, ngDialog
         app.$scope.gridOptionsCriterios['gridApi'] = gridApi;
         gridApi.selection.on.rowSelectionChanged(app.$scope, (row)=>{
             console.log(gridApi.selection.getSelectedRows());
+            app.tareasModel.nuevaTarea.idTipoTarea = gridApi.selection.getSelectedRows()[0].idCriterio;
         });
     }
 
 
     /****************  CARGAR CATEGORÍAS **************** */
-    this.tipoListener = function () {
-        for (let i = 0; i < app.tareasModel.categoriasTareas.length; i++) {
-            if (this.tareasModel.nuevaTarea.idTipoTarea === app.tareasModel.categoriasTareas[i].idTiposTareas) {
-                console.log(app.tareasModel.categoriasTareas[i].criterios);
-            }
-        }
-        console.log(this.tareasModel.nuevaTarea.idTipoTarea);
-    }
+    // this.tipoListener = function () {
+    //     for (let i = 0; i < app.tareasModel.categoriasTareas.length; i++) {
+    //         if (this.tareasModel.nuevaTarea.idTipoTarea === app.tareasModel.categoriasTareas[i].idTiposTareas) {
+    //             console.log(app.tareasModel.categoriasTareas[i].criterios);
+    //         }
+    //     }
+    //     console.log(this.tareasModel.nuevaTarea.idTipoTarea);
+    // }
     this.obtenerCategorias = function () {
         $http.get('http://localhost:8080/sistEval/ws/getTiposTareas/').then(function (data) {
             app.tareasModel.categoriasTareas = data.data;

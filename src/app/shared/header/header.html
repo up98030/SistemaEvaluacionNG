@@ -42,9 +42,9 @@
 		<!--<md-button ui-sref="listaModulos" class="boton-header grinds">-->
 		<div class="right-icons">
 			<i class="fa fa-cog grinds" aria-hidden="true" ui-sref="settings" ng-show="principal.$sessionStorage.userData.idPerfil == 3"></i>
-			<i class="fa fa-cog grinds" aria-hidden="true" style="opacity:0;" ng-show="principal.$sessionStorage.userData.idPerfil != 3" style="margin-right:8vw;"></i>
+			<i class="fa fa-cog grinds" aria-hidden="true" style="opacity:0; width:10vw;" ng-show="principal.$sessionStorage.userData.idPerfil != 3"></i>
 			<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-			<i class="fa fa-sign-out grinds" ui-sref="home" aria-hidden="true"></i>
+			<i class="fa fa-sign-out grinds" ui-sref="home" ng-click="principal.logOut()" aria-hidden="true"></i>
 		</div>
 
 		<!--</md-button>-->
