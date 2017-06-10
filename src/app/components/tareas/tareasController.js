@@ -179,11 +179,10 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
             { name: 'observaciones', width: 300, visible: false },
             { name: 'observacionCalificacion', width: 300, displayName: 'Observación', visible: false }
 
-        ],
-        data: tareasData,
-
-    };
-    var tareasData = [];
+        ]
+    };    
+    // var tareasData = [];
+    // app.gridOptions.data = tareasData;
     var completo = false;
 
     /************************** Cuando selecciona una tarea **************************/
@@ -246,38 +245,20 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
                 }
             }
             loading_screen.finish();
+            app.tareasModel.tareasCargadas = true;
             console.log('Categorias tareas  contadors', app.tareasModel.categoriasTareas);
             app.gridOptions.data = data.data;
         });
     }
-    this.cargarTareas('CRE');
+    // debugger;
+    // if (app.tareasModel.tareasCargadas != true) {
+        this.cargarTareas('CRE');
+    // }
 
 
     this.descargarArchivoTarea = function () {
         console.log(tareasModel.tarea);
-
-        // var binary = '';
-        // var bytes = new Uint8Array(256);
-        // var len = bytes.byteLength;
-        // for (var i = 0; i < len; i++) {
-        //     binary += String.fromCharCode(bytes[i]);
-        // }
-        // console.log(bytes);
-
-        // var base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(tareasModel.tarea.tareasEntity.archivoAdjunto)));
-
-        var string = new TextDecoder('utf-8').decode(tareasModel.tarea.tareasEntity.archivoAdjunto);
-
-        // var bb = new BlobBuilder();
-        // bb.append(tareasModel.tarea.tareasEntity.archivoAdjunto);
-        // var f = new FileReader();
-        // f.onload = function (e) {
-        //     callback(e.target.result)
-        // }
-        // f.readAsText(bb.getBlob());
-
-        console.log(string);
-        var binaryString = window.atob(string);
+        var binaryString = window.atob(tareasModel.tarea.base64File);
         var binaryLen = binaryString.length;
         var bytes = new Uint8Array(binaryLen);
         for (var i = 0; i < binaryLen; i++) {
@@ -285,26 +266,13 @@ function tareasController($scope, $http, $state, tareasModel, usuarioModel, $loc
             bytes[i] = ascii;
         }
 
-        var blob = new Blob([byte]);
+        var blob = new Blob([bytes]);
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        var fileName = reportName + ".gif";
+        var fileName = tareasModel.tarea.tareasEntity.nombreTarea + "." + tareasModel.tarea.tareasEntity.extensionArchivo;
         link.download = fileName;
         link.click();
 
-
-
-        // let headers = {
-        //     'Accept': 'application/octet-stream',
-        //     'Content-Type': 'application/octet-stream',
-        // };
-        // this.$http.get('http://localhost:8080/sistEval/ws/tareas/' + tareasModel.tarea.idTarea + '/' + tareasModel.tarea.idUsuario,
-        //     headers).then(function (data) {
-        //         // app.$scope.tiposTareas = data.data;
-        //         saveAs(data);
-        //         console.log("TIPOSTAREAS");
-        //         console.log(data);
-        //     });
     }
 
 

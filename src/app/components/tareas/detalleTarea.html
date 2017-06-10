@@ -18,22 +18,10 @@
 					</p>
 					<!-- *********************************** ARCHIVO DE TAREA *********************************** -->
 					<div ng-show="tareas.tareasModel.tarea.tareasEntity.archivoAdjunto.length > 0">
-						<a target="_self" href="http://www.pdf995.com/samples/archivoTarea.pdf" download="foo.pdf">
-							<md-button class="md-raised md-alert" style="background-color:#e9eaea" type="button">
+							<md-button class="md-raised md-alert" ng-click="tareas.descargarArchivoTarea()" style="background-color:#e9eaea" type="button">
 								<i class="fa fa-link" aria-hidden="true" style="font-size:17px;"></i> Descargar Adjunto
 							</md-button>
-						</a>
 					</div>
-
-					<a href="http://localhost:8080/sistEval/ws/tareas/{{tareas.tareasModel.tarea.idTarea}}/{{tareas.tareasModel.tarea.idUsuario}}"
-					 download>Descargar</a>
-
-
-					<md-button type="button" class="md-raised md-alert" ng-click="tareas.descargarArchivoTarea()" style="background-color:#e9eaea">
-						<br>
-						<br>
-						<i class="fa fa-link" aria-hidden="true" style="font-size:17px;"></i> Descargar Adjunto
-					</md-button>
 					<!-- *********************************** FECHA DE ENTREGA *********************************** -->
 					<div>
 						<h4>Fecha de entrega: </h4><span>{{tareas.tareasModel.tarea.tareasEntity.fechaFin}}</span>
