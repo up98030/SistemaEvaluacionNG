@@ -1,0 +1,104 @@
+<div ng-controller="usuariosCtrl as usuarios">
+    <div ui-view='header'></div>
+    <div layout="row">
+        <div flex="100" class="sidenav">
+            <div ui-view='left'></div>
+        </div>
+    </div>
+    <div layout="row" style="width:90%; height:40vh; margin: 8vh 5vw">
+        <div ui-grid="usuarios.gridOptionsGrupos" ui-grid-selection class="grid" style="width:50%; margin:0 auto;"></div>
+    </div>
+    <div layout="row" style="width:90%; height:100vh; margin: 8vh 5vw">
+        <div flex="80" style="margin-left:10%;">
+            <md-input-container>
+                <label>Usuario:</label>
+                <input ng-model="usuarios.usuarioModel.userData.nombreUsuario">
+            </md-input-container>
+            <md-input-container>
+                <label>Nombre:</label>
+                <input ng-model="usuarios.usuarioModel.userData.nombreCompleto">
+            </md-input-container>
+            <md-input-container>
+                <label>Correo:</label>
+                <input ng-model="usuarios.usuarioModel.userData.correoUsuario">
+            </md-input-container>
+
+            <div layout="row" style="margin-top:1%;border:1px solid #999999;border-radius:6px;border-top:1px solid #27779a;">
+                <div flex="100">
+                    <div style="text-align:center; background-color:#27779a;border-top-radius:6px;z-index:99;">
+                        <div style="padding:5px;">
+                            <i class="fa fa-lock shadow-depth" style="font-size:2em;" aria-hidden="true"></i>
+                            <!--<div class="shadow-depth"><strong>Contraseña</strong></div><strong>-->
+                        </div>
+                    </div>
+                    <div style="padding:1%;">
+                        <md-input-container>
+                            <label>Nueva contraseña:</label>
+                            <input type="password" ng-model="usuarios.userData.password" ng-trim="true">
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Confirmar contraseña:</label>
+                            <input type="password" ng-model="usuarios.passwordConfirmation" ng-trim="true">
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+
+            <div layout="row" style="margin-top:2%;">
+                <md-button ng-click="usuarios.actualizarUsuario()" class="btn-guardar-usuarios">Actualizar</md-button>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<div class="footer">
+    <div layout="row" style="text-align:center;">
+
+    </div>
+</div>
+
+</div>
+
+<style>
+    .shadow-depth {
+        color: rgba(0, 0, 0, 0.6);
+        text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-actualizar-psswd i {
+        vertical-align: sub;
+        font-size: 2em;
+    }
+
+    .btn-actualizar-psswd {
+        border: 4px solid #b4bcdb;
+        background-color: #d9dded;
+    }
+
+    .btn-guardar-usuarios {
+        background-color: #256AB0 !important;
+        margin-left: 46%;
+        color: #fff;
+    }
+
+    .footer {
+        width: 100%;
+        position: relative;
+        height: 50px;
+        bottom: 0px;
+        background-color: #1e476b;
+        color: #fff;
+    }
+
+    .contenedor-dashboard {
+        /*border:1px solid;*/
+        /* margin:5px;*/
+    }
+
+    .contenedor-principal-dashboard {
+        text-align: center;
+        padding: 2%;
+    }
+</style>
