@@ -13,9 +13,28 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
     app.usuarioModel.perfilesUsuario = [];
     app.usuarioModel.modulosUsuario = [];
     this.$scope.periodoActivo = "";
-    this.gridOptions = {
+    this.gridOptionsGrupos = [];
+    app.gridOptionsGrupos = {
         enableRowSelection: true,
-        enableFullRowSelection: true,
+        enableFullRowSelection: false,
+        rowHeader: false,
+        enableSelectAll: true,
+        rowHeight: 30,
+        multiSelect: true,
+        columnDefs: [
+            { name: 'idModulo', visible: false, displayName: 'Id', width: 50 },
+            { name: 'nombreModulo', visible: true, displayName: 'Grupos Asignados', width: '*', minWidth: 200 },
+            { name: 'estado', visible: false, width: 200 },
+        ]
+    }
+
+    app.gridOptionsGrupos.onRegisterApi = function (gridApi) {
+        app.gridOptionsGrupos['gridApi'] = gridApi;
+    }
+
+    this.gridOptions = {
+        enableRowSelection: false,
+        enableFullRowSelection: false,
         rowHeader: false,
         enableSelectAll: false,
         rowHeight: 30,
@@ -43,15 +62,58 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
                 minWidth: 200,
                 width: '*',
                 displayName: 'Modulo',
+                visible: false,
                 cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.obtenerModulosGrid(row.entity.idModulo)}}</div>',
             },
             {
                 name: 'acciones', width: 150, visible: true,
-                cellTemplate: '<div class="ui-grid-cell-contents" style="text-align:center;" ng-click="grid.appScope.eliminarUsuario(row.entity)"><i class="fa fa-trash" style="color:#cc3333;" aria-hidden="true"></i></div>'
+                cellTemplate: '<div class="ui-grid-cell-contents" style="text-align:center;"><i title="Eliminar" ng-click="grid.appScope.eliminarUsuario(row.entity)" class="fa fa-trash" style="color:#cc3333;padding:0 1em;" aria-hidden="true"></i> <i title="Editar" ng-click="grid.appScope.editarUsuario(row.entity)" class="fa fa-pencil-square" style="color:#494949;" aria-hidden="true"></i> </div>'
             }
         ],
         data: null
     };
+
+    this.$scope.editarUsuario = function (entity) {
+        console.log("Entity");
+        console.log(entity);
+        app.usuarioModel.userData = entity;
+        app.$http.post('http://localhost:8080/sistEval/ws/obtenerGruposUsuario/', entity).then(function (data) {
+            console.log("Response Grupo");
+            console.log(data);
+            let gruposUsuarios = data.data;
+            $http.get('http://localhost:8080/sistEval/ws/modulos/').then(function (data) {
+                console.log('MODULOS', data);
+                app.gridOptionsGrupos.data = data.data;
+                for (let i = 0; i < gruposUsuarios.length; i++) {
+                    for (let j = 0; j < app.gridOptionsGrupos.data.length; j++) {
+                        if (app.gridOptionsGrupos.data[j].idModulo === gruposUsuarios[i].idModulo) {
+                            app.gridOptionsGrupos['gridApi'].grid.modifyRows(app.gridOptionsGrupos.data);
+                            app.gridOptionsGrupos['gridApi'].selection.selectRow(app.gridOptionsGrupos.data[j]);
+                        }
+                    }
+                }
+                // app.gridOptionsGrupos.onRegisterApi = function (gridApi) {
+                //     alert('asdf');
+                //     app.gridOptionsGrupos['gridApi'] = gridApi;
+                //     console.log("app.gridOptionsGrupos['gridApi']");
+                //     console.log(app.gridOptionsGrupos['gridApi']);
+                //     gridApi.selection.on.rowSelectionChanged(app.$scope, (row) => {
+                //         console.log("Grupo usuarios");
+                //         console.log(row);
+                //         // debugger;
+
+                //         console.log("app.gridOptionsGrupos.data");
+                //         console.log(app.gridOptionsGrupos.data);
+                //     })
+                // }
+            }, function (error) {
+                toastr.error('Error al obtener modulos');
+            });
+            app.$state.go('editarUsuario');
+        }, function (error) {
+            toastr.error('Error al obtener grupo');
+        });
+    }
 
     this.actualizarUsuario = function () {
         console.log('PASSWORD ', this.userData.password);
@@ -238,21 +300,22 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
     }
     /***************** FIN CONTROLADOR MODULOS ******************** */
 
+    /******************* GRID API DE LISTA USUARIOS ******************************* */
     this.gridOptions.onRegisterApi = function (gridApi) {
         console.log("Grid API");
         console.log(gridApi);
         console.log(gridApi.selection.on.rowSelectionChanged(app.$scope, function (row) {
             console.log(gridApi);
-            app.usuarioModel.usuarioSeleccionado = row.entity
-            console.log("Usuario seleccionado");
-            app.$state.go('editarUsuario');
-            console.log(row.entity);
-            app.usuarioEliminar = row.entity;
-            tareasModel.tarea = row.entity;
-            app.userData = row.entity;
-            console.log('UserData >>> ', app.userData);
-            var tarea = row.entity;
-            $scope.test = tarea.nombreTarea;
+            // app.usuarioModel.usuarioSeleccionado = row.entity
+            // console.log("Usuario seleccionado");
+            // app.$state.go('editarUsuario');
+            // console.log(row.entity);
+            // app.usuarioEliminar = row.entity;
+            // tareasModel.tarea = row.entity;
+            // app.userData = row.entity;
+            // console.log('UserData >>> ', app.userData);
+            // var tarea = row.entity;
+            // $scope.test = tarea.nombreTarea;
         }));
         console.log(gridApi.selection.getSelectedRows());
     };
