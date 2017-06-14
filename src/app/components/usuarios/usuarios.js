@@ -116,22 +116,38 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
     }
 
     this.actualizarUsuario = function () {
-        console.log('PASSWORD ', this.userData.password);
-        if (this.userData.password && this.userData.password !== undefined && this.userData.password !== null && this.userData.password !== "" && this.userData.password !== " ") {
-            if (this.passwordConfirmation !== this.userData.password) {
+        console.log('Grupos usuario editado');
+        console.log(this.gridOptionsGrupos['gridApi'].selection.getSelectedRows());
+        // console.log('PASSWORD ', this.userData.password);
+        if (this.usuarioModel.newPassword && this.usuarioModel.newPassword !== undefined && this.usuarioModel.newPassword !== null && this.usuarioModel.newPassword !== "" && this.usuarioModel.newPassword !== " ") {
+            if (this.usuarioModel.passwordConfirmation !== this.usuarioModel.newPassword) {
                 toastr.error('Las contraseñas no coinciden');
                 return;
             }
         }
-        console.log('this.userData >>>>>>>>>>>>> ', this.userData);
-        this.$http.post('http://localhost:8080/sistEval/ws/actualizarUsuario/', this.userData).then(function (data) {
-            if (app.userData.password) {
-                app.userData.password = "";
-                app.passwordConfirmation = "";
+        // console.log('this.userData >>>>>>>>>>>>> ', this.userData);
+        let usuarioEditObj = {
+            'idUsuario': app.usuarioModel.userData.idUsuario,
+            'nombreUsuario': app.usuarioModel.userData.nombreUsuario,
+            'nombreCompleto': app.usuarioModel.userData.nombreCompleto,
+            'correoUsuario': app.usuarioModel.userData.correoUsuario,
+            'idPerfil': app.usuarioModel.userData.idPerfil,
+            'password': app.usuarioModel.newPassword,
+            'grupos': this.gridOptionsGrupos['gridApi'].selection.getSelectedRows()
+        };
+        console.log('usuarioEditObj');
+        console.log(usuarioEditObj);
+        this.$http.post('http://localhost:8080/sistEval/ws/actualizarUsuarioGrupos/', usuarioEditObj).then(function (data) {
+            if (app.usuarioModel.newPassword) {
+                app.usuarioModel.newPassword = "";
+                app.usuarioModel.passwordConfirmation = "";
             }
             toastr.success('Usuario actualizado');
+            app.$state.go('listaUsuarios');
         }, function (error) {
-            toastr.error('Error al actualizar datos usuario');
+            toastr.success('Usuario actualizado');
+            app.$state.go('listaUsuarios');
+            // toastr.error('Error al actualizar datos usuario');
         });
     }
 
@@ -377,7 +393,7 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
     }
 
     this.validarCampos = function () {
-        if (!this.$scope.nombreUsuario || !this.$scope.correoUsuario || !this.$scope.password || !this.$scope.nombresUsuario || !this.$scope.apellidosUsuario) {
+        if (!this.$scope.correoUsuario || !this.$scope.password || !this.$scope.nombresUsuario || !this.$scope.apellidosUsuario) {
             toastr.error('Debe llenar todos los campos');
             return false;
         } else {
