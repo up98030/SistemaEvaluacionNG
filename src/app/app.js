@@ -32,6 +32,7 @@ require('../../node_modules/angular-sanitize/angular-sanitize.js');
 require('../../node_modules/angular-material-calendar/angular-material-calendar.js');
 var tareasModel = require('./models/tareasModel.js');
 var usuarioModel = require('./models/usuarioModel.js');
+var reportesModel = require('./models/reportesModel.js');
 //require('../../node_modules/angular-ui-grid/ui-grid.css');
 
 var app = angular.module('myApp',
@@ -45,6 +46,7 @@ var app = angular.module('myApp',
 
 app.factory('tareasModel', tareasModel);
 app.factory('usuarioModel', usuarioModel);
+app.factory('reportesModel', reportesModel);
 
 //app.value('tareasModel', new tareasModel());
 

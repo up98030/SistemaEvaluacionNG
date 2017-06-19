@@ -27,9 +27,25 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
             { name: 'estado', visible: false, width: 200 },
         ]
     }
+    this.gridOptionsPerfiles = [];
+    app.gridOptionsPerfiles = {
+        enableRowSelection: true,
+        enableFullRowSelection: false,
+        rowHeader: false,
+        enableSelectAll: true,
+        rowHeight: 30,
+        multiSelect: false,
+        columnDefs: [
+            { name: 'idPerfil', visible: true, displayName: 'Id', width: 50, visible:false },
+            { name: 'nombrePerfil', visible: true, displayName: 'Perfil', width: '*', minWidth: 200 },
+        ]
+    }
 
     app.gridOptionsGrupos.onRegisterApi = function (gridApi) {
         app.gridOptionsGrupos['gridApi'] = gridApi;
+    }
+    app.gridOptionsPerfiles.onRegisterApi = function (gridApi) {
+        app.gridOptionsPerfiles['gridApi'] = gridApi;
     }
 
     this.gridOptions = {
@@ -77,10 +93,13 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
         console.log("Entity");
         console.log(entity);
         app.usuarioModel.userData = entity;
+        app.usuarioModel.newPassword = "";
+        app.usuarioModel.passwordConfirmation = "";
         app.$http.post('http://localhost:8080/sistEval/ws/obtenerGruposUsuario/', entity).then(function (data) {
             console.log("Response Grupo");
             console.log(data);
             let gruposUsuarios = data.data;
+            /****************** OBTENER GRUPOS ******************/
             $http.get('http://localhost:8080/sistEval/ws/modulos/').then(function (data) {
                 console.log('MODULOS', data);
                 app.gridOptionsGrupos.data = data.data;
@@ -92,20 +111,21 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
                         }
                     }
                 }
-                // app.gridOptionsGrupos.onRegisterApi = function (gridApi) {
-                //     alert('asdf');
-                //     app.gridOptionsGrupos['gridApi'] = gridApi;
-                //     console.log("app.gridOptionsGrupos['gridApi']");
-                //     console.log(app.gridOptionsGrupos['gridApi']);
-                //     gridApi.selection.on.rowSelectionChanged(app.$scope, (row) => {
-                //         console.log("Grupo usuarios");
-                //         console.log(row);
-                //         // debugger;
+                /************************* OBTENER PERFILES ******************/
+                $http.get('http://localhost:8080/sistEval/ws/perfiles/').then(function (data) {
+                    console.log('Perfiles', data);
+                    app.gridOptionsPerfiles.data = data.data;
+                    for(let i=0;i<app.gridOptionsPerfiles.data.length;i++){
+                        if(app.gridOptionsPerfiles.data[i].idPerfil === entity.idPerfil){
+                            app.gridOptionsPerfiles['gridApi'].grid.modifyRows(app.gridOptionsPerfiles.data);
+                            app.gridOptionsPerfiles['gridApi'].selection.selectRow(app.gridOptionsPerfiles.data[i]);
+                        }
+                    }
+                }, function (error) {
+                    toastr.error('Error al obtener perfiles');
+                });
 
-                //         console.log("app.gridOptionsGrupos.data");
-                //         console.log(app.gridOptionsGrupos.data);
-                //     })
-                // }
+
             }, function (error) {
                 toastr.error('Error al obtener modulos');
             });
@@ -131,10 +151,15 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
             'nombreUsuario': app.usuarioModel.userData.nombreUsuario,
             'nombreCompleto': app.usuarioModel.userData.nombreCompleto,
             'correoUsuario': app.usuarioModel.userData.correoUsuario,
-            'idPerfil': app.usuarioModel.userData.idPerfil,
-            'password': app.usuarioModel.newPassword,
+            'idPerfil': this.gridOptionsPerfiles['gridApi'].selection.getSelectedRows()[0].idPerfil,
+            // 'password': app.usuarioModel.newPassword,
             'grupos': this.gridOptionsGrupos['gridApi'].selection.getSelectedRows()
         };
+        if(app.usuarioModel.newPassword && app.usuarioModel.newPassword !== "" && app.usuarioModel.newPassword !== " "){
+            usuarioEditObj['password'] = app.usuarioModel.newPassword;
+        }else{
+            usuarioEditObj['password'] = app.usuarioModel.userData.password;
+        }
         console.log('usuarioEditObj');
         console.log(usuarioEditObj);
         this.$http.post('http://localhost:8080/sistEval/ws/actualizarUsuarioGrupos/', usuarioEditObj).then(function (data) {

@@ -1,0 +1,102 @@
+<div ui-view='header'></div>
+<div ui-view='left'></div>
+<div ng-controller="reportesCtrl as reportes">
+
+    <div layout="row" style="padding:1%; width:96vw;">
+        <div flex="25" class="cajaResumenNotas">
+            <i class="fa fa-street-view" aria-hidden="true" style="font-size:3em; display:block;"></i>
+            <br/>
+            <h3 class="tituloResumenNotas">Docentes</h3>
+            <div ui-grid="reportes.gridOptionsUsuarios" ui-grid-selection class="grid gridFiltrosReportes" selectable></div>
+        </div>
+        <div flex="25" class="cajaResumenNotas">
+            <i class="fa fa-cubes" aria-hidden="true" style="font-size:3em; display:block;"></i>
+            <br/>
+            <h3 class="tituloResumenNotas">Grupos</h3>
+            <div ui-grid="reportes.gridOptionsGrupos" ui-grid-selection class="grid gridFiltrosReportes" selectable></div>
+        </div>
+        <div flex="25" class="cajaResumenNotas">
+            <i class="fa fa-sitemap" aria-hidden="true" style="font-size:3em; display:block;"></i>
+            <br/>
+            <h3 class="tituloResumenNotas">Categorías</h3>
+            <div ui-grid="reportes.gridOptionsCategorias" ui-grid-selection class="grid gridFiltrosReportes" selectable></div>
+        </div>
+        <div flex="25" class="cajaResumenNotas">
+            <i class="fa fa-sort-amount-asc" aria-hidden="true" style="font-size:3em; display:block;"></i>
+            <br/>
+            <h3 class="tituloResumenNotas">Fecha</h3>
+            <div class="contenedorFechaReporte">
+                <div class="contenedor">
+                    <h3>Inicio</h3>
+                </div>
+                <md-datepicker ng-model="reportes.fechaInicio" md-placeholder=""></md-datepicker>
+            </div>
+            <div class="contenedorFechaReporte">
+                <div class="contenedor">
+                    <h3>Fin</h3>
+                </div>
+                <md-datepicker ng-model="reportes.fechaFin" md-placeholder=""></md-datepicker>
+            </div>
+        </div>
+    </div>
+    <div layout="row" style="width:96vw;">
+        <div flex="100" style="margin-left:1vw;">
+            <md-button class="md-raised md-primary crearReporteButton" ng-click="reportes.crearReporte();">Crear reporte</md-button>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .contenedorFechaReporte {
+        border: 1px solid #b2b2b2;
+        border-radius: 4px;
+        margin-bottom:0.1em;
+    }
+
+    .contenedorFechaReporte .contenedor {
+        width: 100%;
+        /*background-color: #9e379f;*/
+        background-color: #b2b2b2;
+        /*color: #fff;*/
+    }
+
+    .contenedorFechaReporte .contenedor h3 {
+        margin: 0;
+        padding: 0.3em;
+    }
+
+    .crearReporteButton {
+        width: 100%;
+        background-color: #493267 !important;
+    }
+
+    .gridFiltrosReportes {
+        height: 200px;
+        font-size: 12px;
+        text-align: left;
+    }
+
+    .cajaResumenNotas {
+        border: 2px solid;
+        border-color: #d4cccc;
+        text-align: center;
+        padding: 20px;
+        margin: 0.5%;
+    }
+
+    .cajaResumenNotas:hover {
+        border: 2px solid;
+        border-color: #505c6a;
+    }
+
+    .tituloResumenNotas {
+        /*border-bottom: 1px solid #dcd6d6;*/
+        /*padding-bottom: 40px;*/
+    }
+
+    .cajaResumenNotas h5 {
+        font-size: 3em;
+        margin: 0;
+    }
+</style>
