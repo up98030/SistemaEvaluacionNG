@@ -82,18 +82,20 @@ angular.module('myApp.home', [])
 						console.log('Periodo activo >> ', periodoActivo);
 						app.$sessionStorage.userData.idPeriodo = periodoActivo['idPeriodo'];
 
-						
-
-				/******************** RESUMEN DE NOTAS ******************/
-				app.$http.post('http://localhost:8080/sistEval/ws/summary/', angular.toJson(app.$sessionStorage.userData)).then(function (data) {
-					app.$state.go('principal');
+							app.$state.go('principal');
 					loading_screen.finish();
 					app.$localStorage.userSummary = data.data;
-					console.log('RESUMEN>>>', data);
-				}, function (error) {
-					toastr.error("No se pudo obtener resumen de tareas y notas usuario");
-					loading_screen.finish();
-				});
+
+				/******************** RESUMEN DE NOTAS ******************/
+				// app.$http.post('http://localhost:8080/sistEval/ws/summary/', angular.toJson(app.$sessionStorage.userData)).then(function (data) {
+				// 	app.$state.go('principal');
+				// 	loading_screen.finish();
+				// 	app.$localStorage.userSummary = data.data;
+				// 	console.log('RESUMEN>>>', data);
+				// }, function (error) {
+				// 	toastr.error("No se pudo obtener resumen de tareas y notas usuario");
+				// 	loading_screen.finish();
+				// });
 
 
 					});

@@ -442,6 +442,7 @@ function usuariosController($scope, $http, $state, tareasModel, usuarioModel, ng
     this.consultarUsuarios = function () {
         let header = {
             "Accept": "text/plain;charset=UTF-8",
+            'Content-Type': undefined
             // "Accept-Charset": "charset=utf-8"
         };
         app.$http.get('http://localhost:8080/sistEval/ws/usuarios/', header).

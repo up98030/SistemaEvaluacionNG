@@ -101,6 +101,20 @@ function reportesController($scope, $http, $state, reportesModel, $sessionStorag
         console.log('this.gridOptionsGrupos',this.gridOptionsGrupos['gridApi'].selection.getSelectedRows());
         console.log('this.gridOptionsUsuarios',this.gridOptionsUsuarios['gridApi'].selection.getSelectedRows());
 
+        let reporteVO = {
+            'usuarios':this.gridOptionsUsuarios['gridApi'].selection.getSelectedRows(),
+            'grupos':this.gridOptionsGrupos['gridApi'].selection.getSelectedRows(),
+            'categorias':this.gridOptionsCategorias['gridApi'].selection.getSelectedRows()
+        }
+
+         this.$http.post('http://localhost:8080/sistEval/ws/crearReporte/', reporteVO).then((data) => {
+             console.log('Reporte');
+             console.log(data);
+         
+        }, () => {
+            toastr.error('Error al crear reporte');
+        });
+
     }
 }
 

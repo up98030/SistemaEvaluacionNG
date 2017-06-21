@@ -11,9 +11,9 @@ angular.module('myApp.principal', ['ngDialog'])
         this.$localStorage = $localStorage;
         this.$sessionStorage = $sessionStorage;
         this.userData = this.$sessionStorage.userData;
-        this.$scope.tareasPendientes = this.$localStorage.userSummary.tareasPendientes;
-        this.$scope.reunionesPendientes = this.$localStorage.userSummary.reunionesPendientes;
-        this.$scope.PromedioNotas = this.$localStorage.userSummary.PromedioNotas;
+        // this.$scope.tareasPendientes = this.$localStorage.userSummary.tareasPendientes;
+        // this.$scope.reunionesPendientes = this.$localStorage.userSummary.reunionesPendientes;
+        // this.$scope.PromedioNotas = this.$localStorage.userSummary.PromedioNotas;
         this.$scope.nombreUsuario = this.$sessionStorage.userData.nombreCompleto;
         this.$scope.perfilUsuario = this.$sessionStorage.userData.idPerfil;
         console.log("LocalStorage DASSHH", this.$localStorage);
